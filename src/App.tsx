@@ -41,7 +41,7 @@ export default function App() {
           <AboutModal />
           <header className="masthead">
             <div className="masthead-title">Museum of Art History</div>
-            <div className="masthead-sub">An interactive timeline · Medieval to Contemporary</div>
+            <div className="masthead-sub">Fifteen floors of art history · 1200 – 2020</div>
           </header>
           <button className="about-btn" onClick={() => useMuseum.getState().setAbout(true)}>
             About

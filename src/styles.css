@@ -114,193 +114,293 @@ button {
   color: var(--muted);
 }
 
-/* ===== timeline canvas ===== */
+/* ===== floor-plan timeline (the museum section) ===== */
 
-.timeline {
+.floorplan {
   position: absolute;
   inset: 0;
   overflow: hidden;
   cursor: grab;
   background:
-    radial-gradient(1600px 900px at 50% 30%, #131a2c 0%, transparent 65%),
-    var(--ink);
+    radial-gradient(1100px 620px at 62% 16%, #262019 0%, transparent 62%),
+    radial-gradient(900px 700px at 20% 90%, #201a13 0%, transparent 55%),
+    #171310;
   touch-action: none;
 }
-.timeline.dragging {
+.floorplan.dragging {
   cursor: grabbing;
 }
-.tl-world {
+.fp-world {
   position: absolute;
   left: 0;
   top: 0;
   transform-origin: 0 0;
   will-change: transform;
-}
-.tl-svg {
-  position: absolute;
-  overflow: visible;
-  pointer-events: none;
-}
-.tl-line {
-  transition: opacity 0.5s ease;
-}
-.tl-halo {
-  position: absolute;
-  pointer-events: none;
-  transition: opacity 0.5s ease;
+  --room-reveal: 0;
+  --band-scale: 1;
 }
 
 /* dim-out for filtering */
 .is-dim {
-  opacity: 0.13 !important;
+  opacity: 0.16 !important;
   filter: saturate(0.25);
   transition: opacity 0.45s ease, filter 0.45s ease;
 }
 
-/* --- period nodes --- */
+/* --- floor slabs --- */
 
-.tl-period {
+.fp-floor {
   position: absolute;
-  width: 0;
-  height: 0;
-}
-.tl-period-inner {
-  position: absolute;
-  transform: translate(-50%, -50%) scale(var(--label-scale, 1));
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(180deg, #f3ecda 0%, #e7dcc1 100%);
+  border-radius: 2px;
+  box-shadow: 0 20px 38px rgba(0, 0, 0, 0.5);
   transition: filter 0.3s ease;
 }
-.tl-period-inner:hover {
-  filter: brightness(1.25);
+.fp-floor:hover {
+  filter: brightness(1.04);
 }
-.tl-period-star {
-  width: 13px;
-  height: 13px;
-  border-radius: 50%;
+/* skewed top surface — the slab's 2.5D cap */
+.fp-floor::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: -14px;
+  top: -11px;
+  height: 11px;
+  background: linear-gradient(180deg, #faf4e4, #f0e8d3);
+  transform: skewX(-52deg);
+  border-radius: 2px 2px 0 0;
 }
-.tl-period-name {
-  font-family: var(--serif);
-  font-size: 34px;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text);
-  text-shadow: 0 2px 26px rgba(0, 0, 0, 0.8);
-  text-align: center;
-  line-height: 1.08;
-  max-width: 8.5em;
-  white-space: normal;
+/* period-color marquetry stripe on the left edge */
+.fp-floor::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: var(--pc, #888);
+  opacity: 0.85;
+  border-radius: 2px 0 0 2px;
 }
-.tl-period-dates {
-  font-size: 13px;
-  letter-spacing: 0.34em;
-  color: var(--muted);
+
+/* --- floor edge band --- */
+
+.fp-band {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 20px 0 28px;
+  border-bottom: 1px solid rgba(139, 108, 48, 0.22);
+  cursor: pointer;
+}
+.fp-band-inner {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
   white-space: nowrap;
+  transform-origin: left center;
+  transform: scale(var(--band-scale, 1));
+}
+.fp-fnum {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 23px;
+  color: var(--gold-2);
+  min-width: 34px;
+}
+.fp-fname {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #4a3d2c;
+}
+.fp-fyears {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  color: #7d6f57;
+}
+.fp-here-chip {
+  margin-left: auto;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #f2ead8;
+  background: #9b3728;
+  padding: 4px 10px;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.fp-floor.is-here .fp-here-chip {
+  opacity: var(--room-reveal);
 }
 
-/* --- artist nodes --- */
+/* --- artist rooms (standardized placards — size never encodes data) --- */
 
-.tl-artist {
+.fp-room {
   position: absolute;
-  width: 0;
-  height: 0;
-  transition: opacity 0.45s ease, filter 0.45s ease;
-}
-.tl-artist-inner {
-  position: absolute;
-  transform: translate(-50%, -50%) scale(var(--node-scale, 1));
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 7px;
-  white-space: nowrap;
-}
-.tl-artist-ring {
-  width: 84px;
-  height: 84px;
-  border-radius: 50%;
-  border: 2px solid;
-  padding: 3px;
-  display: block;
-  background: var(--ink-2);
-  transition: transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.4);
-}
-.tl-artist-inner:hover .tl-artist-ring {
-  transform: scale(1.12);
-}
-.tl-artist-ring img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-  filter: sepia(0.15) contrast(1.02);
-}
-.tl-artist-initial {
-  display: grid;
-  place-content: center;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  font-family: var(--serif);
-  font-size: 34px;
-  color: var(--muted);
-}
-.tl-artist-name {
-  font-family: var(--serif);
-  font-size: 19px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  color: var(--text);
-  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.9);
-}
-.tl-artist-dates {
-  font-size: 10.5px;
-  letter-spacing: 0.2em;
-  color: var(--muted);
-}
-
-/* --- year axis --- */
-
-.tl-axis {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 58px;
+  justify-content: center;
+  gap: 6px;
+  background: #faf5e8;
+  border: 1px solid rgba(139, 108, 48, 0.55);
+  box-shadow:
+    inset 0 0 0 3px #faf5e8,
+    inset 0 0 0 4px rgba(139, 108, 48, 0.28),
+    0 6px 14px rgba(42, 33, 24, 0.18);
+  padding: 10px 8px;
+  text-align: center;
+  opacity: var(--room-reveal);
   pointer-events: none;
-  background: linear-gradient(transparent, rgba(7, 9, 14, 0.9) 55%);
-  border-top: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
-.tl-tick {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 100%;
-  opacity: 0;
+.rooms-live .fp-room {
+  pointer-events: auto;
+  cursor: pointer;
 }
-.tl-tick span {
-  position: absolute;
-  bottom: 26px;
-  left: 0;
-  width: 1px;
-  height: 10px;
-  background: rgba(200, 162, 75, 0.55);
+.rooms-live .fp-room:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold-2);
+  box-shadow:
+    inset 0 0 0 3px #faf5e8,
+    inset 0 0 0 4px rgba(139, 108, 48, 0.4),
+    0 12px 22px rgba(42, 33, 24, 0.3);
 }
-.tl-tick label {
+/* door notch on the corridor side */
+.fp-room::after {
+  content: '';
   position: absolute;
-  bottom: 8px;
-  left: 0;
+  bottom: -1px;
+  left: 50%;
   transform: translateX(-50%);
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
-  color: var(--muted);
+  width: 34px;
+  height: 3px;
+  background: #e7dcc1;
+}
+.fp-rnum {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--gold-2);
+  letter-spacing: 0.08em;
+}
+.fp-rname {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.12;
+  color: var(--paper-ink);
+  letter-spacing: 0.02em;
+}
+.fp-rdates {
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  color: #7d6f57;
 }
 
-.tl-hint {
+/* --- per-floor date rule --- */
+
+.fp-rule {
+  position: absolute;
+  left: 70px;
+  right: 70px;
+  bottom: 12px;
+  border-top: 1px solid rgba(139, 108, 48, 0.4);
+  opacity: var(--room-reveal);
+}
+.fp-tick {
+  position: absolute;
+  top: 3px;
+  transform: translateX(-50%);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: #7d6f57;
+}
+.fp-tick::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 1px;
+  height: 4px;
+  background: rgba(139, 108, 48, 0.6);
+}
+
+/* --- wayfinding rail (screen-fixed floor index) --- */
+
+.fp-rail {
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 12px 14px;
+  background: rgba(20, 16, 12, 0.72);
+  border: 1px solid rgba(200, 162, 75, 0.22);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+.fp-rail-title {
+  font-size: 8.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+.fp-rail-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 3.5px 8px;
+  border-radius: 6px;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #b6ac97;
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease;
+  text-align: left;
+}
+.fp-rail-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #f2ead8;
+}
+.fp-rail-item b {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--gold);
+  min-width: 26px;
+}
+.fp-rail-item i {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex: none;
+}
+.fp-rail-item.is-here {
+  color: #f2ead8;
+  background: rgba(200, 162, 75, 0.14);
+}
+.fp-rail-item.is-here::after {
+  content: '◂';
+  color: #9b3728;
+  margin-left: 6px;
+}
+
+.fp-hint {
   position: absolute;
   right: 22px;
   bottom: 16px;
@@ -309,6 +409,12 @@ button {
   color: var(--muted);
   opacity: 0.75;
   pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .fp-rail {
+    display: none;
+  }
 }
 
 /* ===== filter bar ===== */
@@ -947,7 +1053,7 @@ button {
     left: 18px;
     width: min(320px, calc(100vw - 36px));
   }
-  .tl-hint {
+  .fp-hint {
     display: none;
   }
 }

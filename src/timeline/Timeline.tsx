@@ -1,50 +1,51 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { useMuseum } from '../store'
-import { asset } from '../data'
 import { isTouchDevice } from '../touch'
 import type { Artist, MuseumData, Period } from '../types'
 import {
   type Cam,
-  yearToX,
-  xToYear,
-  pxPerYear,
   K_MIN,
   K_MAX,
-  ARTIST_IN_START,
-  ARTIST_IN_END,
+  ROOM_IN_START,
+  ROOM_IN_END,
   clamp,
   smoothstep,
   easeInOutCubic,
-  nodeScale,
-  labelScale,
-  seeded,
+  roman,
 } from './camera'
 
-// ---------------------------------------------------------------- layout ----
+// ------------------------------------------------------------- world layout -
+// The museum section: fifteen fixed-size floor slabs stacked chronologically,
+// ground floor (Medieval & Gothic) at the bottom. Rooms are standardized —
+// their size never encodes collection size — and sit along each floor at the
+// position of the artist's real working years.
 
-interface ArtistPos {
+const SLAB_W = 1150
+const SLAB_H = 232
+const GAP = 44
+const BAND_H = 52
+const ROOM_W = 150
+const ROOM_H = 104
+const ROOM_GAP = 14
+const EDGE_PAD = 70
+
+interface RoomPos {
   artist: Artist
   x: number
   y: number
+  number: string
+  years: string
 }
-interface PeriodLayout {
+interface FloorLayout {
   period: Period
-  cx: number
-  /** world-x extent of the period band (non-linear axis, so computed per edge) */
-  x0: number
-  x1: number
-  centroid: { x: number; y: number }
-  artists: ArtistPos[]
+  index: number // 0 = ground floor (earliest period)
+  y: number // world y of slab top
+  rooms: RoomPos[]
+  ticks: { x: number; year: number }[]
 }
 
-const Y_OFFSETS = [-72, 60, -10, 88, -98, 32, 108, -42]
-// labels cycle six rows so temporally-close periods (nine between 1848 and
-// 2020) never share a row with a near neighbour
-const PERIOD_ROWS = [-290, 160, -80, 300, -190, 90]
-const WORLD_Y_SPAN = 950
-
-/** An artist sits at the median year of their paintings in the collection —
- *  the truest "when they worked" signal we have from the data. */
+/** An artist's place on the floor: the median year of their paintings in the
+ *  collection — the truest "when they worked" signal the data has. */
 function artistYear(artist: Artist, data: MuseumData, period: Period): number {
   const years = artist.paintingIds
     .map((id) => data.paintingById.get(id)?.year)
@@ -56,30 +57,45 @@ function artistYear(artist: Artist, data: MuseumData, period: Period): number {
   return (period.start + period.end) / 2
 }
 
-function computeLayout(data: MuseumData): PeriodLayout[] {
-  return data.periods.map((period) => {
+function computeFloors(data: MuseumData): FloorLayout[] {
+  const n = data.periods.length
+  return data.periods.map((period, index) => {
+    const y = (n - 1 - index) * (SLAB_H + GAP)
+    const span = Math.max(period.end - period.start, 1)
+    const usable = SLAB_W - EDGE_PAD * 2
+
     const artists = data.artists
       .filter((a) => a.periodId === period.id)
-      .map((artist, i) => ({
-        artist,
-        x: yearToX(artistYear(artist, data, period)),
-        y: Y_OFFSETS[i % Y_OFFSETS.length],
-      }))
-    const x0 = yearToX(period.start)
-    const x1 = yearToX(period.end)
-    const cx = (x0 + x1) / 2
-    const centroid = artists.length
-      ? {
-          // midpoint of the x extent (not the mean) so a temporal outlier stays on screen
-          x: (Math.min(...artists.map((a) => a.x)) + Math.max(...artists.map((a) => a.x))) / 2,
-          y: artists.reduce((s, a) => s + a.y, 0) / artists.length,
-        }
-      : { x: cx, y: 0 }
-    return { period, cx, x0, x1, centroid, artists }
+      .map((artist) => ({ artist, year: artistYear(artist, data, period) }))
+      .sort((a, b) => a.year - b.year)
+
+    // ideal chronological x, then minimal nudges so uniform rooms never overlap
+    const xs = artists.map(({ year }) => {
+      const t = clamp((year - period.start) / span, 0, 1)
+      return clamp(EDGE_PAD + t * usable - ROOM_W / 2, 16, SLAB_W - ROOM_W - 16)
+    })
+    for (let i = 1; i < xs.length; i++) xs[i] = Math.max(xs[i], xs[i - 1] + ROOM_W + ROOM_GAP)
+    xs[xs.length - 1] = Math.min(xs[xs.length - 1] ?? 0, SLAB_W - ROOM_W - 16)
+    for (let i = xs.length - 2; i >= 0; i--) xs[i] = Math.min(xs[i], xs[i + 1] - ROOM_W - ROOM_GAP)
+
+    const rooms: RoomPos[] = artists.map(({ artist }, i) => ({
+      artist,
+      x: xs[i],
+      y: BAND_H + 12 + (i % 2) * 16,
+      number: `${index + 1}${String(i + 1).padStart(2, '0')}`,
+      years: `${artist.birthYear ?? '—'}–${artist.deathYear ?? '—'}`,
+    }))
+
+    const ticks = Array.from({ length: 5 }, (_, i) => {
+      const year = Math.round(period.start + (span * i) / 4)
+      return { x: EDGE_PAD + (usable * i) / 4, year }
+    })
+
+    return { period, index, y, rooms, ticks }
   })
 }
 
-// ---------------------------------------------------------------- component -
+// ------------------------------------------------------------- component ----
 
 export default function Timeline() {
   const data = useMuseum((s) => s.data)!
@@ -87,78 +103,69 @@ export default function Timeline() {
   const flyReq = useMuseum((s) => s.flyToTarget)
   const openCard = useMuseum((s) => s.openCard)
 
-  const layout = useMemo(() => computeLayout(data), [data])
+  const floors = useMemo(() => computeFloors(data), [data])
+  const worldH = floors.length * (SLAB_H + GAP) - GAP
 
   const viewportRef = useRef<HTMLDivElement>(null)
   const worldRef = useRef<HTMLDivElement>(null)
-  const periodLayerRef = useRef<HTMLDivElement>(null)
-  const artistLayerRef = useRef<HTMLDivElement>(null)
-  const linesRef = useRef<SVGGElement>(null)
-  const axisRef = useRef<HTMLDivElement>(null)
+  const railRef = useRef<HTMLElement>(null)
+  const slabRefs = useRef<(HTMLDivElement | null)[]>([])
+  const railRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const hereRef = useRef(-1)
 
-  // camera state lives in refs; rAF applies it imperatively (no re-renders)
-  const camRef = useRef<Cam>({ x: yearToX(1660), y: 0, k: 0.7 })
+  const camRef = useRef<Cam>({ x: SLAB_W / 2, y: worldH / 2, k: 0.2 })
   const targetRef = useRef<Cam>({ ...camRef.current })
   const flightRef = useRef<{ from: Cam; to: Cam; t0: number; dur: number } | null>(null)
 
-  const stars = useMemo(
-    () =>
-      Array.from({ length: 340 }, (_, i) => ({
-        x: yearToX(1210) + seeded(i) * (yearToX(2035) - yearToX(1210)),
-        y: -WORLD_Y_SPAN + seeded(i + 1000) * WORLD_Y_SPAN * 2,
-        r: 0.6 + seeded(i + 2000) * 1.4,
-        o: 0.12 + seeded(i + 3000) * 0.4,
-      })),
-    [],
-  )
-
-  const svgX0 = yearToX(1210)
-  const svgW = yearToX(2035) - svgX0
-  const svgY0 = -WORLD_Y_SPAN
-  const svgH = WORLD_Y_SPAN * 2
-
+  // Home view: fit the building's width and stand at the ground-floor
+  // entrance (Medieval & Gothic, at the bottom) — visitors pan upward through
+  // history; the rail jumps straight to any floor.
   const fitAll = (): Cam => {
     const vw = viewportRef.current?.clientWidth ?? 1280
-    const minX = yearToX(data.periods[0].start) - 250
-    const maxX = yearToX(data.periods[data.periods.length - 1].end) + 250
     return {
-      x: (minX + maxX) / 2,
-      y: -30,
-      k: clamp(vw / (maxX - minX), K_MIN, 1.4),
+      x: SLAB_W / 2,
+      y: worldH, // clamped to the bottom of the building by the camera bounds
+      k: clamp((vw * 0.42) / SLAB_W, 0.16, 0.8),
     }
+  }
+
+  /** Width taken by the wayfinding rail (0 when hidden on small screens). */
+  const railW = () => {
+    const el = railRef.current
+    return el && el.offsetWidth > 0 ? el.offsetWidth + 60 : 0
   }
 
   const flyTo = (to: Cam, dur = 950) => {
     flightRef.current = { from: { ...camRef.current }, to, t0: performance.now(), dur }
   }
 
-  /** Zoom for a period fly-in: fit the artist cluster to the viewport, but always past the reveal threshold. */
-  const periodZoom = (pl: PeriodLayout) => {
-    const vw = viewportRef.current?.clientWidth ?? 1280
-    const xs = pl.artists.map((a) => a.x)
-    const span = Math.max(Math.max(...xs) - Math.min(...xs) + 220, 260)
-    return clamp((vw * 0.85) / span, ARTIST_IN_END + 0.15, 3.9)
+  /** Frame a floor in the space right of the rail, always past room reveal. */
+  const floorZoom = () => {
+    const vw = (viewportRef.current?.clientWidth ?? 1280) - railW()
+    return clamp((vw * 0.92) / SLAB_W, 0.95, 2.2)
+  }
+  const flyToFloor = (f: FloorLayout, dur = 1000) => {
+    const k = floorZoom()
+    flyTo({ x: SLAB_W / 2 - railW() / (2 * k), y: f.y + SLAB_H / 2, k }, dur)
   }
 
-  // main rAF loop -------------------------------------------------------------
+  // ------------------------------------------------------------ frame loop --
   useEffect(() => {
     const viewport = viewportRef.current!
     const world = worldRef.current!
     let raf = 0
     let lastT = performance.now()
+    let roomsLive = false
 
-    // tick pool for the year axis
-    const tickPool: HTMLDivElement[] = []
-    const ensureTicks = (n: number) => {
-      const axis = axisRef.current!
-      while (tickPool.length < n) {
-        const el = document.createElement('div')
-        el.className = 'tl-tick'
-        el.innerHTML = '<span></span><label></label>'
-        axis.appendChild(el)
-        tickPool.push(el)
-      }
-      return tickPool
+    const clampCam = (c: Cam) => {
+      const vw = viewport.clientWidth
+      const vh = viewport.clientHeight
+      const hw = vw / 2 / c.k
+      const hh = vh / 2 / c.k
+      const rw = railW() / c.k // keep content clear of the wayfinding rail
+      const M = 120
+      c.x = hw >= SLAB_W / 2 + M ? SLAB_W / 2 - rw / 2 : clamp(c.x, -M + hw - rw, SLAB_W + M - hw)
+      c.y = hh >= worldH / 2 + M ? worldH / 2 : clamp(c.y, -M + hh, worldH + M - hh)
     }
 
     const frame = (t: number) => {
@@ -172,86 +179,59 @@ export default function Timeline() {
         const f = flightRef.current
         const p = clamp((t - f.t0) / f.dur, 0, 1)
         const e = easeInOutCubic(p)
-        // zoom interpolates in log space so long flights feel even
         cam.x = f.from.x + (f.to.x - f.from.x) * e
         cam.y = f.from.y + (f.to.y - f.from.y) * e
         cam.k = Math.exp(Math.log(f.from.k) + (Math.log(f.to.k) - Math.log(f.from.k)) * e)
-        target.x = cam.x
-        target.y = cam.y
-        target.k = cam.k
+        Object.assign(target, cam)
         if (p >= 1) flightRef.current = null
       } else {
+        clampCam(target)
         const s = 1 - Math.exp(-dt * 11)
         cam.x += (target.x - cam.x) * s
         cam.y += (target.y - cam.y) * s
         cam.k = Math.exp(Math.log(cam.k) + (Math.log(target.k) - Math.log(cam.k)) * s)
       }
+      clampCam(cam)
 
       const vw = viewport.clientWidth
       const vh = viewport.clientHeight
       const { x, y, k } = cam
-      const tx = vw / 2 - x * k
-      const ty = vh / 2 - y * k
-      world.style.transform = `translate3d(${tx}px, ${ty}px, 0) scale(${k})`
-      world.style.setProperty('--node-scale', String(nodeScale(k)))
-      world.style.setProperty('--label-scale', String(labelScale(k)))
+      world.style.transform = `translate3d(${vw / 2 - x * k}px, ${vh / 2 - y * k}px, 0) scale(${k})`
 
-      // semantic zoom crossfade
-      const artistOp = smoothstep(ARTIST_IN_START, ARTIST_IN_END, k)
-      const periodOp = 1 - artistOp * 0.72
-      if (artistLayerRef.current) {
-        artistLayerRef.current.style.opacity = String(artistOp)
-        artistLayerRef.current.style.pointerEvents = artistOp > 0.45 ? 'auto' : 'none'
+      // semantic reveal of rooms + per-floor date rules
+      const reveal = smoothstep(ROOM_IN_START, ROOM_IN_END, k)
+      world.style.setProperty('--room-reveal', String(reveal))
+      // floor bands stay readable however far out the camera is
+      world.style.setProperty('--band-scale', String(Math.max(1, 0.55 / k)))
+      const live = reveal > 0.5
+      if (live !== roomsLive) {
+        roomsLive = live
+        world.classList.toggle('rooms-live', live)
       }
-      if (periodLayerRef.current) periodLayerRef.current.style.opacity = String(periodOp)
-      if (linesRef.current) linesRef.current.style.opacity = String(artistOp * 0.55)
 
-      // year axis — the time axis is non-linear, so ticks are placed with a
-      // variable step: at each position the step comes from the local px/year
-      // density, keeping ~90px spacing everywhere (like a log-scale axis)
-      const axis = axisRef.current
-      if (axis) {
-        const STEPS = [5, 10, 25, 50, 100, 250, 500]
-        const yearR = Math.min(xToYear((vw - tx) / k), 2100)
-        let year = Math.max(xToYear(-tx / k), 1000)
-        const pool = ensureTicks(60)
-        let i = 0
-        let guard = 0
-        while (year <= yearR && i < pool.length && guard++ < 200) {
-          const density = pxPerYear(Math.max(year, 1160)) * k
-          const step = STEPS.find((s) => s * density >= 90) ?? 500
-          const snapped = Math.ceil(year / step) * step
-          if (snapped > yearR) break
-          const el = pool[i++]
-          const sx = yearToX(snapped) * k + tx
-          el.style.transform = `translateX(${sx}px)`
-          el.style.opacity = '1'
-          const label = el.querySelector('label')!
-          if (label.textContent !== String(snapped)) label.textContent = String(snapped)
-          // advance minimally — the next tick's step is chosen from the local
-          // density just past this tick, so spacing adapts along the axis
-          year = snapped + 1
-        }
-        for (; i < pool.length; i++) pool[i].style.opacity = '0'
+      // "you are here": the floor nearest the viewport centre once zoomed in
+      let here = -1
+      if (k >= ROOM_IN_START) {
+        const idx = Math.round((worldH - y - SLAB_H / 2) / (SLAB_H + GAP))
+        here = clamp(idx, 0, floors.length - 1)
+      }
+      if (here !== hereRef.current) {
+        hereRef.current = here
+        slabRefs.current.forEach((el, i) => el?.classList.toggle('is-here', i === here))
+        railRefs.current.forEach((el, i) => el?.classList.toggle('is-here', i === here))
       }
     }
     raf = requestAnimationFrame(frame)
 
-    // initial fit
     const start = fitAll()
-    camRef.current = { ...start, k: start.k * 0.8 }
+    camRef.current = { ...start, k: start.k * 0.82 }
     targetRef.current = { ...start }
 
-    return () => {
-      cancelAnimationFrame(raf)
-      // remove imperative tick elements (StrictMode remounts would orphan them)
-      for (const el of tickPool) el.remove()
-      tickPool.length = 0
-    }
+    return () => cancelAnimationFrame(raf)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // input handlers ------------------------------------------------------------
+  // ---------------------------------------------------------- input ---------
   useEffect(() => {
     const viewport = viewportRef.current!
 
@@ -262,21 +242,17 @@ export default function Timeline() {
       const rect = viewport.getBoundingClientRect()
       const sx = e.clientX - rect.left
       const sy = e.clientY - rect.top
-      const vw = rect.width
-      const vh = rect.height
       const k0 = target.k
       const k1 = clamp(k0 * Math.exp(-e.deltaY * 0.0016), K_MIN, K_MAX)
-      // keep the world point under the cursor stationary
-      const wx = target.x + (sx - vw / 2) / k0
-      const wy = target.y + (sy - vh / 2) / k0
-      target.x = wx - (sx - vw / 2) / k1
-      target.y = wy - (sy - vh / 2) / k1
+      const wx = target.x + (sx - rect.width / 2) / k0
+      const wy = target.y + (sy - rect.height / 2) / k0
+      target.x = wx - (sx - rect.width / 2) / k1
+      target.y = wy - (sy - rect.height / 2) / k1
       target.k = k1
     }
 
-    // Multi-pointer input: mouse/touch drag pans (after a small threshold so
-    // node clicks aren't swallowed by capture); two touches pinch-zoom about
-    // the moving midpoint.
+    // Multi-pointer input: drag pans (after a threshold so room/band clicks
+    // survive), two touches pinch-zoom about the moving midpoint.
     const pts = new Map<number, { x: number; y: number }>()
     let mode: 'idle' | 'pending' | 'drag' | 'pinch' = 'idle'
     let lastX = 0
@@ -292,7 +268,7 @@ export default function Timeline() {
         try {
           viewport.setPointerCapture(id)
         } catch {
-          /* pointer already gone */
+          /* synthetic pointer */
         }
       }
       viewport.classList.add('dragging')
@@ -323,15 +299,12 @@ export default function Timeline() {
         const my = (a.y + b.y) / 2
         const k0 = target.k
         const k1 = clamp((k0 * d) / pinchPrev.d, K_MIN, K_MAX)
-        // pin the world point that was under the previous midpoint to the new one
         const wx = target.x + (pinchPrev.mx - rect.left - rect.width / 2) / k0
         const wy = target.y + (pinchPrev.my - rect.top - rect.height / 2) / k0
         target.x = wx - (mx - rect.left - rect.width / 2) / k1
         target.y = wy - (my - rect.top - rect.height / 2) / k1
         target.k = k1
-        cam.x = target.x
-        cam.y = target.y
-        cam.k = k1 // 1:1 with the fingers, no smoothing lag
+        Object.assign(cam, target)
         pinchPrev = { d, mx, my }
         return
       }
@@ -345,19 +318,17 @@ export default function Timeline() {
         try {
           viewport.setPointerCapture(e.pointerId)
         } catch {
-          /* pointer already gone */
+          /* synthetic pointer */
         }
         viewport.classList.add('dragging')
       }
       flightRef.current = null
-      const dx = dxs / cam.k
-      const dy = dys / cam.k
       lastX = e.clientX
       lastY = e.clientY
-      target.x -= dx
-      target.y -= dy
-      cam.x -= dx
-      cam.y -= dy
+      target.x -= dxs / cam.k
+      target.y -= dys / cam.k
+      cam.x -= dxs / cam.k
+      cam.y -= dys / cam.k
     }
     const onPointerUp = (e: PointerEvent) => {
       if (!pts.delete(e.pointerId)) return
@@ -372,7 +343,6 @@ export default function Timeline() {
           return
         }
         if (pts.size === 1) {
-          // one finger lifted: continue as a pan with the remaining finger
           const [p] = [...pts.values()]
           mode = 'drag'
           lastX = p.x
@@ -400,7 +370,7 @@ export default function Timeline() {
     }
   }, [])
 
-  // fly-to requests from the filter bar / cards --------------------------------
+  // ------------------------------------------------- filter fly-to requests -
   useEffect(() => {
     if (!flyReq) return
     if (flyReq.kind === 'home') {
@@ -408,124 +378,98 @@ export default function Timeline() {
       return
     }
     if (flyReq.kind === 'period') {
-      const pl = layout.find((l) => l.period.id === flyReq.id)
-      if (pl) flyTo({ x: pl.centroid.x, y: pl.centroid.y, k: periodZoom(pl) }, 1100)
+      const f = floors.find((fl) => fl.period.id === flyReq.id)
+      if (f) flyToFloor(f, 1100)
       return
     }
-    const pos = layout.flatMap((l) => l.artists).find((a) => a.artist.id === flyReq.id)
-    if (pos) flyTo({ x: pos.x, y: pos.y, k: 3.9 }, 1000)
+    for (const f of floors) {
+      const room = f.rooms.find((r) => r.artist.id === flyReq.id)
+      if (room) {
+        flyTo({ x: room.x + ROOM_W / 2, y: f.y + room.y + ROOM_H / 2, k: Math.max(floorZoom(), 1.15) }, 1000)
+        return
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flyReq])
 
-  const onArtistClick = (a: ArtistPos) => {
-    flyTo({ x: a.x, y: a.y, k: Math.max(camRef.current.k, 3.9) }, 850)
-    window.setTimeout(() => openCard(a.artist.id), 700)
-  }
-
-  const onPeriodClick = (pl: PeriodLayout) => {
-    flyTo({ x: pl.centroid.x, y: pl.centroid.y, k: periodZoom(pl) }, 1100)
+  const onRoomClick = (f: FloorLayout, room: RoomPos) => {
+    flyTo({ x: room.x + ROOM_W / 2, y: f.y + room.y + ROOM_H / 2, k: Math.max(camRef.current.k, 1.15) }, 700)
+    window.setTimeout(() => openCard(room.artist.id), 480)
   }
 
   const dimmed = (periodId: string) => (filterPeriodId != null && periodId !== filterPeriodId ? ' is-dim' : '')
 
   return (
-    <div ref={viewportRef} className="timeline" role="application" aria-label="Art history timeline">
-      <div ref={worldRef} className="tl-world">
-        <svg
-          className="tl-svg"
-          style={{ left: svgX0, top: svgY0, width: svgW, height: svgH }}
-          viewBox={`0 0 ${svgW} ${svgH}`}
-        >
-          {stars.map((s, i) => (
-            <circle key={i} cx={s.x - svgX0} cy={s.y - svgY0} r={s.r} fill="#cdd4e8" opacity={s.o} />
-          ))}
-          <g ref={linesRef} style={{ opacity: 0 }}>
-            {layout.map((pl) => {
-              const pts = [...pl.artists].sort((a, b) => a.x - b.x)
-              return (
-                <polyline
-                  key={pl.period.id}
-                  className={`tl-line${dimmed(pl.period.id)}`}
-                  points={pts.map((p) => `${p.x - svgX0},${p.y - svgY0}`).join(' ')}
-                  fill="none"
-                  stroke={pl.period.color}
-                  strokeWidth={1.2}
-                  strokeDasharray="1 7"
-                  strokeLinecap="round"
-                  vectorEffect="non-scaling-stroke"
-                />
-              )
-            })}
-          </g>
-        </svg>
-
-        {/* period halos: world-scaled soft regions */}
-        {layout.map((pl) => (
+    <div ref={viewportRef} className="floorplan" role="application" aria-label="Museum floor plan timeline">
+      <div ref={worldRef} className="fp-world" style={{ width: SLAB_W }}>
+        {floors.map((f) => (
           <div
-            key={`halo-${pl.period.id}`}
-            className={`tl-halo${dimmed(pl.period.id)}`}
-            style={{
-              left: pl.x0 - 60,
-              top: -430,
-              width: pl.x1 - pl.x0 + 120,
-              height: 860,
-              background: `radial-gradient(ellipse closest-side, ${pl.period.color}2e, ${pl.period.color}14 55%, transparent 72%)`,
+            key={f.period.id}
+            ref={(el) => (slabRefs.current[f.index] = el)}
+            className={`fp-floor${dimmed(f.period.id)}`}
+            style={{ top: f.y, height: SLAB_H, ['--pc' as string]: f.period.color }}
+            onClick={(e) => {
+              if ((e.target as HTMLElement).closest('.fp-room')) return
+              flyToFloor(f)
             }}
-          />
-        ))}
-
-        {/* period constellation labels */}
-        <div ref={periodLayerRef}>
-          {layout.map((pl, pi) => (
-            <div
-              key={pl.period.id}
-              className={`tl-period${dimmed(pl.period.id)}`}
-              style={{ left: pl.cx, top: PERIOD_ROWS[pi % PERIOD_ROWS.length] }}
-            >
-              <button className="tl-period-inner" onClick={() => onPeriodClick(pl)}>
-                <span className="tl-period-star" style={{ background: pl.period.color, boxShadow: `0 0 18px 4px ${pl.period.color}88` }} />
-                <span className="tl-period-name">{pl.period.name}</span>
-                <span className="tl-period-dates">
-                  {pl.period.start} – {pl.period.end}
+          >
+            <div className="fp-band" style={{ height: BAND_H }}>
+              <div className="fp-band-inner">
+                <span className="fp-fnum">{roman(f.index + 1)}</span>
+                <span className="fp-fname">{f.period.name}</span>
+                <span className="fp-fyears">
+                  {f.period.start} – {f.period.end}
                 </span>
-              </button>
-            </div>
-          ))}
-        </div>
-
-        {/* artist nodes */}
-        <div ref={artistLayerRef} style={{ opacity: 0, pointerEvents: 'none' }}>
-          {layout.flatMap((pl) =>
-            pl.artists.map((a) => (
-              <div key={a.artist.id} className={`tl-artist${dimmed(pl.period.id)}`} style={{ left: a.x, top: a.y }}>
-                <button
-                  className="tl-artist-inner"
-                  onClick={() => onArtistClick(a)}
-                  aria-label={`Open card for ${a.artist.name}`}
-                >
-                  <span className="tl-artist-ring" style={{ borderColor: pl.period.color, boxShadow: `0 0 22px ${pl.period.color}55` }}>
-                    {a.artist.portrait ? (
-                      <img src={asset(a.artist.portrait)} alt="" draggable={false} />
-                    ) : (
-                      <span className="tl-artist-initial">{a.artist.name[0]}</span>
-                    )}
-                  </span>
-                  <span className="tl-artist-name">{a.artist.name}</span>
-                  <span className="tl-artist-dates">
-                    {a.artist.birthYear ?? '—'}–{a.artist.deathYear ?? '—'}
-                  </span>
-                </button>
               </div>
-            )),
-          )}
-        </div>
+              <span className="fp-here-chip">◉ You are here</span>
+            </div>
+
+            {f.rooms.map((room) => (
+              <button
+                key={room.artist.id}
+                className="fp-room"
+                style={{ left: room.x, top: room.y, width: ROOM_W, height: ROOM_H }}
+                onClick={() => onRoomClick(f, room)}
+                aria-label={`Open card for ${room.artist.name}`}
+              >
+                <span className="fp-rnum">{room.number}</span>
+                <span className="fp-rname">{room.artist.name}</span>
+                <span className="fp-rdates">{room.years}</span>
+              </button>
+            ))}
+
+            <div className="fp-rule">
+              {f.ticks.map((tk) => (
+                <span key={tk.year} className="fp-tick" style={{ left: tk.x }}>
+                  {tk.year}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
 
-      <div ref={axisRef} className="tl-axis" />
-      <div className="tl-hint">
+      {/* screen-fixed floor index — the wayfinding rail */}
+      <nav ref={railRef} className="fp-rail" aria-label="Floor index">
+        <div className="fp-rail-title">Floors</div>
+        {[...floors].reverse().map((f) => (
+          <button
+            key={f.period.id}
+            ref={(el) => (railRefs.current[f.index] = el)}
+            className={`fp-rail-item${dimmed(f.period.id)}`}
+            onClick={() => flyToFloor(f)}
+          >
+            <b>{roman(f.index + 1)}</b>
+            <i style={{ background: f.period.color }} />
+            <span>{f.period.name}</span>
+          </button>
+        ))}
+      </nav>
+
+      <div className="fp-hint">
         {isTouchDevice
-          ? 'Pinch to zoom · drag to pan · tap a period to open it'
-          : 'Scroll to zoom · drag to pan · click a period to open it'}
+          ? 'Pinch to zoom · drag to pan · tap a floor to open it'
+          : 'Scroll to zoom · drag to pan · click a floor to open it'}
       </div>
     </div>
   )

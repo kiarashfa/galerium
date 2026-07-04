@@ -1,5 +1,10 @@
 node_modules/
 dist/
-*.tsbuildinfo
+scripts/e2e-inspect.png
+scripts/fetch-report.txt
 .env
 .env.local
+.claude/
+*.tsbuildinfo
+scripts/shot-*.png
+scripts/e2e-restricted.png
