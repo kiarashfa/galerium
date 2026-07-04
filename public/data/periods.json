@@ -1,0 +1,137 @@
+[
+  {
+    "id": "medieval-gothic",
+    "name": "Medieval & Gothic",
+    "start": 1200,
+    "end": 1400,
+    "color": "#8c6d46",
+    "blurb": "Gothic art was a style of medieval art that developed in Northern France out of Romanesque art in the 12th century, led by the concurrent development of Gothic architecture. It spread to all of Western Europe, and much of Northern, Southern and Central Europe, never quite effacing more classical styles in Italy. In the late 14th century, the sophisticated court style of International Gothic developed, which continued to evolve until the late 15th century. In many areas, especially Germany, Late Gothic art continued well into the 16th century, before being subsumed into Renaissance art. Primary media in the Gothic period included sculpture, panel painting, stained glass, fresco and illuminated manuscripts. The easily recognisable shifts in architecture from Romanesque to Gothic, and Gothic to Renaissance styles, are typically used to define the periods in art in all media, although in many ways figurative art developed at a different pace.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Gothic_art"
+  },
+  {
+    "id": "renaissance",
+    "name": "Renaissance",
+    "start": 1400,
+    "end": 1600,
+    "color": "#c9a227",
+    "blurb": "Renaissance art (1350 – 1620) is the painting, sculpture, and decorative arts of the period of European history known as the Renaissance, which emerged as a distinct style in Italy in about AD 1400, in parallel with developments which occurred in philosophy, literature, music, science, and technology. Renaissance art took as its foundation the art of Classical antiquity, perceived as the noblest of ancient traditions, but transformed that tradition by absorbing recent developments in the art of Northern Europe and by applying contemporary scientific knowledge. Along with Renaissance humanist philosophy, it spread throughout Europe, affecting both artists and their patrons with the development of new techniques and new artistic sensibilities. For art historians, Renaissance art marks the transition of Europe from the medieval period to the Early Modern age.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Renaissance_art"
+  },
+  {
+    "id": "baroque",
+    "name": "Baroque",
+    "start": 1600,
+    "end": 1750,
+    "color": "#a4443c",
+    "blurb": "Baroque painting is the painting associated with the Baroque cultural movement. The movement is often identified with Absolutism, the Counter Reformation and Catholic Revival, but the existence of important Baroque art and architecture in non-absolutist and Protestant states throughout Western Europe underscores its widespread popularity.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Baroque_painting"
+  },
+  {
+    "id": "rococo",
+    "name": "Rococo",
+    "start": 1720,
+    "end": 1780,
+    "color": "#d9a0b4",
+    "blurb": "Rococo, less commonly Roccoco (  rə-KOH-koh, US also  ROH-kə-KOH; French: [ʁɔkɔko] , also [ʁokoko]), is a Western style of architecture, art, and decoration that emerged in France in the 1730s as a reaction against the Louis XIV style. It is characterized by extensive ornamentation, fluid curves, asymmetry, and a smaller scale designed to foster intimacy. It employs rocaille (shell- and pebble-like motifs) and often blends white and pastel colours with gilding and sculpted moulding, using trompe-l'œil frescoes to create spatial illusion. In the visual arts, prevalent themes are aristocratic leisure and the pastoral, depicted in stage-like settings. It is often regarded as the final expression of the Baroque movement and is sometimes called Late Baroque.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Rococo"
+  },
+  {
+    "id": "neoclassicism",
+    "name": "Neoclassicism",
+    "start": 1770,
+    "end": 1830,
+    "color": "#aab3bd",
+    "blurb": "Neoclassicism, also spelled Neo-classicism, emerged as a Western cultural movement in the decorative and visual arts, literature, theatre, music, and architecture that drew inspiration from the art and culture of classical antiquity. Neoclassicism was born in Rome, largely due to the writings of Johann Joachim Winckelmann during the rediscovery of Pompeii and Herculaneum. Its popularity expanded throughout Europe as a generation of European art students finished their Grand Tour and returned from Italy to their home countries with newly rediscovered Greco-Roman ideals. The main Neoclassical movement emerged from the 18th-century Age of Enlightenment, and reached its peak in the early-to-mid-19th century, eventually competing with Romanticism. In architecture, the style endured throughout the 19th, 20th, and into the 21st century.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Neoclassicism"
+  },
+  {
+    "id": "romanticism",
+    "name": "Romanticism",
+    "start": 1800,
+    "end": 1850,
+    "color": "#7e3b52",
+    "blurb": "Romanticism (also known as the Romantic movement or Romantic era) was an artistic and intellectual movement that originated in Europe towards the end of the 18th century. The purpose of the  movement was to advocate for the importance of subjectivity, imagination, and appreciation of nature in society and culture in response to the Age of Enlightenment and the Industrial Revolution.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Romanticism"
+  },
+  {
+    "id": "realism",
+    "name": "Realism",
+    "start": 1848,
+    "end": 1880,
+    "color": "#6b7f57",
+    "blurb": "Realism was an artistic movement that emerged in France in the 1840s. Realists rejected Romanticism, which had dominated French literature and art since the early 19th century. The artist Gustave Courbet, the original proponent of Realism, sought to portray real and typical contemporary people and situations with truth and accuracy, not avoiding unpleasant or sordid aspects of life. Realism revolted against the exotic subject matter, exaggerated emotionalism, and the drama of the Romantic movement, often focusing on unidealized subjects and events that were previously rejected in artwork. Realist works depicted people of all social classes in situations that arise in ordinary life, and often reflected the changes brought by the Industrial and Commercial Revolutions. Realism was primarily concerned with how things appeared to the eye, rather than containing ideal representations of the world. Realism spread to other countries, maintaining similar principles with some differences arising from the artistic background of the individual countries and artists.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Realism_(art_movement)"
+  },
+  {
+    "id": "impressionism",
+    "name": "Impressionism",
+    "start": 1860,
+    "end": 1886,
+    "color": "#5b8bd0",
+    "blurb": "Impressionism was a 19th-century art movement characterised by visible brush strokes, open composition, emphasis on accurate depiction of light in its changing qualities (often accentuating the effects of the passage of time), ordinary subject matter, unusual visual angles, and inclusion of movement as a crucial element of human perception and experience. Impressionism originated with a group of Paris-based artists whose independent exhibitions brought them to prominence during the 1870s and 1880s.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Impressionism"
+  },
+  {
+    "id": "post-impressionism",
+    "name": "Post-Impressionism",
+    "start": 1886,
+    "end": 1905,
+    "color": "#d0763b",
+    "blurb": "Post-Impressionism (also spelled Postimpressionism) was a predominantly French art movement which developed roughly between 1886 and 1905, from the last Impressionist exhibition to the birth of Fauvism. Post-Impressionism emerged as a reaction against Impressionists' concern for the naturalistic depiction of light and colour. Its broad emphasis on abstract qualities or symbolic content means Post-Impressionism encompasses Les Nabis, Neo-Impressionism, Symbolism, Cloisonnism, the Pont-Aven School, and Synthetism, along with some later Impressionists' work. The movement's principal artists were Paul Cézanne (known as the father of Post-Impressionism), Paul Gauguin, Vincent van Gogh and Georges Seurat.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Post-Impressionism"
+  },
+  {
+    "id": "expressionism",
+    "name": "Expressionism",
+    "start": 1905,
+    "end": 1933,
+    "color": "#d94f30",
+    "blurb": "Expressionism is a modernist movement, initially in poetry and painting, originating in Northern Europe around the beginning of the 20th century. Its typical trait is to present the world solely from a subjective perspective, distorting it radically for emotional effect in order to evoke moods or ideas. Expressionist artists have sought to express the meaning of emotional experience rather than physical reality.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Expressionism"
+  },
+  {
+    "id": "cubism",
+    "name": "Cubism",
+    "start": 1907,
+    "end": 1922,
+    "color": "#7b6c8f",
+    "blurb": "Cubism is an early-20th-century avant-garde art movement which began in Paris. It revolutionized painting and the visual arts, and sparked artistic innovations in music, ballet, literature, and architecture.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Cubism"
+  },
+  {
+    "id": "surrealism",
+    "name": "Surrealism",
+    "start": 1924,
+    "end": 1955,
+    "color": "#3fa8a0",
+    "blurb": "Surrealism is an art and cultural movement that developed in Europe in the aftermath of World War I in which artists aimed to allow the unconscious mind to express itself, often resulting in the depiction of illogical or dreamlike scenes and ideas. Its intention was, according to leader André Breton, to \"resolve the previously contradictory conditions of dream and reality into an absolute reality, a super-reality\", or surreality. It produced works of painting, writing, photography, theatre, filmmaking, music, comedy and other media as well.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Surrealism"
+  },
+  {
+    "id": "abstract-expressionism",
+    "name": "Abstract Expressionism",
+    "start": 1943,
+    "end": 1965,
+    "color": "#c24b6e",
+    "blurb": "Abstract expressionism in the United States emerged as a distinct art movement in the aftermath of World War II and gained mainstream acceptance in the 1950s, a shift from the American social realism of the 1930s influenced by the Great Depression and Mexican muralists. The term was first applied to American art in 1946 by the art critic Robert Coates. Key figures in the New York School, which was the center of this movement, included such artists as Arshile Gorky, Jackson Pollock, Franz Kline, Mark Rothko, Norman Lewis, Willem de Kooning, Adolph Gottlieb, Clyfford Still, Robert Motherwell, Theodoros Stamos, Jack Tworkov, and Lee Krasner among others.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Abstract_expressionism"
+  },
+  {
+    "id": "pop-art",
+    "name": "Pop Art",
+    "start": 1955,
+    "end": 1975,
+    "color": "#38b6e8",
+    "blurb": "Pop art is an art movement that emerged in the United Kingdom and the United States during the mid-to late 1950s. The movement presented a challenge to traditions of fine art by including imagery from popular and mass culture—including advertising, comic strips, product packaging, celebrities, and everyday consumer goods—into painting, sculpture, and printmaking. By elevating the banal, the kitsch, and the mass-produced to the status of high art, pop art blurred the boundaries between high and low culture. It is also associated with the artists' use of mechanical means of reproduction or rendering techniques. In pop art, material is sometimes visually removed from its known context, isolated, or combined with unrelated material.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Pop_art"
+  },
+  {
+    "id": "contemporary",
+    "name": "Contemporary",
+    "start": 1975,
+    "end": 2020,
+    "color": "#9ba53d",
+    "blurb": "Contemporary art is generally art created from the 1970s onwards. Contemporary artists work in a globally influenced, culturally diverse, and technologically advancing world. Their art is a dynamic combination of materials, methods, concepts, and subjects that continue the challenging of boundaries that was already well underway in the 20th century. Diverse and eclectic, contemporary art as a whole is distinguished by the very lack of a uniform, organising principle, ideology, or \"-ism\". Contemporary art is part of a cultural dialogue that concerns larger contextual frameworks such as personal and cultural identity, family, community, and nationality.",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Contemporary_art"
+  }
+]
