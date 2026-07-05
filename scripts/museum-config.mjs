@@ -132,6 +132,7 @@ export const artists = [
   // ---- Medieval & Gothic ----
   {
     id: 'giotto',
+    tier: 'medium',
     periodId: 'medieval-gothic',
     wikiTitle: 'Giotto',
     paintings: [
@@ -149,6 +150,7 @@ export const artists = [
   },
   {
     id: 'cimabue',
+    tier: 'medium',
     periodId: 'medieval-gothic',
     wikiTitle: 'Cimabue',
     paintings: [
@@ -167,6 +169,7 @@ export const artists = [
   },
   {
     id: 'duccio',
+    tier: 'small',
     periodId: 'medieval-gothic',
     wikiTitle: 'Duccio',
     paintings: [
@@ -181,6 +184,7 @@ export const artists = [
 
   {
     id: 'fra-angelico',
+    tier: 'large',
     periodId: 'medieval-gothic',
     wikiTitle: 'Fra Angelico',
     paintings: [
@@ -208,6 +212,7 @@ export const artists = [
   },
   {
     id: 'simone-martini',
+    tier: 'medium',
     periodId: 'medieval-gothic',
     wikiTitle: 'Simone Martini',
     paintings: [
@@ -225,6 +230,7 @@ export const artists = [
   // ---- Renaissance ----
   {
     id: 'leonardo-da-vinci',
+    tier: 'medium',
     periodId: 'renaissance',
     wikiTitle: 'Leonardo da Vinci',
     paintings: [
@@ -252,6 +258,7 @@ export const artists = [
   },
   {
     id: 'michelangelo',
+    tier: 'medium',
     periodId: 'renaissance',
     wikiTitle: 'Michelangelo',
     paintings: [
@@ -270,6 +277,7 @@ export const artists = [
   },
   {
     id: 'raphael',
+    tier: 'large',
     periodId: 'renaissance',
     wikiTitle: 'Raphael',
     paintings: [
@@ -297,6 +305,7 @@ export const artists = [
 
   {
     id: 'titian',
+    tier: 'large',
     periodId: 'renaissance',
     wikiTitle: 'Titian',
     paintings: [
@@ -324,6 +333,7 @@ export const artists = [
   },
   {
     id: 'sandro-botticelli',
+    tier: 'large',
     periodId: 'renaissance',
     wikiTitle: 'Sandro Botticelli',
     paintings: [
@@ -351,6 +361,7 @@ export const artists = [
   },
   {
     id: 'jan-van-eyck',
+    tier: 'large',
     periodId: 'renaissance',
     wikiTitle: 'Jan van Eyck',
     paintings: [
@@ -380,6 +391,7 @@ export const artists = [
   // ---- Baroque ----
   {
     id: 'caravaggio',
+    tier: 'large',
     periodId: 'baroque',
     wikiTitle: 'Caravaggio',
     paintings: [
@@ -407,6 +419,7 @@ export const artists = [
   },
   {
     id: 'rembrandt',
+    tier: 'large',
     periodId: 'baroque',
     wikiTitle: 'Rembrandt',
     paintings: [
@@ -434,6 +447,7 @@ export const artists = [
   },
   {
     id: 'johannes-vermeer',
+    tier: 'large',
     periodId: 'baroque',
     wikiTitle: 'Johannes Vermeer',
     paintings: [
@@ -461,6 +475,7 @@ export const artists = [
 
   {
     id: 'peter-paul-rubens',
+    tier: 'large',
     periodId: 'baroque',
     wikiTitle: 'Peter Paul Rubens',
     paintings: [
@@ -488,6 +503,7 @@ export const artists = [
   },
   {
     id: 'diego-velazquez',
+    tier: 'large',
     periodId: 'baroque',
     wikiTitle: 'Diego Velázquez',
     paintings: [
@@ -512,6 +528,7 @@ export const artists = [
   },
   {
     id: 'artemisia-gentileschi',
+    tier: 'large',
     periodId: 'baroque',
     wikiTitle: 'Artemisia Gentileschi',
     paintings: [
@@ -541,6 +558,7 @@ export const artists = [
   // ---- Rococo ----
   {
     id: 'antoine-watteau',
+    tier: 'large',
     periodId: 'rococo',
     wikiTitle: 'Antoine Watteau',
     paintings: [
@@ -568,6 +586,7 @@ export const artists = [
   },
   {
     id: 'francois-boucher',
+    tier: 'large',
     periodId: 'rococo',
     wikiTitle: 'François Boucher',
     paintings: [
@@ -595,6 +614,7 @@ export const artists = [
   },
   {
     id: 'jean-honore-fragonard',
+    tier: 'large',
     periodId: 'rococo',
     wikiTitle: 'Jean-Honoré Fragonard',
     paintings: [
@@ -624,6 +644,7 @@ export const artists = [
 
   {
     id: 'jean-baptiste-simeon-chardin',
+    tier: 'medium',
     periodId: 'rococo',
     wikiTitle: 'Jean-Baptiste-Siméon Chardin',
     paintings: [
@@ -644,6 +665,7 @@ export const artists = [
   // ---- Neoclassicism ----
   {
     id: 'jacques-louis-david',
+    tier: 'large',
     periodId: 'neoclassicism',
     wikiTitle: 'Jacques-Louis David',
     paintings: [
@@ -671,6 +693,7 @@ export const artists = [
   },
   {
     id: 'jean-auguste-dominique-ingres',
+    tier: 'large',
     periodId: 'neoclassicism',
     wikiTitle: 'Jean-Auguste-Dominique Ingres',
     paintings: [
@@ -698,6 +721,7 @@ export const artists = [
   },
   {
     id: 'elisabeth-vigee-le-brun',
+    tier: 'large',
     periodId: 'neoclassicism',
     wikiTitle: 'Élisabeth Vigée Le Brun',
     paintings: [
@@ -726,6 +750,7 @@ export const artists = [
 
   {
     id: 'honore-daumier',
+    tier: 'small',
     periodId: 'realism',
     wikiTitle: 'Honoré Daumier',
     paintings: [
@@ -743,6 +768,7 @@ export const artists = [
   // ---- Impressionism ----
   {
     id: 'claude-monet',
+    tier: 'large',
     periodId: 'impressionism',
     wikiTitle: 'Claude Monet',
     paintings: [
@@ -770,6 +796,7 @@ export const artists = [
   },
   {
     id: 'pierre-auguste-renoir',
+    tier: 'large',
     periodId: 'impressionism',
     wikiTitle: 'Pierre-Auguste Renoir',
     paintings: [
@@ -797,6 +824,7 @@ export const artists = [
   },
   {
     id: 'edgar-degas',
+    tier: 'large',
     periodId: 'impressionism',
     wikiTitle: 'Edgar Degas',
     paintings: [
@@ -827,6 +855,7 @@ export const artists = [
   // the period's depth instead.
   {
     id: 'benjamin-west',
+    tier: 'large',
     periodId: 'neoclassicism',
     wikiTitle: 'Benjamin West',
     paintings: [
@@ -854,6 +883,7 @@ export const artists = [
   },
   {
     id: 'angelica-kauffman',
+    tier: 'large',
     periodId: 'neoclassicism',
     wikiTitle: 'Angelica Kauffman',
     portraitFile: 'Angelica Kauffmann, Self-Portrait as the Muse of Painting, 1787.jpg',
@@ -884,6 +914,7 @@ export const artists = [
   // ---- Romanticism ----
   {
     id: 'francisco-goya',
+    tier: 'large',
     periodId: 'romanticism',
     wikiTitle: 'Francisco Goya',
     paintings: [
@@ -911,6 +942,7 @@ export const artists = [
   },
   {
     id: 'caspar-david-friedrich',
+    tier: 'large',
     periodId: 'romanticism',
     wikiTitle: 'Caspar David Friedrich',
     paintings: [
@@ -938,6 +970,7 @@ export const artists = [
   },
   {
     id: 'eugene-delacroix',
+    tier: 'large',
     periodId: 'romanticism',
     wikiTitle: 'Eugène Delacroix',
     paintings: [
@@ -965,6 +998,7 @@ export const artists = [
   },
   {
     id: 'jmw-turner',
+    tier: 'large',
     periodId: 'romanticism',
     wikiTitle: 'J. M. W. Turner',
     paintings: [
@@ -993,6 +1027,7 @@ export const artists = [
 
   {
     id: 'theodore-gericault',
+    tier: 'medium',
     periodId: 'romanticism',
     wikiTitle: 'Théodore Géricault',
     paintings: [
@@ -1010,6 +1045,7 @@ export const artists = [
   },
   {
     id: 'william-blake',
+    tier: 'small',
     periodId: 'romanticism',
     wikiTitle: 'William Blake',
     paintings: [
@@ -1024,6 +1060,7 @@ export const artists = [
   // ---- Realism ----
   {
     id: 'gustave-courbet',
+    tier: 'large',
     periodId: 'realism',
     wikiTitle: 'Gustave Courbet',
     paintings: [
@@ -1051,6 +1088,7 @@ export const artists = [
   },
   {
     id: 'jean-francois-millet',
+    tier: 'medium',
     periodId: 'realism',
     wikiTitle: 'Jean-François Millet',
     paintings: [
@@ -1071,6 +1109,7 @@ export const artists = [
   },
   {
     id: 'edouard-manet',
+    tier: 'large',
     periodId: 'realism',
     wikiTitle: 'Édouard Manet',
     paintings: [
@@ -1099,6 +1138,7 @@ export const artists = [
 
   {
     id: 'berthe-morisot',
+    tier: 'medium',
     periodId: 'impressionism',
     wikiTitle: 'Berthe Morisot',
     paintings: [
@@ -1117,6 +1157,7 @@ export const artists = [
   },
   {
     id: 'mary-cassatt',
+    tier: 'large',
     periodId: 'impressionism',
     wikiTitle: 'Mary Cassatt',
     paintings: [
@@ -1140,6 +1181,7 @@ export const artists = [
   },
   {
     id: 'alfred-sisley',
+    tier: 'large',
     periodId: 'impressionism',
     wikiTitle: 'Alfred Sisley',
     paintings: [
@@ -1169,6 +1211,7 @@ export const artists = [
   // ---- Post-Impressionism ----
   {
     id: 'vincent-van-gogh',
+    tier: 'large',
     periodId: 'post-impressionism',
     wikiTitle: 'Vincent van Gogh',
     paintings: [
@@ -1196,6 +1239,7 @@ export const artists = [
   },
   {
     id: 'paul-cezanne',
+    tier: 'large',
     periodId: 'post-impressionism',
     wikiTitle: 'Paul Cézanne',
     paintings: [
@@ -1223,6 +1267,7 @@ export const artists = [
   },
   {
     id: 'paul-gauguin',
+    tier: 'large',
     periodId: 'post-impressionism',
     wikiTitle: 'Paul Gauguin',
     paintings: [
@@ -1251,6 +1296,7 @@ export const artists = [
 
   {
     id: 'georges-seurat',
+    tier: 'medium',
     periodId: 'post-impressionism',
     wikiTitle: 'Georges Seurat',
     paintings: [
@@ -1267,6 +1313,7 @@ export const artists = [
   },
   {
     id: 'henri-de-toulouse-lautrec',
+    tier: 'medium',
     periodId: 'post-impressionism',
     wikiTitle: 'Henri de Toulouse-Lautrec',
     paintings: [
@@ -1290,6 +1337,7 @@ export const artists = [
   // ---- Expressionism (all public domain — died before 1956) ----
   {
     id: 'edvard-munch',
+    tier: 'large',
     periodId: 'expressionism',
     wikiTitle: 'Edvard Munch',
     paintings: [
@@ -1317,6 +1365,7 @@ export const artists = [
   },
   {
     id: 'ernst-ludwig-kirchner',
+    tier: 'medium',
     periodId: 'expressionism',
     wikiTitle: 'Ernst Ludwig Kirchner',
     paintings: [
@@ -1334,6 +1383,7 @@ export const artists = [
   },
   {
     id: 'franz-marc',
+    tier: 'medium',
     periodId: 'expressionism',
     wikiTitle: 'Franz Marc',
     paintings: [
@@ -1353,6 +1403,7 @@ export const artists = [
   },
   {
     id: 'egon-schiele',
+    tier: 'small',
     periodId: 'expressionism',
     wikiTitle: 'Egon Schiele',
     paintings: [
@@ -1368,6 +1419,7 @@ export const artists = [
 
   {
     id: 'wassily-kandinsky',
+    tier: 'medium',
     periodId: 'expressionism',
     wikiTitle: 'Wassily Kandinsky',
     paintings: [
@@ -1389,6 +1441,7 @@ export const artists = [
   // ---- Surrealism (no major surrealist is PD — all flagged) ----
   {
     id: 'salvador-dali',
+    tier: 'large',
     periodId: 'surrealism',
     wikiTitle: 'Salvador Dalí',
     allowNonFree: true,
@@ -1417,6 +1470,7 @@ export const artists = [
   },
   {
     id: 'rene-magritte',
+    tier: 'large',
     periodId: 'surrealism',
     wikiTitle: 'René Magritte',
     allowNonFree: true,
@@ -1445,6 +1499,7 @@ export const artists = [
   },
   {
     id: 'max-ernst',
+    tier: 'medium',
     periodId: 'surrealism',
     wikiTitle: 'Max Ernst',
     allowNonFree: true,
@@ -1468,6 +1523,7 @@ export const artists = [
 
   {
     id: 'joan-miro',
+    tier: 'medium',
     periodId: 'surrealism',
     wikiTitle: 'Joan Miró',
     allowNonFree: true,
@@ -1493,6 +1549,7 @@ export const artists = [
   // hosting is spotty — only 3 documented painting articles exist; kept at 3.
   {
     id: 'yves-tanguy',
+    tier: 'small',
     periodId: 'surrealism',
     wikiTitle: 'Yves Tanguy',
     allowNonFree: true,
@@ -1506,6 +1563,7 @@ export const artists = [
   // ---- Cubism ----
   {
     id: 'juan-gris',
+    tier: 'medium',
     periodId: 'cubism',
     wikiTitle: 'Juan Gris',
     // Article lead image is an en.wiki-only Man Ray photo; use his Commons-hosted self-portrait.
@@ -1525,6 +1583,7 @@ export const artists = [
   },
   {
     id: 'robert-delaunay',
+    tier: 'medium',
     periodId: 'cubism',
     wikiTitle: 'Robert Delaunay',
     paintings: [
@@ -1542,6 +1601,7 @@ export const artists = [
   },
   {
     id: 'albert-gleizes',
+    tier: 'large',
     periodId: 'cubism',
     wikiTitle: 'Albert Gleizes',
     paintings: [
@@ -1569,6 +1629,7 @@ export const artists = [
   // Cubism retrofit: still under copyright — flagged for local personal use.
   {
     id: 'pablo-picasso',
+    tier: 'large',
     periodId: 'cubism',
     wikiTitle: 'Pablo Picasso',
     allowNonFree: true,
@@ -1597,6 +1658,7 @@ export const artists = [
   },
   {
     id: 'georges-braque',
+    tier: 'medium',
     periodId: 'cubism',
     wikiTitle: 'Georges Braque',
     allowNonFree: true,
@@ -1617,6 +1679,7 @@ export const artists = [
   // works are PD-US), fair-use fallback for the rest.
   {
     id: 'fernand-leger',
+    tier: 'small',
     periodId: 'cubism',
     wikiTitle: 'Fernand Léger',
     allowNonFree: true,
@@ -1633,6 +1696,7 @@ export const artists = [
   // ---- Abstract Expressionism (all under copyright — flagged) ----
   {
     id: 'jackson-pollock',
+    tier: 'small',
     periodId: 'abstract-expressionism',
     wikiTitle: 'Jackson Pollock',
     allowNonFree: true,
@@ -1650,6 +1714,7 @@ export const artists = [
   },
   {
     id: 'mark-rothko',
+    tier: 'medium',
     periodId: 'abstract-expressionism',
     wikiTitle: 'Mark Rothko',
     allowNonFree: true,
@@ -1674,6 +1739,7 @@ export const artists = [
   },
   {
     id: 'willem-de-kooning',
+    tier: 'small',
     periodId: 'abstract-expressionism',
     wikiTitle: 'Willem de Kooning',
     allowNonFree: true,
@@ -1690,6 +1756,7 @@ export const artists = [
   // ---- Pop Art (all under copyright — flagged) ----
   {
     id: 'andy-warhol',
+    tier: 'large',
     periodId: 'pop-art',
     wikiTitle: 'Andy Warhol',
     allowNonFree: true,
@@ -1718,6 +1785,7 @@ export const artists = [
   },
   {
     id: 'roy-lichtenstein',
+    tier: 'large',
     periodId: 'pop-art',
     wikiTitle: 'Roy Lichtenstein',
     allowNonFree: true,
@@ -1746,6 +1814,7 @@ export const artists = [
   },
   {
     id: 'jasper-johns',
+    tier: 'small',
     periodId: 'pop-art',
     wikiTitle: 'Jasper Johns',
     allowNonFree: true,
@@ -1762,6 +1831,7 @@ export const artists = [
   // ---- Contemporary (all under copyright — flagged) ----
   {
     id: 'jean-michel-basquiat',
+    tier: 'large',
     periodId: 'contemporary',
     wikiTitle: 'Jean-Michel Basquiat',
     allowNonFree: true,
@@ -1790,6 +1860,7 @@ export const artists = [
   },
   {
     id: 'david-hockney',
+    tier: 'medium',
     periodId: 'contemporary',
     wikiTitle: 'David Hockney',
     allowNonFree: true,
@@ -1810,6 +1881,7 @@ export const artists = [
   // nearly all his painting articles (1 of 7 survived), below the 4+ floor.
   {
     id: 'lucian-freud',
+    tier: 'small',
     periodId: 'contemporary',
     wikiTitle: 'Lucian Freud',
     allowNonFree: true,
@@ -1827,6 +1899,7 @@ export const artists = [
   // whatever sticks is kept, even a single work.
   {
     id: 'gerhard-richter',
+    tier: 'small',
     periodId: 'contemporary',
     wikiTitle: 'Gerhard Richter',
     allowNonFree: true,
@@ -1844,6 +1917,7 @@ export const artists = [
   // honest to his dates; selection favors his later triptychs plus the icons.
   {
     id: 'francis-bacon',
+    tier: 'large',
     periodId: 'contemporary',
     wikiTitle: 'Francis Bacon (artist)',
     allowNonFree: true,

@@ -1,4 +1,6 @@
-import type { Painting } from '../types'
+import type { Painting, RoomTier } from '../types'
+
+export type { RoomTier }
 
 export interface Placement {
   painting: Painting
@@ -25,18 +27,32 @@ export interface RoomSpec {
 export const EYE_HEIGHT = 1.7
 const HANG_HEIGHT = 1.62
 
-// Fixed room — a long museum wing. Deliberately NOT data-driven: the room must
-// stay a stable, memorable place as the collection grows (same rule as the
-// timeline's standardized rooms). Entrance door on the +z short wall, grand
-// artist placard on the -z short wall, paintings down the two long walls.
-export const ROOM_W = 10
-export const ROOM_D = 26
-export const ROOM_H = 4.3
+/** Three fixed room sizes replacing the old single 10×26 room. Same width,
+ *  height, materials, spacing, door and placard across all three — only the
+ *  length (depth) grows, so it reads as "the same museum, bigger wing." Sized so
+ *  each tier fits its whole bracket at readable STD_SPACING on the two long
+ *  walls (no painting compression, no entrance-wall hanging):
+ *    small  1–7  → 4 slots/wall (8 ≥ 7)
+ *    medium 8–14 → 7 slots/wall (14)
+ *    large  15–20→ 10 slots/wall (20)
+ *  Deliberately NOT continuously data-driven within a tier: rooms stay stable,
+ *  memorable places as the collection grows (same rule as the timeline rooms). */
+const TIER_DIMS: Record<RoomTier, { width: number; depth: number; height: number }> = {
+  small: { width: 10, depth: 20, height: 4.3 },
+  medium: { width: 10, depth: 30, height: 4.3 },
+  large: { width: 10, depth: 40, height: 4.3 },
+}
 
-/** slots per long wall at standard spacing */
-const FIRST_SLOT_Z = ROOM_D / 2 - 4.5 // first painting shortly past the door
-const LAST_SLOT_Z = -ROOM_D / 2 + 3.6 // keep clear of the placard wall
-const STD_SPACING = 3.5
+/** Which tier a painting count falls into (used to assign the stored tier). */
+export function tierForCount(count: number): RoomTier {
+  if (count >= 15) return 'large'
+  if (count >= 8) return 'medium'
+  return 'small'
+}
+
+const ENTRANCE_PAD = 4.5 // door wall → first painting (clears the door + notices)
+const PLACARD_PAD = 3.6 // last painting → placard wall
+const STD_SPACING = 3.5 // center-to-center on a wall; readable for works up to 3.1m wide
 
 /** Display size for a painting from its aspect ratio (real dims are unknown). */
 function displaySize(aspect: number): { width: number; height: number } {
@@ -49,38 +65,43 @@ function displaySize(aspect: number): { width: number; height: number } {
   return { width, height }
 }
 
-export function computeRoom(paintings: Painting[]): RoomSpec {
+export function computeRoom(paintings: Painting[], tier: RoomTier): RoomSpec {
+  const { width, depth, height } = TIER_DIMS[tier]
   const n = paintings.length
-  // paintings alternate right/left walls walking in from the entrance; slots
-  // use standard spacing anchored at the entrance end, so an artist with few
-  // works greets you immediately and new works later append down the room.
-  // Only if an artist exceeds capacity does the spacing compress to fit.
+
+  // paintings alternate right/left long walls walking in from the entrance;
+  // slots use standard spacing anchored at the entrance end, so an artist with
+  // few works greets you immediately and later works append down the room. The
+  // tier is sized so its whole bracket fits at STD_SPACING; the Math.min below
+  // is only a safety net if an artist is ever pushed past the tier's capacity.
   const slotsPerWall = Math.ceil(n / 2)
-  const usable = FIRST_SLOT_Z - LAST_SLOT_Z
+  const firstSlotZ = depth / 2 - ENTRANCE_PAD
+  const lastSlotZ = -depth / 2 + PLACARD_PAD
+  const usable = firstSlotZ - lastSlotZ
   const spacing = slotsPerWall > 1 ? Math.min(STD_SPACING, usable / (slotsPerWall - 1)) : STD_SPACING
 
   const placements: Placement[] = paintings.map((painting, i) => {
     const right = i % 2 === 0 // first painting on the right as you walk in
     const slot = Math.floor(i / 2)
-    const z = FIRST_SLOT_Z - slot * spacing
-    const { width, height } = displaySize(painting.aspect)
+    const z = firstSlotZ - slot * spacing
+    const { width: w, height: h } = displaySize(painting.aspect)
     return {
       painting,
-      position: right ? [ROOM_W / 2 - 0.01, HANG_HEIGHT, z] : [-ROOM_W / 2 + 0.01, HANG_HEIGHT, z],
+      position: right ? [width / 2 - 0.01, HANG_HEIGHT, z] : [-width / 2 + 0.01, HANG_HEIGHT, z],
       rotationY: right ? -Math.PI / 2 : Math.PI / 2,
       normal: right ? [-1, 0, 0] : [1, 0, 0],
-      width,
-      height,
+      width: w,
+      height: h,
     }
   })
 
   return {
-    width: ROOM_W,
-    depth: ROOM_D,
-    height: ROOM_H,
+    width,
+    depth,
+    height,
     placements,
-    spawn: [0, EYE_HEIGHT, ROOM_D / 2 - 1.6],
-    doorWidth: 1.7,
-    doorHeight: 2.7,
+    spawn: [0, EYE_HEIGHT, depth / 2 - 1.6],
+    doorWidth: 2.6,
+    doorHeight: 2.9,
   }
 }

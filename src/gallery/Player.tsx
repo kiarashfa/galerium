@@ -108,8 +108,12 @@ export default function Player({
         raycaster.setFromCamera(ndc, camera)
         const hit = raycaster.intersectObjects([...meshesRef.current.values()], false)[0]
         if (hit && hit.distance < INSPECT_RANGE) {
-          const id = hit.object.userData.paintingId as string
-          if (id) useMuseum.getState().inspect(id)
+          if (hit.object.userData.exitDoor) {
+            useMuseum.getState().exitToFloor()
+          } else {
+            const id = hit.object.userData.paintingId as string
+            if (id) useMuseum.getState().inspect(id)
+          }
         }
       }
     }
@@ -148,6 +152,11 @@ export default function Player({
       const meshes = [...meshesRef.current.values()]
       const hit = raycaster.intersectObjects(meshes, false)[0]
       if (hit && hit.distance < INSPECT_RANGE) {
+        if (hit.object.userData.exitDoor) {
+          controls.unlock()
+          useMuseum.getState().exitToFloor()
+          return
+        }
         const id = (hit.object.userData.paintingId as string) ?? null
         if (id) {
           controls.unlock()
@@ -172,6 +181,9 @@ export default function Player({
       fallback,
       hot: hotRef.current,
     }
+    // camera exposed as a test seam (alongside __museum/__museumStore) so e2e can
+    // deterministically face the exit door without fighting the slow renderer
+    ;(window as unknown as Record<string, unknown>).__museumCamera = camera
     if ((!controls.isLocked && !fallback) || inspectingRef.current) return
 
     const k = keys.current

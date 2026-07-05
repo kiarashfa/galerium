@@ -8,6 +8,10 @@ export interface Period {
   wikipediaUrl: string
 }
 
+/** Gallery room size tier, assigned once from painting count and stored as
+ *  permanent data (does NOT re-derive live — see scripts/museum-config.mjs). */
+export type RoomTier = 'small' | 'medium' | 'large'
+
 export interface Artist {
   id: string
   periodId: string
@@ -22,6 +26,8 @@ export interface Artist {
   portraitCredit: string | null
   wikipediaUrl: string
   paintingIds: string[]
+  /** Permanent gallery room size; see RoomTier. */
+  tier: RoomTier
 }
 
 /** Marker license for works still under copyright, included for local personal

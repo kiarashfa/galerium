@@ -23,6 +23,8 @@ interface MuseumStore {
   enterGallery: (artistId: string) => void
   galleryReady: () => void
   exitGallery: () => void
+  /** Leave the gallery back to the timeline, flying to the artist's own floor. */
+  exitToFloor: () => void
   inspect: (paintingId: string | null) => void
   setFilterPeriod: (periodId: string | null) => void
   setAbout: (open: boolean) => void
@@ -45,6 +47,19 @@ export const useMuseum = create<MuseumStore>((set) => ({
     set({ view: 'entering', galleryArtistId: artistId, cardArtistId: null, inspectPaintingId: null }),
   galleryReady: () => set({ view: 'gallery' }),
   exitGallery: () => set({ view: 'timeline', galleryArtistId: null, inspectPaintingId: null }),
+  exitToFloor: () =>
+    set((s) => {
+      const artist = s.galleryArtistId ? s.data?.artistById.get(s.galleryArtistId) : null
+      return {
+        view: 'timeline',
+        galleryArtistId: null,
+        inspectPaintingId: null,
+        // land the timeline on the floor this artist's room belongs to
+        flyToTarget: artist
+          ? { kind: 'period', id: artist.periodId, nonce: Date.now() + Math.random() }
+          : s.flyToTarget,
+      }
+    }),
   inspect: (inspectPaintingId) => set({ inspectPaintingId }),
   setFilterPeriod: (filterPeriodId) => set({ filterPeriodId }),
   setAbout: (aboutOpen) => set({ aboutOpen }),

@@ -375,6 +375,12 @@ async function buildArtist(cfg) {
   }
 }
 
+// Gallery room size tier. Kept in sync with src/gallery/layout.ts tierForCount.
+// PERMANENT once assigned: a curated `tier` in museum-config wins; only brand-new
+// artists (no explicit tier) fall back to deriving it from their painting count,
+// so re-running this after a manual painting addition never re-tiers an artist.
+const tierForCount = (c) => (c >= 15 ? 'large' : c >= 8 ? 'medium' : 'small')
+
 const usedPaintingIds = new Set()
 
 // A painting config entry is either an article title string, or
@@ -458,6 +464,7 @@ async function main() {
     if (artist.paintingIds.length < 4) {
       warn(`${artist.name}: only ${artist.paintingIds.length} paintings survived the license gate (want 4+)`)
     }
+    artist.tier = cfg.tier ?? tierForCount(artist.paintingIds.length)
     artistsOut.push(artist)
   }
 

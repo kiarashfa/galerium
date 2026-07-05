@@ -1,10 +1,10 @@
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { useThree } from '@react-three/fiber'
 import { MeshReflectorMaterial } from '@react-three/drei'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 import PaintingMesh from './PaintingMesh'
-import { makeCeilingTexture, makeFloorTexture, makePlacardTexture, makePlasterTexture } from './textures'
+import { makeCeilingTexture, makeFloorTexture, makeNoticeTexture, makePlacardMaps, makePlasterTexture } from './textures'
 import type { RoomSpec } from './layout'
 
 /** Image-based lighting from three's built-in RoomEnvironment — no network fetch. */
@@ -42,18 +42,22 @@ export default function Room({ room, artistName, periodName, periodColor, datesT
   const floorTex = useMemo(() => makeFloorTexture(), [])
   const plasterTex = useMemo(() => makePlasterTexture(), [])
   const ceilingTex = useMemo(() => makeCeilingTexture(), [])
-  const placardTex = useMemo(
-    () => makePlacardTexture(artistName, periodName, datesText, periodColor),
+  const placard = useMemo(
+    () => makePlacardMaps(artistName, periodName, datesText, periodColor),
     [artistName, periodName, datesText, periodColor],
   )
+  const noticeQuiet = useMemo(() => makeNoticeTexture('quiet'), [])
+  const noticeFlash = useMemo(() => makeNoticeTexture('noflash'), [])
   useEffect(
     () => () => {
       floorTex.dispose()
       plasterTex.dispose()
       ceilingTex.dispose()
-      placardTex.dispose()
+      placard.dispose()
+      noticeQuiet.dispose()
+      noticeFlash.dispose()
     },
-    [floorTex, plasterTex, ceilingTex, placardTex],
+    [floorTex, plasterTex, ceilingTex, placard, noticeQuiet, noticeFlash],
   )
   floorTex.repeat.set(width / 5, depth / 5)
   plasterTex.repeat.set(6, 3)
@@ -136,11 +140,51 @@ export default function Room({ room, artistName, periodName, periodColor, datesT
         {wallMat}
       </mesh>
 
-      {/* grand wing placard on the far short wall */}
-      <mesh position={[0, 2.35, -depth / 2 + 0.02]}>
-        <planeGeometry args={[8, 4]} />
-        <meshStandardMaterial map={placardTex} roughness={0.92} />
-      </mesh>
+      {/* grand wing placard on the far short wall — a mounted stone tablet with
+          raised gold lettering (bump + metalness maps) framed in gilt bronze */}
+      <group position={[0, 2.35, -depth / 2 + 0.02]}>
+        {/* limestone tablet, proud of the wall */}
+        <mesh position-z={0.02} castShadow>
+          <boxGeometry args={[8.5, 4.5, 0.1]} />
+          <meshStandardMaterial color="#cabd9f" roughness={0.9} metalness={0} />
+        </mesh>
+        {/* raised-gold lettering panel */}
+        <mesh position-z={0.075}>
+          <planeGeometry args={[8, 4]} />
+          <meshStandardMaterial
+            map={placard.map}
+            bumpMap={placard.bumpMap}
+            bumpScale={1.1}
+            metalnessMap={placard.metalnessMap}
+            metalness={1}
+            roughnessMap={placard.roughnessMap}
+            roughness={1}
+            emissiveMap={placard.metalnessMap}
+            emissive="#3a2c12"
+            emissiveIntensity={0.32}
+            envMapIntensity={1.1}
+          />
+        </mesh>
+        {/* gilt-bronze bevel frame around the tablet */}
+        {([
+          [0, 2.28, 8.7, 0.16],
+          [0, -2.28, 8.7, 0.16],
+        ] as const).map(([x, y, bw, bh], i) => (
+          <mesh key={`h${i}`} position={[x, y, 0.06]}>
+            <boxGeometry args={[bw, bh, 0.13]} />
+            <meshStandardMaterial color="#8a6a2c" metalness={0.75} roughness={0.38} />
+          </mesh>
+        ))}
+        {([
+          [-4.27, 0, 0.16, 4.72],
+          [4.27, 0, 0.16, 4.72],
+        ] as const).map(([x, y, bw, bh], i) => (
+          <mesh key={`v${i}`} position={[x, y, 0.06]}>
+            <boxGeometry args={[bw, bh, 0.13]} />
+            <meshStandardMaterial color="#8a6a2c" metalness={0.75} roughness={0.38} />
+          </mesh>
+        ))}
+      </group>
       <PlacardWash depth={depth} height={height} />
 
       {/* baseboard + crown molding */}
@@ -162,25 +206,15 @@ export default function Room({ room, artistName, periodName, periodColor, datesT
         </group>
       ))}
 
-      {/* entry door on the entrance wall */}
-      <group position={[0, 0, depth / 2 - 0.03]} rotation-y={Math.PI}>
-        <mesh position-y={doorHeight / 2}>
-          <boxGeometry args={[doorWidth, doorHeight, 0.12]} />
-          <meshStandardMaterial color="#241a11" roughness={0.5} metalness={0.05} />
-        </mesh>
-        <mesh position-y={doorHeight + 0.09}>
-          <boxGeometry args={[doorWidth + 0.3, 0.18, 0.16]} />
-          {trimMat}
-        </mesh>
-        <mesh position={[-doorWidth / 2 - 0.07, doorHeight / 2, 0]}>
-          <boxGeometry args={[0.14, doorHeight + 0.18, 0.16]} />
-          {trimMat}
-        </mesh>
-        <mesh position={[doorWidth / 2 + 0.07, doorHeight / 2, 0]}>
-          <boxGeometry args={[0.14, doorHeight + 0.18, 0.16]} />
-          {trimMat}
-        </mesh>
-      </group>
+      {/* elegant, clickable exit door + etiquette notices on the entrance wall */}
+      <ExitDoor
+        depth={depth}
+        doorWidth={doorWidth}
+        doorHeight={doorHeight}
+        register={register}
+        noticeQuiet={noticeQuiet}
+        noticeFlash={noticeFlash}
+      />
 
       {/* benches along the central axis, long side following the room */}
       {benches.map((b, i) => (
@@ -221,6 +255,180 @@ export default function Room({ room, artistName, periodName, periodColor, datesT
           shadow-mapSize={[1024, 1024]}
           shadow-bias={-0.0003}
         />
+      ))}
+    </group>
+  )
+}
+
+const WALNUT = '#241a11'
+const FRAME_WOOD = '#2c2118'
+const GOLD = '#8a6a2c'
+
+function makeExitPlateTexture(): THREE.CanvasTexture {
+  const w = 256
+  const h = 80
+  const c = document.createElement('canvas')
+  c.width = w
+  c.height = h
+  const ctx = c.getContext('2d')!
+  ctx.fillStyle = '#d9b871'
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  ctx.font = '700 54px "Inter", sans-serif'
+  ctx.fillText('E  X  I  T', w / 2, h / 2 + 3)
+  const t = new THREE.CanvasTexture(c)
+  t.colorSpace = THREE.SRGBColorSpace
+  t.anisotropy = 8
+  return t
+}
+
+/** The clickable exit: gilded walnut double doors + a small EXIT plaque, plus two
+ *  engraved etiquette notices flanking the entrance. The invisible hit plane in
+ *  front is registered so the same crosshair/tap raycast that inspects paintings
+ *  can trigger the exit (Player checks userData.exitDoor). */
+function ExitDoor({
+  depth,
+  doorWidth,
+  doorHeight,
+  register,
+  noticeQuiet,
+  noticeFlash,
+}: {
+  depth: number
+  doorWidth: number
+  doorHeight: number
+  register: (mesh: THREE.Mesh | null, id: string) => void
+  noticeQuiet: THREE.Texture
+  noticeFlash: THREE.Texture
+}) {
+  const exitTex = useMemo(() => makeExitPlateTexture(), [])
+  useEffect(() => () => exitTex.dispose(), [exitTex])
+
+  const registerHit = useCallback(
+    (m: THREE.Mesh | null) => {
+      if (m) {
+        m.userData.exitDoor = true
+        register(m, '__door__')
+      } else register(null, '__door__')
+    },
+    [register],
+  )
+
+  const zWall = depth / 2
+  const leafW = doorWidth / 2 - 0.03
+  const leafX = doorWidth / 4
+  const doorMat = <meshStandardMaterial color={WALNUT} roughness={0.5} metalness={0.15} envMapIntensity={1} />
+  const goldMat = <meshStandardMaterial color={GOLD} metalness={0.78} roughness={0.36} />
+  const frameMat = <meshStandardMaterial color={FRAME_WOOD} roughness={0.5} metalness={0.1} />
+
+  // a slim gold molding frame (4 thin bars) around a leaf-local rectangle
+  const molding = (pw: number, ph: number, cy: number, key: string) => (
+    <group key={key} position={[0, cy, 0]}>
+      {([
+        [0, ph / 2, pw + 0.05, 0.05],
+        [0, -ph / 2, pw + 0.05, 0.05],
+      ] as const).map(([x, y, bw, bh], i) => (
+        <mesh key={'h' + i} position={[x, y, 0]}>
+          <boxGeometry args={[bw, bh, 0.03]} />
+          {goldMat}
+        </mesh>
+      ))}
+      {([
+        [-pw / 2, 0, 0.05, ph],
+        [pw / 2, 0, 0.05, ph],
+      ] as const).map(([x, y, bw, bh], i) => (
+        <mesh key={'v' + i} position={[x, y, 0]}>
+          <boxGeometry args={[bw, bh, 0.03]} />
+          {goldMat}
+        </mesh>
+      ))}
+    </group>
+  )
+
+  return (
+    <group>
+      {/* two walnut leaves */}
+      {([-1, 1] as const).map((s) => (
+        <group key={s} position={[s * leafX, 0, zWall - 0.06]}>
+          <mesh position-y={doorHeight / 2} castShadow>
+            <boxGeometry args={[leafW, doorHeight, 0.1]} />
+            {doorMat}
+          </mesh>
+          {/* recessed panels (upper large, lower short), gilt moldings */}
+          <group position={[0, 0, -0.06]}>
+            {molding(leafW - 0.36, doorHeight * 0.5, doorHeight * 0.62, 'up')}
+            {molding(leafW - 0.36, doorHeight * 0.22, doorHeight * 0.24, 'lo')}
+          </group>
+          {/* gold kickplate */}
+          <mesh position={[0, 0.22, -0.055]}>
+            <boxGeometry args={[leafW - 0.1, 0.28, 0.02]} />
+            {goldMat}
+          </mesh>
+        </group>
+      ))}
+
+      {/* vertical gold pull-handles at the meeting stiles */}
+      {([-1, 1] as const).map((s) => (
+        <mesh key={s} position={[s * 0.12, doorHeight * 0.46, zWall - 0.16]}>
+          <boxGeometry args={[0.05, 0.6, 0.05]} />
+          {goldMat}
+        </mesh>
+      ))}
+
+      {/* wood casing: jambs + lintel */}
+      {([-1, 1] as const).map((s) => (
+        <mesh key={s} position={[s * (doorWidth / 2 + 0.1), doorHeight / 2, zWall - 0.02]}>
+          <boxGeometry args={[0.18, doorHeight + 0.26, 0.22]} />
+          {frameMat}
+        </mesh>
+      ))}
+      <mesh position={[0, doorHeight + 0.13, zWall - 0.02]}>
+        <boxGeometry args={[doorWidth + 0.38, 0.2, 0.22]} />
+        {frameMat}
+      </mesh>
+      {/* gilded cornice + engraved EXIT plaque */}
+      <mesh position={[0, doorHeight + 0.3, zWall - 0.05]}>
+        <boxGeometry args={[doorWidth + 0.66, 0.13, 0.28]} />
+        {goldMat}
+      </mesh>
+      <mesh position={[0, doorHeight + 0.13, zWall - 0.14]} rotation-y={Math.PI}>
+        <planeGeometry args={[0.82, 0.24]} />
+        <meshStandardMaterial
+          map={exitTex}
+          transparent
+          emissiveMap={exitTex}
+          emissive="#caa257"
+          emissiveIntensity={0.6}
+          roughness={0.5}
+          metalness={0.2}
+        />
+      </mesh>
+
+      {/* invisible hit surface for the exit raycast (a bit larger than the door) */}
+      <mesh ref={registerHit} position={[0, doorHeight / 2, zWall - 0.24]} rotation-y={Math.PI}>
+        <planeGeometry args={[doorWidth + 0.24, doorHeight + 0.1]} />
+        <meshBasicMaterial transparent opacity={0} depthWrite={false} side={THREE.DoubleSide} />
+      </mesh>
+
+      {/* etiquette notices flanking the door (smaller z = toward the room) */}
+      {([
+        [-3.0, noticeQuiet],
+        [3.0, noticeFlash],
+      ] as const).map(([x, tex], i) => (
+        <group key={i} position={[x, 1.55, zWall]}>
+          <mesh position-z={-0.02}>
+            <boxGeometry args={[1.02, 0.82, 0.05]} />
+            {goldMat}
+          </mesh>
+          <mesh position-z={-0.05}>
+            <boxGeometry args={[0.92, 0.72, 0.02]} />
+            <meshStandardMaterial color="#3a2c18" roughness={0.6} metalness={0.3} />
+          </mesh>
+          <mesh position-z={-0.065} rotation-y={Math.PI}>
+            <planeGeometry args={[0.88, 0.68]} />
+            <meshStandardMaterial map={tex} roughness={0.55} metalness={0.35} />
+          </mesh>
+        </group>
       ))}
     </group>
   )

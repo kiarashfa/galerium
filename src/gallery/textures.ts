@@ -87,57 +87,167 @@ export function makeCeilingTexture(): THREE.CanvasTexture {
   return tex
 }
 
-/** Grand wing placard for the far wall: artist name, period, dates. */
-export function makePlacardTexture(name: string, period: string, dates: string, accent: string): THREE.CanvasTexture {
+export interface PlacardMaps {
+  map: THREE.CanvasTexture
+  bumpMap: THREE.CanvasTexture
+  metalnessMap: THREE.CanvasTexture
+  roughnessMap: THREE.CanvasTexture
+  dispose: () => void
+}
+
+/** Grand wing placard for the far wall (artist name, period, dates), rendered as
+ *  a mounted stone tablet with RAISED GOLD lettering. Returns four coordinated
+ *  maps: colour, a height/bump mask (letters proud of the stone), a metalness
+ *  mask (only the name / rule / fleuron are gold metal) and a roughness mask
+ *  (gold polished, stone matte) — so the name catches the placard wash and
+ *  picture-light spill and reads dimensional, not flat. Same composition. */
+export function makePlacardMaps(name: string, period: string, dates: string, accent: string): PlacardMaps {
   const w = 2048
   const h = 1024
+  const spacedPeriod = period.toUpperCase().split('').join('  ')
+
+  // lay the composition out once (font size, wrapping, y positions)
+  const probe = document.createElement('canvas').getContext('2d')!
+  probe.textAlign = 'center'
+  let fontSize = 215
+  probe.font = `600 ${fontSize}px "Cormorant Garamond", Georgia, serif`
+  const display = name.toUpperCase()
+  let lines = [display]
+  if (probe.measureText(display).width > w - 300) {
+    const words = display.split(' ')
+    const mid = Math.ceil(words.length / 2)
+    lines = [words.slice(0, mid).join(' '), words.slice(mid).join(' ')]
+    const widest = Math.max(...lines.map((l) => probe.measureText(l).width))
+    if (widest > w - 300) fontSize = Math.floor((fontSize * (w - 300)) / widest)
+  }
+  const nameFont = `600 ${fontSize}px "Cormorant Garamond", Georgia, serif`
+  const nameY = lines.length === 1 ? 520 : 440
+  const ruleY = lines.length === 1 ? 640 : 700
+
+  type Pal = { bg: string; eyebrow: string; name: string | CanvasGradient; rule: string; dates: string }
+  const draw = (pal: Pal) => {
+    const c = document.createElement('canvas')
+    c.width = w
+    c.height = h
+    const ctx = c.getContext('2d')!
+    ctx.fillStyle = pal.bg
+    ctx.fillRect(0, 0, w, h)
+    ctx.textAlign = 'center'
+    ctx.fillStyle = pal.eyebrow
+    ctx.font = '600 54px "Inter", sans-serif'
+    ctx.fillText(spacedPeriod, w / 2, 240)
+    ctx.fillStyle = pal.name
+    ctx.font = nameFont
+    lines.forEach((l, i) => ctx.fillText(l, w / 2, nameY + i * (fontSize * 1.08)))
+    ctx.fillStyle = pal.rule
+    ctx.fillRect(w / 2 - 260, ruleY, 520, 4)
+    ctx.font = '52px Georgia, serif'
+    ctx.fillText('❦', w / 2, ruleY + 20) // ❦ fleuron
+    ctx.fillStyle = pal.dates
+    ctx.font = 'italic 92px "Cormorant Garamond", Georgia, serif'
+    ctx.fillText(dates, w / 2, ruleY + 165)
+    return c
+  }
+
+  // colour: warm limestone tablet, gold gradient name, accent eyebrow, ink dates
+  const goldGrad = probe.createLinearGradient(0, nameY - fontSize, 0, nameY + lines.length * fontSize)
+  goldGrad.addColorStop(0, '#e7d29a')
+  goldGrad.addColorStop(0.5, '#c8a24b')
+  goldGrad.addColorStop(1, '#9a7628')
+  const colorCanvas = draw({ bg: '#d6cab0', eyebrow: accent, name: goldGrad, rule: '#a8843a', dates: 'rgba(60,48,30,0.92)' })
+  // bump: all lettering raised proud of the stone
+  const bumpCanvas = draw({ bg: '#2f2f2f', eyebrow: '#d0d0d0', name: '#efefef', rule: '#efefef', dates: '#c4c4c4' })
+  // metalness: only name + rule/fleuron are gold metal
+  const metalCanvas = draw({ bg: '#000000', eyebrow: '#000000', name: '#ffffff', rule: '#ffffff', dates: '#000000' })
+  // roughness: gold polished (dark), stone + accent matte (light)
+  const roughCanvas = draw({ bg: '#e8e8e8', eyebrow: '#cfcfcf', name: '#2e2e2e', rule: '#2e2e2e', dates: '#d4d4d4' })
+
+  const mk = (c: HTMLCanvasElement, srgb: boolean) => {
+    const t = new THREE.CanvasTexture(c)
+    if (srgb) t.colorSpace = THREE.SRGBColorSpace
+    t.anisotropy = 8
+    return t
+  }
+  const map = mk(colorCanvas, true)
+  const bumpMap = mk(bumpCanvas, false)
+  const metalnessMap = mk(metalCanvas, false)
+  const roughnessMap = mk(roughCanvas, false)
+  return {
+    map,
+    bumpMap,
+    metalnessMap,
+    roughnessMap,
+    dispose: () => {
+      map.dispose()
+      bumpMap.dispose()
+      metalnessMap.dispose()
+      roughnessMap.dispose()
+    },
+  }
+}
+
+/** Small engraved brass notice for the entrance wall (gallery etiquette). */
+export function makeNoticeTexture(kind: 'quiet' | 'noflash'): THREE.CanvasTexture {
+  const w = 512
+  const h = 384
   const c = document.createElement('canvas')
   c.width = w
   c.height = h
   const ctx = c.getContext('2d')!
-  // blends with the plaster wall the plane sits on
-  ctx.fillStyle = '#e2dbcb'
+  // warm brass plate with a darker recessed field
+  ctx.fillStyle = '#40311c'
   ctx.fillRect(0, 0, w, h)
-  ctx.textAlign = 'center'
+  ctx.fillStyle = '#4a3a22'
+  ctx.fillRect(16, 16, w - 32, h - 32)
+  ctx.strokeStyle = 'rgba(210,180,120,0.75)'
+  ctx.lineWidth = 3
+  ctx.strokeRect(22, 22, w - 44, h - 44)
 
-  ctx.fillStyle = accent
-  ctx.font = '600 54px "Inter", sans-serif'
-  ctx.fillText(period.toUpperCase().split('').join('  '), w / 2, 240)
+  const gold = '#d9b871'
+  ctx.strokeStyle = gold
+  ctx.fillStyle = gold
+  ctx.lineWidth = 7
+  ctx.lineJoin = 'round'
+  const cx = w / 2
+  const iconY = 118
 
-  // artist name, wrapped to at most two lines
-  ctx.fillStyle = '#2a2118'
-  let fontSize = 215
-  ctx.font = `600 ${fontSize}px "Cormorant Garamond", Georgia, serif`
-  const display = name.toUpperCase()
-  let lines = [display]
-  if (ctx.measureText(display).width > w - 300) {
-    const words = display.split(' ')
-    const mid = Math.ceil(words.length / 2)
-    lines = [words.slice(0, mid).join(' '), words.slice(mid).join(' ')]
-    const widest = Math.max(...lines.map((l) => ctx.measureText(l).width))
-    if (widest > w - 300) {
-      fontSize = Math.floor((fontSize * (w - 300)) / widest)
-      ctx.font = `600 ${fontSize}px "Cormorant Garamond", Georgia, serif`
-    }
+  if (kind === 'quiet') {
+    // speaker silhouette + a "no sound" slash
+    ctx.beginPath()
+    ctx.moveTo(cx - 46, iconY - 20)
+    ctx.lineTo(cx - 20, iconY - 20)
+    ctx.lineTo(cx + 6, iconY - 42)
+    ctx.lineTo(cx + 6, iconY + 42)
+    ctx.lineTo(cx - 20, iconY + 20)
+    ctx.lineTo(cx - 46, iconY + 20)
+    ctx.closePath()
+    ctx.fill()
+    ctx.lineWidth = 8
+    ctx.beginPath()
+    ctx.moveTo(cx - 40, iconY - 46)
+    ctx.lineTo(cx + 52, iconY + 46)
+    ctx.stroke()
+  } else {
+    // camera body + lens + flash hump, with a slash
+    ctx.lineWidth = 7
+    ctx.strokeRect(cx - 52, iconY - 26, 104, 60)
+    ctx.beginPath()
+    ctx.arc(cx, iconY + 4, 20, 0, Math.PI * 2)
+    ctx.stroke()
+    ctx.fillRect(cx + 26, iconY - 40, 22, 14)
+    ctx.beginPath()
+    ctx.moveTo(cx - 58, iconY - 40)
+    ctx.lineTo(cx + 58, iconY + 44)
+    ctx.stroke()
   }
-  const nameY = lines.length === 1 ? 520 : 440
-  lines.forEach((l, i) => ctx.fillText(l, w / 2, nameY + i * (fontSize * 1.08)))
 
-  // gold rule with fleuron
-  const ruleY = lines.length === 1 ? 640 : 700
-  const grad = ctx.createLinearGradient(w / 2 - 260, 0, w / 2 + 260, 0)
-  grad.addColorStop(0, 'rgba(168,132,58,0)')
-  grad.addColorStop(0.5, 'rgba(168,132,58,0.9)')
-  grad.addColorStop(1, 'rgba(168,132,58,0)')
-  ctx.fillStyle = grad
-  ctx.fillRect(w / 2 - 260, ruleY, 520, 4)
-  ctx.fillStyle = '#a8843a'
-  ctx.font = '52px Georgia, serif'
-  ctx.fillText('❦', w / 2, ruleY + 20)
-
-  ctx.fillStyle = 'rgba(42,33,24,0.75)'
-  ctx.font = `italic 92px "Cormorant Garamond", Georgia, serif`
-  ctx.fillText(dates, w / 2, ruleY + 165)
+  ctx.fillStyle = gold
+  ctx.textAlign = 'center'
+  ctx.font = '600 46px "Inter", sans-serif'
+  ctx.fillText(kind === 'quiet' ? 'QUIET, PLEASE' : 'NO FLASH', cx, 252)
+  ctx.font = '500 30px "Inter", sans-serif'
+  ctx.fillStyle = 'rgba(217,184,113,0.85)'
+  ctx.fillText(kind === 'quiet' ? 'RESPECT OTHER VISITORS' : 'PHOTOGRAPHY', cx, 302)
 
   const tex = new THREE.CanvasTexture(c)
   tex.colorSpace = THREE.SRGBColorSpace

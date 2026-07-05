@@ -23,7 +23,8 @@
       "giotto--berlin-crucifixion",
       "giotto--life-of-christ",
       "giotto--strasbourg-crucifixion"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "cimabue",
@@ -48,7 +49,8 @@
       "cimabue--diptych-of-devotion",
       "cimabue--the-flagellation-of-christ",
       "cimabue--virgin-and-child-with-two-angels"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "duccio",
@@ -70,7 +72,8 @@
       "duccio--crevole-madonna",
       "duccio--madonna-with-child-and-six-angels",
       "duccio--madonna-and-child-with-saints-polyptych"
-    ]
+    ],
+    "tier": "small"
   },
   {
     "id": "fra-angelico",
@@ -103,7 +106,8 @@
       "fra-angelico--adoration-of-the-magi",
       "fra-angelico--adoration-of-the-magi-san-marco",
       "fra-angelico--croce-al-tempio-lamentation"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "simone-martini",
@@ -127,7 +131,8 @@
       "simone-martini--orsini-polyptych",
       "simone-martini--saint-catherine-of-alexandria-polyptych",
       "simone-martini--san-martino-chapel"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "leonardo-da-vinci",
@@ -156,7 +161,8 @@
       "leonardo-da-vinci--isleworth-mona-lisa",
       "leonardo-da-vinci--la-scapigliata",
       "leonardo-da-vinci--leda-and-the-swan"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "michelangelo",
@@ -181,7 +187,8 @@
       "michelangelo--battle-of-cascina",
       "michelangelo--leda-and-the-swan",
       "michelangelo--the-crucifixion-of-saint-peter"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "raphael",
@@ -215,7 +222,8 @@
       "raphael--madonna-della-seggiola",
       "raphael--self-portrait",
       "raphael--vision-of-a-knight"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "titian",
@@ -251,7 +259,8 @@
       "titian--la-schiavona",
       "titian--pastoral-concert",
       "titian--tarquin-and-lucretia"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "sandro-botticelli",
@@ -285,7 +294,8 @@
       "sandro-botticelli--virgin-and-child-with-an-angel",
       "sandro-botticelli--bardi-madonna",
       "sandro-botticelli--portrait-of-a-young-man-holding-a-roundel"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "jan-van-eyck",
@@ -320,7 +330,8 @@
       "jan-van-eyck--portrait-of-a-man-with-carnation",
       "jan-van-eyck--portrait-of-baudouin-de-lannoy",
       "jan-van-eyck--portrait-of-cardinal-niccolo-albergati"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "caravaggio",
@@ -356,7 +367,8 @@
       "caravaggio--the-taking-of-christ",
       "caravaggio--boy-bitten-by-a-lizard",
       "caravaggio--rest-on-the-flight-into-egypt"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "rembrandt",
@@ -392,7 +404,8 @@
       "rembrandt--balaam-and-the-ass",
       "rembrandt--andromeda-chained-to-the-rocks",
       "rembrandt--jacob-blessing-the-sons-of-joseph"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "johannes-vermeer",
@@ -427,7 +440,8 @@
       "johannes-vermeer--the-love-letter",
       "johannes-vermeer--girl-interrupted-at-her-music",
       "johannes-vermeer--study-of-a-young-woman"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "peter-paul-rubens",
@@ -461,7 +475,8 @@
       "peter-paul-rubens--the-birth-of-the-milky-way",
       "peter-paul-rubens--the-garden-of-eden-with-the-fall-of-man",
       "peter-paul-rubens--saturn"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "diego-velazquez",
@@ -494,7 +509,8 @@
       "diego-velazquez--the-kitchen-maid",
       "diego-velazquez--female-figure",
       "diego-velazquez--prince-baltasar-carlos-in-the-riding-school"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "artemisia-gentileschi",
@@ -529,7 +545,8 @@
       "artemisia-gentileschi--madonna-and-child",
       "artemisia-gentileschi--saint-cecilia",
       "artemisia-gentileschi--allegory-of-painting"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "antoine-watteau",
@@ -565,7 +582,8 @@
       "antoine-watteau--the-worried-lover",
       "antoine-watteau--la-boudeuse",
       "antoine-watteau--marriage-contract-and-country-dancing"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "francois-boucher",
@@ -601,7 +619,8 @@
       "francois-boucher--the-rising-of-the-sun",
       "francois-boucher--jupiter-and-callisto-boucher-1759",
       "francois-boucher--diana-returning-from-the-hunt"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "jean-honore-fragonard",
@@ -636,7 +655,8 @@
       "jean-honore-fragonard--the-storm",
       "jean-honore-fragonard--the-woman-with-a-dog",
       "jean-honore-fragonard--adoration-of-the-shepherds"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "jean-baptiste-simeon-chardin",
@@ -663,7 +683,8 @@
       "jean-baptiste-simeon-chardin--the-buffet",
       "jean-baptiste-simeon-chardin--the-attributes-of-music-the-arts-and-the-sciences",
       "jean-baptiste-simeon-chardin--the-attributes-of-civilian-and-military-music"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "jacques-louis-david",
@@ -699,7 +720,8 @@
       "jacques-louis-david--love-and-psyche",
       "jacques-louis-david--the-anger-of-achilles",
       "jacques-louis-david--the-distribution-of-the-eagle-standards"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "jean-auguste-dominique-ingres",
@@ -735,7 +757,8 @@
       "jean-auguste-dominique-ingres--the-death-of-leonardo-da-vinci",
       "jean-auguste-dominique-ingres--the-illness-of-antiochus",
       "jean-auguste-dominique-ingres--portrait-of-madame-de-senonnes"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "elisabeth-vigee-le-brun",
@@ -770,7 +793,8 @@
       "elisabeth-vigee-le-brun--anne-pitt-as-hebe",
       "elisabeth-vigee-le-brun--portrait-of-joseph-vernet",
       "elisabeth-vigee-le-brun--portrait-of-muhammad-dervish-khan"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "honore-daumier",
@@ -793,7 +817,8 @@
       "honore-daumier--the-emigrants",
       "honore-daumier--the-republic",
       "honore-daumier--melodrama"
-    ]
+    ],
+    "tier": "small"
   },
   {
     "id": "claude-monet",
@@ -829,7 +854,8 @@
       "claude-monet--san-giorgio-maggiore-at-dusk",
       "claude-monet--springtime",
       "claude-monet--beach-in-pourville"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "pierre-auguste-renoir",
@@ -864,7 +890,8 @@
       "pierre-auguste-renoir--la-promenade",
       "pierre-auguste-renoir--the-day-dream",
       "pierre-auguste-renoir--la-parisienne"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "edgar-degas",
@@ -900,7 +927,8 @@
       "edgar-degas--portraits-at-the-stock-exchange",
       "edgar-degas--the-dance-lesson",
       "edgar-degas--dance-class-at-the-opera"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "benjamin-west",
@@ -936,7 +964,8 @@
       "benjamin-west--the-oath-of-hannibal",
       "benjamin-west--alexander-iii-of-scotland-rescued-from-the-fury-of-a-stag-by",
       "benjamin-west--alfred-the-great-dividing-his-loaf-with-a-pilgrim"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "angelica-kauffman",
@@ -972,7 +1001,8 @@
       "angelica-kauffman--portrait-of-david-garrick",
       "angelica-kauffman--portrait-of-ludwig-crown-prince-of-bavaria",
       "angelica-kauffman--armida-in-vain-endeavours-with-her-entreaties-to-prevent-rin"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "francisco-goya",
@@ -1008,7 +1038,8 @@
       "francisco-goya--the-inquisition-tribunal",
       "francisco-goya--the-madhouse",
       "francisco-goya--truth-time-and-history"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "caspar-david-friedrich",
@@ -1044,7 +1075,8 @@
       "caspar-david-friedrich--cabin-in-the-snow",
       "caspar-david-friedrich--morning-on-the-riesengebirge",
       "caspar-david-friedrich--neubrandenburg"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "eugene-delacroix",
@@ -1079,7 +1111,8 @@
       "eugene-delacroix--the-bride-of-abydos",
       "eugene-delacroix--the-sultan-of-morocco",
       "eugene-delacroix--christ-on-the-cross"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "jmw-turner",
@@ -1115,7 +1148,8 @@
       "jmw-turner--rome-from-mount-aventine",
       "jmw-turner--rome-from-the-vatican",
       "jmw-turner--the-fifth-plague-of-egypt"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "theodore-gericault",
@@ -1141,7 +1175,8 @@
       "theodore-gericault--evening-landscape-with-an-aqueduct",
       "theodore-gericault--the-melancholic-man",
       "theodore-gericault--a-charge-of-cuirassiers"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "william-blake",
@@ -1162,7 +1197,8 @@
       "william-blake--the-ancient-of-days",
       "william-blake--nebuchadnezzar",
       "william-blake--the-great-red-dragon-paintings"
-    ]
+    ],
+    "tier": "small"
   },
   {
     "id": "gustave-courbet",
@@ -1198,7 +1234,8 @@
       "gustave-courbet--the-bathers",
       "gustave-courbet--the-bacchante",
       "gustave-courbet--after-dinner-at-ornans"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "jean-francois-millet",
@@ -1227,7 +1264,8 @@
       "jean-francois-millet--the-beakful",
       "jean-francois-millet--peasant-with-a-wheelbarrow",
       "jean-francois-millet--peasant-women-with-brushwood"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "edouard-manet",
@@ -1263,7 +1301,8 @@
       "edouard-manet--la-nymphe-surprise",
       "edouard-manet--in-the-conservatory",
       "edouard-manet--boating"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "berthe-morisot",
@@ -1290,7 +1329,8 @@
       "berthe-morisot--in-a-park",
       "berthe-morisot--la-petite-nicoise",
       "berthe-morisot--young-girl-in-a-park"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "mary-cassatt",
@@ -1322,7 +1362,8 @@
       "mary-cassatt--lilacs-in-a-window",
       "mary-cassatt--lydia-crocheting-in-the-garden-at-marly",
       "mary-cassatt--portrait-of-the-artist"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "alfred-sisley",
@@ -1357,7 +1398,8 @@
       "alfred-sisley--rue-de-la-chaussee-in-argenteuil",
       "alfred-sisley--the-canal-du-loing",
       "alfred-sisley--the-seine-at-argenteuil"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "vincent-van-gogh",
@@ -1392,7 +1434,8 @@
       "vincent-van-gogh--portrait-of-pere-tanguy",
       "vincent-van-gogh--skull-of-a-skeleton-with-burning-cigarette",
       "vincent-van-gogh--the-parsonage-garden-at-nuenen"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "paul-cezanne",
@@ -1427,7 +1470,8 @@
       "paul-cezanne--forest",
       "paul-cezanne--still-life-with-peaches-and-pears",
       "paul-cezanne--portrait-of-ambroise-vollard"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "paul-gauguin",
@@ -1463,7 +1507,8 @@
       "paul-gauguin--the-beautiful-angel",
       "paul-gauguin--vairumati",
       "paul-gauguin--self-portrait-with-the-yellow-christ"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "georges-seurat",
@@ -1488,7 +1533,8 @@
       "georges-seurat--young-woman-powdering-herself",
       "georges-seurat--the-channel-of-gravelines-petit-fort-philippe",
       "georges-seurat--the-lighthouse-at-honfleur"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "henri-de-toulouse-lautrec",
@@ -1518,7 +1564,8 @@
       "henri-de-toulouse-lautrec--portrait-of-suzanne-valadon",
       "henri-de-toulouse-lautrec--at-grenelle-absinthe-drinker",
       "henri-de-toulouse-lautrec--the-hangover"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "edvard-munch",
@@ -1553,7 +1600,8 @@
       "edvard-munch--death-and-the-child",
       "edvard-munch--morning-yawn",
       "edvard-munch--self-portrait-with-cigarette"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "ernst-ludwig-kirchner",
@@ -1579,7 +1627,8 @@
       "ernst-ludwig-kirchner--the-bridge-near-wiesen",
       "ernst-ludwig-kirchner--female-half-length-nude-with-hat",
       "ernst-ludwig-kirchner--alpine-kitchen"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "franz-marc",
@@ -1607,7 +1656,8 @@
       "franz-marc--hut-in-dachau-moors",
       "franz-marc--indersdorf",
       "franz-marc--two-women-on-the-hillside"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "egon-schiele",
@@ -1630,7 +1680,8 @@
       "egon-schiele--portrait-of-edith",
       "egon-schiele--seated-woman-with-bent-knees",
       "egon-schiele--dead-city-iii"
-    ]
+    ],
+    "tier": "small"
   },
   {
     "id": "wassily-kandinsky",
@@ -1657,7 +1708,8 @@
       "wassily-kandinsky--simple-complexity",
       "wassily-kandinsky--upward",
       "wassily-kandinsky--three-elements"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "salvador-dali",
@@ -1693,7 +1745,8 @@
       "salvador-dali--young-woman-at-a-window",
       "salvador-dali--the-discovery-of-america-by-christopher-columbus",
       "salvador-dali--the-hallucinogenic-toreador"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "rene-magritte",
@@ -1729,7 +1782,8 @@
       "rene-magritte--on-the-threshold-of-liberty",
       "rene-magritte--the-voice-of-space",
       "rene-magritte--the-secret-player"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "max-ernst",
@@ -1759,7 +1813,8 @@
       "max-ernst--the-barbarians",
       "max-ernst--the-wood",
       "max-ernst--trophy-hypertrophied"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "joan-miro",
@@ -1788,7 +1843,8 @@
       "joan-miro--hands-flying-off-toward-the-constellations",
       "joan-miro--the-navigator-s-hope",
       "joan-miro--man-and-woman-in-front-of-a-pile-of-excrement"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "yves-tanguy",
@@ -1807,7 +1863,8 @@
       "yves-tanguy--mama-papa-is-wounded",
       "yves-tanguy--at-4-o-clock-in-the-summer-hope",
       "yves-tanguy--the-palace-of-the-windowed-rocks"
-    ]
+    ],
+    "tier": "small"
   },
   {
     "id": "juan-gris",
@@ -1833,7 +1890,8 @@
       "juan-gris--juan-legua",
       "juan-gris--the-anisette-bottle",
       "juan-gris--still-life-with-a-poem"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "robert-delaunay",
@@ -1858,7 +1916,8 @@
       "robert-delaunay--rhythms",
       "robert-delaunay--portrait-of-tristan-tzara",
       "robert-delaunay--still-life-with-a-parrot"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "albert-gleizes",
@@ -1893,7 +1952,8 @@
       "albert-gleizes--the-banks-of-the-marne",
       "albert-gleizes--the-hunt",
       "albert-gleizes--the-tree"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "pablo-picasso",
@@ -1928,7 +1988,8 @@
       "pablo-picasso--portrait-of-suzanne-bloch",
       "pablo-picasso--femme-aux-bras-croises",
       "pablo-picasso--girl-on-a-ball"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "georges-braque",
@@ -1952,7 +2013,8 @@
       "georges-braque--mandora",
       "georges-braque--still-life",
       "georges-braque--fishing-boats"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "fernand-leger",
@@ -1971,7 +2033,8 @@
       "fernand-leger--the-city",
       "fernand-leger--still-life-with-candlestick",
       "fernand-leger--man-and-woman"
-    ]
+    ],
+    "tier": "small"
   },
   {
     "id": "jackson-pollock",
@@ -1994,7 +2057,8 @@
       "jackson-pollock--mural",
       "jackson-pollock--number-17a",
       "jackson-pollock--mural-on-indian-red-ground"
-    ]
+    ],
+    "tier": "small"
   },
   {
     "id": "mark-rothko",
@@ -2023,7 +2087,8 @@
       "mark-rothko--untitled",
       "mark-rothko--no-6-yellow-white-blue-over-yellow-on-gray",
       "mark-rothko--seagram-murals"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "willem-de-kooning",
@@ -2045,7 +2110,8 @@
       "willem-de-kooning--woman-ochre",
       "willem-de-kooning--police-gazette",
       "willem-de-kooning--woman-vi"
-    ]
+    ],
+    "tier": "small"
   },
   {
     "id": "andy-warhol",
@@ -2081,7 +2147,8 @@
       "andy-warhol--cars",
       "andy-warhol--flowers",
       "andy-warhol--men-in-her-life"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "roy-lichtenstein",
@@ -2117,7 +2184,8 @@
       "roy-lichtenstein--crak",
       "roy-lichtenstein--girl-with-hair-ribbon",
       "roy-lichtenstein--golf-ball"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "jasper-johns",
@@ -2137,7 +2205,8 @@
       "jasper-johns--three-flags",
       "jasper-johns--map",
       "jasper-johns--racing-thoughts"
-    ]
+    ],
+    "tier": "small"
   },
   {
     "id": "jean-michel-basquiat",
@@ -2172,7 +2241,8 @@
       "jean-michel-basquiat--crown-hotel",
       "jean-michel-basquiat--defacement",
       "jean-michel-basquiat--donut-revenge"
-    ]
+    ],
+    "tier": "large"
   },
   {
     "id": "david-hockney",
@@ -2196,7 +2266,8 @@
       "david-hockney--we-two-boys-together-clinging",
       "david-hockney--portrait-of-sir-david-webster",
       "david-hockney--the-splash"
-    ]
+    ],
+    "tier": "medium"
   },
   {
     "id": "lucian-freud",
@@ -2217,7 +2288,8 @@
       "lucian-freud--after-cezanne",
       "lucian-freud--portrait-of-kitty",
       "lucian-freud--head-on-a-green-sofa"
-    ]
+    ],
+    "tier": "small"
   },
   {
     "id": "gerhard-richter",
@@ -2234,7 +2306,8 @@
     "wikipediaUrl": "https://en.wikipedia.org/wiki/Gerhard_Richter",
     "paintingIds": [
       "gerhard-richter--wand"
-    ]
+    ],
+    "tier": "small"
   },
   {
     "id": "francis-bacon",
@@ -2270,6 +2343,7 @@
       "francis-bacon--blood-on-the-floor",
       "francis-bacon--figure-in-a-landscape",
       "francis-bacon--head-ii"
-    ]
+    ],
+    "tier": "large"
   }
 ]

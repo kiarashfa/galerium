@@ -24,7 +24,7 @@ export default function GalleryApp() {
     () => artist.paintingIds.map((id) => data.paintingById.get(id)!).filter(Boolean),
     [artist, data],
   )
-  const room = useMemo(() => computeRoom(paintings), [paintings])
+  const room = useMemo(() => computeRoom(paintings, artist.tier), [paintings, artist.tier])
 
   const meshesRef = useRef<Map<string, THREE.Mesh>>(new Map())
   const register = useCallback((mesh: THREE.Mesh | null, paintingId: string) => {
