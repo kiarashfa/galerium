@@ -18,7 +18,11 @@
       "giotto--stefaneschi-triptych",
       "giotto--badia-polyptych",
       "giotto--saint-francis-receiving-the-stigmata",
-      "giotto--padua-crucifix"
+      "giotto--padua-crucifix",
+      "giotto--saint-stephen",
+      "giotto--berlin-crucifixion",
+      "giotto--life-of-christ",
+      "giotto--strasbourg-crucifixion"
     ]
   },
   {
@@ -40,7 +44,10 @@
       "cimabue--gualino-madonna",
       "cimabue--castelfiorentino-madonna",
       "cimabue--maesta",
-      "cimabue--the-mocking-of-christ"
+      "cimabue--the-mocking-of-christ",
+      "cimabue--diptych-of-devotion",
+      "cimabue--the-flagellation-of-christ",
+      "cimabue--virgin-and-child-with-two-angels"
     ]
   },
   {
@@ -85,7 +92,17 @@
       "fra-angelico--the-last-judgment",
       "fra-angelico--deposition-of-christ",
       "fra-angelico--fiesole-altarpiece",
-      "fra-angelico--madonna-of-humility"
+      "fra-angelico--madonna-of-humility",
+      "fra-angelico--coronation-of-the-virgin-fra-angelico-uffizi",
+      "fra-angelico--annunciation-of-san-giovanni-valdarno",
+      "fra-angelico--san-pietro-martire-triptych",
+      "fra-angelico--perugia-altarpiece",
+      "fra-angelico--tabernacle-of-the-linaioli",
+      "fra-angelico--cortona-triptych",
+      "fra-angelico--presentation-at-the-temple",
+      "fra-angelico--adoration-of-the-magi",
+      "fra-angelico--adoration-of-the-magi-san-marco",
+      "fra-angelico--croce-al-tempio-lamentation"
     ]
   },
   {
@@ -108,7 +125,8 @@
       "simone-martini--saint-louis-of-toulouse-crowning-his-brother-robert-of-anjou",
       "simone-martini--blessed-agostino-novello-triptych",
       "simone-martini--orsini-polyptych",
-      "simone-martini--saint-catherine-of-alexandria-polyptych"
+      "simone-martini--saint-catherine-of-alexandria-polyptych",
+      "simone-martini--san-martino-chapel"
     ]
   },
   {
@@ -132,7 +150,12 @@
       "leonardo-da-vinci--virgin-of-the-rocks",
       "leonardo-da-vinci--annunciation",
       "leonardo-da-vinci--saint-john-the-baptist",
-      "leonardo-da-vinci--la-belle-ferronniere"
+      "leonardo-da-vinci--la-belle-ferronniere",
+      "leonardo-da-vinci--the-virgin-and-child-with-saint-anne",
+      "leonardo-da-vinci--benois-madonna",
+      "leonardo-da-vinci--isleworth-mona-lisa",
+      "leonardo-da-vinci--la-scapigliata",
+      "leonardo-da-vinci--leda-and-the-swan"
     ]
   },
   {
@@ -154,7 +177,10 @@
       "michelangelo--doni-tondo",
       "michelangelo--the-entombment",
       "michelangelo--manchester-madonna",
-      "michelangelo--the-torment-of-saint-anthony"
+      "michelangelo--the-torment-of-saint-anthony",
+      "michelangelo--battle-of-cascina",
+      "michelangelo--leda-and-the-swan",
+      "michelangelo--the-crucifixion-of-saint-peter"
     ]
   },
   {
@@ -178,7 +204,17 @@
       "raphael--saint-george-and-the-dragon",
       "raphael--la-fornarina",
       "raphael--portrait-of-baldassare-castiglione",
-      "raphael--madonna-del-cardellino"
+      "raphael--madonna-del-cardellino",
+      "raphael--raphael-rooms",
+      "raphael--disputation-of-the-holy-sacrament",
+      "raphael--galatea",
+      "raphael--alba-madonna",
+      "raphael--la-velata",
+      "raphael--madonna-del-granduca",
+      "raphael--la-belle-jardiniere",
+      "raphael--madonna-della-seggiola",
+      "raphael--self-portrait",
+      "raphael--vision-of-a-knight"
     ]
   },
   {
@@ -202,7 +238,19 @@
       "titian--diana-and-actaeon",
       "titian--equestrian-portrait-of-charles-v",
       "titian--pieta",
-      "titian--penitent-magdalene"
+      "titian--penitent-magdalene",
+      "titian--sleeping-venus",
+      "titian--flora",
+      "titian--the-feast-of-the-gods",
+      "titian--allegory-of-prudence",
+      "titian--the-rape-of-europa",
+      "titian--woman-with-a-mirror",
+      "titian--la-bella",
+      "titian--pope-paul-iii-and-his-grandsons",
+      "titian--penitent-magdalene-titian-1565",
+      "titian--la-schiavona",
+      "titian--pastoral-concert",
+      "titian--tarquin-and-lucretia"
     ]
   },
   {
@@ -226,7 +274,17 @@
       "sandro-botticelli--madonna-of-the-magnificat",
       "sandro-botticelli--pallas-and-the-centaur",
       "sandro-botticelli--adoration-of-the-magi",
-      "sandro-botticelli--cestello-annunciation"
+      "sandro-botticelli--cestello-annunciation",
+      "sandro-botticelli--adoration-of-the-magi-botticelli",
+      "sandro-botticelli--calumny-of-apelles",
+      "sandro-botticelli--portrait-of-a-young-woman",
+      "sandro-botticelli--youth-of-moses",
+      "sandro-botticelli--punishment-of-the-sons-of-korah",
+      "sandro-botticelli--temptations-of-christ",
+      "sandro-botticelli--the-story-of-lucretia",
+      "sandro-botticelli--virgin-and-child-with-an-angel",
+      "sandro-botticelli--bardi-madonna",
+      "sandro-botticelli--portrait-of-a-young-man-holding-a-roundel"
     ]
   },
   {
@@ -249,7 +307,19 @@
       "jan-van-eyck--madonna-in-the-church",
       "jan-van-eyck--virgin-and-child-with-canon-van-der-paele",
       "jan-van-eyck--dresden-triptych",
-      "jan-van-eyck--lucca-madonna"
+      "jan-van-eyck--lucca-madonna",
+      "jan-van-eyck--portrait-of-a-man",
+      "jan-van-eyck--ince-hall-madonna",
+      "jan-van-eyck--annunciation",
+      "jan-van-eyck--crucifixion-and-last-judgement-diptych",
+      "jan-van-eyck--leal-souvenir",
+      "jan-van-eyck--madonna-at-the-fountain",
+      "jan-van-eyck--madonna-of-jan-vos",
+      "jan-van-eyck--madonna-of-nicolas-van-maelbeke",
+      "jan-van-eyck--portrait-of-a-man-with-a-blue-chaperon",
+      "jan-van-eyck--portrait-of-a-man-with-carnation",
+      "jan-van-eyck--portrait-of-baudouin-de-lannoy",
+      "jan-van-eyck--portrait-of-cardinal-niccolo-albergati"
     ]
   },
   {
@@ -273,7 +343,19 @@
       "caravaggio--basket-of-fruit",
       "caravaggio--supper-at-emmaus",
       "caravaggio--the-entombment-of-christ",
-      "caravaggio--the-cardsharps"
+      "caravaggio--the-cardsharps",
+      "caravaggio--amor-vincit-omnia",
+      "caravaggio--medusa",
+      "caravaggio--young-sick-bacchus",
+      "caravaggio--death-of-the-virgin",
+      "caravaggio--the-fortune-teller",
+      "caravaggio--boy-with-a-basket-of-fruit",
+      "caravaggio--crucifixion-of-saint-peter",
+      "caravaggio--the-martyrdom-of-saint-matthew",
+      "caravaggio--the-inspiration-of-saint-matthew",
+      "caravaggio--the-taking-of-christ",
+      "caravaggio--boy-bitten-by-a-lizard",
+      "caravaggio--rest-on-the-flight-into-egypt"
     ]
   },
   {
@@ -297,7 +379,19 @@
       "rembrandt--belshazzar-s-feast",
       "rembrandt--the-return-of-the-prodigal-son",
       "rembrandt--aristotle-with-a-bust-of-homer",
-      "rembrandt--self-portrait-with-two-circles"
+      "rembrandt--self-portrait-with-two-circles",
+      "rembrandt--danae",
+      "rembrandt--syndics-of-the-drapers-guild",
+      "rembrandt--bathsheba-at-her-bath",
+      "rembrandt--moses-breaking-the-tablets-of-the-law",
+      "rembrandt--the-abduction-of-europa",
+      "rembrandt--the-prodigal-son-in-the-brothel",
+      "rembrandt--flora",
+      "rembrandt--judith-at-the-banquet-of-holofernes",
+      "rembrandt--the-stoning-of-saint-stephen",
+      "rembrandt--balaam-and-the-ass",
+      "rembrandt--andromeda-chained-to-the-rocks",
+      "rembrandt--jacob-blessing-the-sons-of-joseph"
     ]
   },
   {
@@ -321,7 +415,18 @@
       "johannes-vermeer--the-astronomer",
       "johannes-vermeer--the-geographer",
       "johannes-vermeer--the-little-street",
-      "johannes-vermeer--girl-reading-a-letter-at-an-open-window"
+      "johannes-vermeer--girl-reading-a-letter-at-an-open-window",
+      "johannes-vermeer--the-concert",
+      "johannes-vermeer--the-music-lesson",
+      "johannes-vermeer--the-lacemaker",
+      "johannes-vermeer--christ-in-the-house-of-martha-and-mary",
+      "johannes-vermeer--woman-with-a-water-jug",
+      "johannes-vermeer--the-wine-glass",
+      "johannes-vermeer--lady-writing-a-letter-with-her-maid",
+      "johannes-vermeer--the-allegory-of-faith",
+      "johannes-vermeer--the-love-letter",
+      "johannes-vermeer--girl-interrupted-at-her-music",
+      "johannes-vermeer--study-of-a-young-woman"
     ]
   },
   {
@@ -345,7 +450,17 @@
       "peter-paul-rubens--the-garden-of-love",
       "peter-paul-rubens--daniel-in-the-lions-den",
       "peter-paul-rubens--the-hippopotamus-and-crocodile-hunt",
-      "peter-paul-rubens--the-fall-of-the-damned"
+      "peter-paul-rubens--the-fall-of-the-damned",
+      "peter-paul-rubens--the-rape-of-the-daughters-of-leucippus",
+      "peter-paul-rubens--honeysuckle-bower",
+      "peter-paul-rubens--the-three-graces",
+      "peter-paul-rubens--romulus-and-remus",
+      "peter-paul-rubens--medusa",
+      "peter-paul-rubens--the-judgement-of-paris",
+      "peter-paul-rubens--the-fall-of-man",
+      "peter-paul-rubens--the-birth-of-the-milky-way",
+      "peter-paul-rubens--the-garden-of-eden-with-the-fall-of-man",
+      "peter-paul-rubens--saturn"
     ]
   },
   {
@@ -369,7 +484,16 @@
       "diego-velazquez--the-triumph-of-bacchus",
       "diego-velazquez--apollo-in-the-forge-of-vulcan",
       "diego-velazquez--old-woman-frying-eggs",
-      "diego-velazquez--the-waterseller-of-seville"
+      "diego-velazquez--the-waterseller-of-seville",
+      "diego-velazquez--the-lunch",
+      "diego-velazquez--the-farmers-lunch",
+      "diego-velazquez--adoration-of-the-magi",
+      "diego-velazquez--three-musicians",
+      "diego-velazquez--christ-in-the-house-of-martha-and-mary",
+      "diego-velazquez--saint-paul",
+      "diego-velazquez--the-kitchen-maid",
+      "diego-velazquez--female-figure",
+      "diego-velazquez--prince-baltasar-carlos-in-the-riding-school"
     ]
   },
   {
@@ -393,7 +517,18 @@
       "artemisia-gentileschi--judith-and-her-maidservant",
       "artemisia-gentileschi--self-portrait-as-saint-catherine-of-alexandria",
       "artemisia-gentileschi--lucretia",
-      "artemisia-gentileschi--danae"
+      "artemisia-gentileschi--danae",
+      "artemisia-gentileschi--esther-before-ahasuerus",
+      "artemisia-gentileschi--jael-and-sisera",
+      "artemisia-gentileschi--mary-magdalene",
+      "artemisia-gentileschi--self-portrait-as-a-female-martyr",
+      "artemisia-gentileschi--self-portrait-as-a-lute-player",
+      "artemisia-gentileschi--adoration-of-the-magi",
+      "artemisia-gentileschi--lot-and-his-daughters",
+      "artemisia-gentileschi--lucretia-artemisia-gentileschi-potsdam",
+      "artemisia-gentileschi--madonna-and-child",
+      "artemisia-gentileschi--saint-cecilia",
+      "artemisia-gentileschi--allegory-of-painting"
     ]
   },
   {
@@ -417,7 +552,19 @@
       "antoine-watteau--the-embarrassing-proposal",
       "antoine-watteau--fetes-venitiennes",
       "antoine-watteau--l-indifferent",
-      "antoine-watteau--the-two-cousins"
+      "antoine-watteau--the-two-cousins",
+      "antoine-watteau--jupiter-and-antiope",
+      "antoine-watteau--actors-of-the-comedie-francaise",
+      "antoine-watteau--the-chord",
+      "antoine-watteau--the-faux-pas",
+      "antoine-watteau--cupid-disarmed",
+      "antoine-watteau--pastoral-pleasure",
+      "antoine-watteau--the-country-dance",
+      "antoine-watteau--the-dreamer",
+      "antoine-watteau--the-surprise",
+      "antoine-watteau--the-worried-lover",
+      "antoine-watteau--la-boudeuse",
+      "antoine-watteau--marriage-contract-and-country-dancing"
     ]
   },
   {
@@ -439,7 +586,21 @@
       "francois-boucher--the-blonde-odalisque",
       "francois-boucher--lovers-in-a-park",
       "francois-boucher--pompadour-at-her-toilette",
-      "francois-boucher--the-brunette-odalisque"
+      "francois-boucher--the-brunette-odalisque",
+      "francois-boucher--diana-bathing",
+      "francois-boucher--the-birth-of-venus",
+      "francois-boucher--the-setting-of-the-sun",
+      "francois-boucher--the-triumph-of-venus",
+      "francois-boucher--aurora-and-cephalus",
+      "francois-boucher--hercules-and-omphale",
+      "francois-boucher--jupiter-and-callisto",
+      "francois-boucher--pastoral-with-a-couple-near-a-fountain",
+      "francois-boucher--venus-consoling-love",
+      "francois-boucher--fishing",
+      "francois-boucher--landscape-near-beauvais",
+      "francois-boucher--the-rising-of-the-sun",
+      "francois-boucher--jupiter-and-callisto-boucher-1759",
+      "francois-boucher--diana-returning-from-the-hunt"
     ]
   },
   {
@@ -463,7 +624,18 @@
       "jean-honore-fragonard--blind-man-s-buff",
       "jean-honore-fragonard--the-see-saw",
       "jean-honore-fragonard--the-music-lesson",
-      "jean-honore-fragonard--coresus-sacrificing-himself-to-save-callirhoe"
+      "jean-honore-fragonard--coresus-sacrificing-himself-to-save-callirhoe",
+      "jean-honore-fragonard--blind-man-s-bluff",
+      "jean-honore-fragonard--jeroboam-sacrificing-to-idols",
+      "jean-honore-fragonard--the-new-model",
+      "jean-honore-fragonard--la-gimblette",
+      "jean-honore-fragonard--the-raised-chemise",
+      "jean-honore-fragonard--jean-claude-richard-abbot-of-saint-non-dressed-a-l-espagnole",
+      "jean-honore-fragonard--psyche-showing-her-sisters-her-gifts-from-cupid",
+      "jean-honore-fragonard--the-visit-to-the-nursery",
+      "jean-honore-fragonard--the-storm",
+      "jean-honore-fragonard--the-woman-with-a-dog",
+      "jean-honore-fragonard--adoration-of-the-shepherds"
     ]
   },
   {
@@ -487,7 +659,10 @@
       "jean-baptiste-simeon-chardin--boy-with-a-spinning-top",
       "jean-baptiste-simeon-chardin--the-laundress",
       "jean-baptiste-simeon-chardin--girl-with-a-racquet",
-      "jean-baptiste-simeon-chardin--the-kitchen-maid"
+      "jean-baptiste-simeon-chardin--the-kitchen-maid",
+      "jean-baptiste-simeon-chardin--the-buffet",
+      "jean-baptiste-simeon-chardin--the-attributes-of-music-the-arts-and-the-sciences",
+      "jean-baptiste-simeon-chardin--the-attributes-of-civilian-and-military-music"
     ]
   },
   {
@@ -511,7 +686,19 @@
       "jacques-louis-david--the-death-of-socrates",
       "jacques-louis-david--the-lictors-bring-to-brutus-the-bodies-of-his-sons",
       "jacques-louis-david--belisarius-begging-for-alms",
-      "jacques-louis-david--leonidas-at-thermopylae"
+      "jacques-louis-david--leonidas-at-thermopylae",
+      "jacques-louis-david--the-intervention-of-the-sabine-women",
+      "jacques-louis-david--the-emperor-napoleon-in-his-study-at-the-tuileries",
+      "jacques-louis-david--mars-being-disarmed-by-venus",
+      "jacques-louis-david--portrait-of-madame-recamier",
+      "jacques-louis-david--erasistratus-discovering-the-cause-of-antiochus-disease",
+      "jacques-louis-david--andromache-mourning-hector",
+      "jacques-louis-david--the-death-of-seneca",
+      "jacques-louis-david--portrait-of-antoine-and-marie-anne-lavoisier",
+      "jacques-louis-david--the-loves-of-paris-and-helen",
+      "jacques-louis-david--love-and-psyche",
+      "jacques-louis-david--the-anger-of-achilles",
+      "jacques-louis-david--the-distribution-of-the-eagle-standards"
     ]
   },
   {
@@ -535,7 +722,19 @@
       "jean-auguste-dominique-ingres--jupiter-and-thetis",
       "jean-auguste-dominique-ingres--oedipus-and-the-sphinx",
       "jean-auguste-dominique-ingres--the-source",
-      "jean-auguste-dominique-ingres--joan-of-arc-at-the-coronation-of-charles-vii"
+      "jean-auguste-dominique-ingres--joan-of-arc-at-the-coronation-of-charles-vii",
+      "jean-auguste-dominique-ingres--napoleon-i-on-his-imperial-throne",
+      "jean-auguste-dominique-ingres--portrait-of-madame-moitessier",
+      "jean-auguste-dominique-ingres--venus-anadyomene",
+      "jean-auguste-dominique-ingres--portrait-of-monsieur-bertin",
+      "jean-auguste-dominique-ingres--mademoiselle-caroline-riviere",
+      "jean-auguste-dominique-ingres--the-ambassadors-of-agamemnon-in-the-tent-of-achilles",
+      "jean-auguste-dominique-ingres--the-princesse-de-broglie",
+      "jean-auguste-dominique-ingres--odalisque-with-slave",
+      "jean-auguste-dominique-ingres--portrait-of-comtesse-d-haussonville",
+      "jean-auguste-dominique-ingres--the-death-of-leonardo-da-vinci",
+      "jean-auguste-dominique-ingres--the-illness-of-antiochus",
+      "jean-auguste-dominique-ingres--portrait-of-madame-de-senonnes"
     ]
   },
   {
@@ -559,7 +758,18 @@
       "elisabeth-vigee-le-brun--lady-hamilton-as-a-bacchante",
       "elisabeth-vigee-le-brun--portrait-of-countess-golovina",
       "elisabeth-vigee-le-brun--madame-de-stael-as-corinne-at-cape-miseno",
-      "elisabeth-vigee-le-brun--portrait-of-hubert-robert"
+      "elisabeth-vigee-le-brun--portrait-of-hubert-robert",
+      "elisabeth-vigee-le-brun--self-portrait-with-julie-self-portrait-a-la-grecque",
+      "elisabeth-vigee-le-brun--portrait-of-princess-maria-christina",
+      "elisabeth-vigee-le-brun--comtesse-de-la-chatre",
+      "elisabeth-vigee-le-brun--portrait-of-countess-yekaterina-skavronskaya",
+      "elisabeth-vigee-le-brun--self-portrait-painting-marie-antoinette",
+      "elisabeth-vigee-le-brun--peace-bringing-back-abundance",
+      "elisabeth-vigee-le-brun--portrait-of-charles-alexandre-de-calonne",
+      "elisabeth-vigee-le-brun--portrait-of-countess-yekaterina-von-engelhardt",
+      "elisabeth-vigee-le-brun--anne-pitt-as-hebe",
+      "elisabeth-vigee-le-brun--portrait-of-joseph-vernet",
+      "elisabeth-vigee-le-brun--portrait-of-muhammad-dervish-khan"
     ]
   },
   {
@@ -606,7 +816,19 @@
       "claude-monet--rouen-cathedral",
       "claude-monet--water-lilies",
       "claude-monet--garden-at-sainte-adresse",
-      "claude-monet--la-grenouillere"
+      "claude-monet--la-grenouillere",
+      "claude-monet--women-in-the-garden",
+      "claude-monet--woman-in-the-garden",
+      "claude-monet--le-dejeuner-sur-l-herbe",
+      "claude-monet--la-japonaise",
+      "claude-monet--regatta-at-sainte-adresse",
+      "claude-monet--regatta-at-argenteuil",
+      "claude-monet--the-artist-s-garden-at-giverny",
+      "claude-monet--gare-saint-lazare",
+      "claude-monet--poplars",
+      "claude-monet--san-giorgio-maggiore-at-dusk",
+      "claude-monet--springtime",
+      "claude-monet--beach-in-pourville"
     ]
   },
   {
@@ -630,7 +852,18 @@
       "pierre-auguste-renoir--the-swing",
       "pierre-auguste-renoir--girls-at-the-piano",
       "pierre-auguste-renoir--dance-in-the-city",
-      "pierre-auguste-renoir--pink-and-blue"
+      "pierre-auguste-renoir--pink-and-blue",
+      "pierre-auguste-renoir--les-grandes-baigneuses",
+      "pierre-auguste-renoir--the-umbrellas",
+      "pierre-auguste-renoir--two-sisters",
+      "pierre-auguste-renoir--dance-in-the-country",
+      "pierre-auguste-renoir--in-summer",
+      "pierre-auguste-renoir--lise-with-a-parasol",
+      "pierre-auguste-renoir--portrait-of-irene-cahen-d-anvers",
+      "pierre-auguste-renoir--la-grenouillere",
+      "pierre-auguste-renoir--la-promenade",
+      "pierre-auguste-renoir--the-day-dream",
+      "pierre-auguste-renoir--la-parisienne"
     ]
   },
   {
@@ -654,7 +887,19 @@
       "edgar-degas--miss-la-la-at-the-cirque-fernando",
       "edgar-degas--place-de-la-concorde",
       "edgar-degas--the-orchestra-at-the-opera",
-      "edgar-degas--young-spartans-exercising"
+      "edgar-degas--young-spartans-exercising",
+      "edgar-degas--the-bellelli-family",
+      "edgar-degas--interior",
+      "edgar-degas--count-lepic-and-his-daughters",
+      "edgar-degas--the-millinery-shop",
+      "edgar-degas--the-dancing-class",
+      "edgar-degas--before-the-race",
+      "edgar-degas--lorenzo-pagans-and-auguste-de-gas",
+      "edgar-degas--the-collector-of-prints",
+      "edgar-degas--ballerina-posing-for-a-photographer",
+      "edgar-degas--portraits-at-the-stock-exchange",
+      "edgar-degas--the-dance-lesson",
+      "edgar-degas--dance-class-at-the-opera"
     ]
   },
   {
@@ -678,7 +923,19 @@
       "benjamin-west--the-death-of-nelson",
       "benjamin-west--the-battle-of-la-hogue",
       "benjamin-west--the-departure-of-regulus",
-      "benjamin-west--agrippina-landing-at-brundisium-with-the-ashes-of-germanicus"
+      "benjamin-west--agrippina-landing-at-brundisium-with-the-ashes-of-germanicus",
+      "benjamin-west--general-johnson-saving-a-wounded-french-officer-from-the-tom",
+      "benjamin-west--treaty-of-paris",
+      "benjamin-west--portrait-of-dr-richard-price",
+      "benjamin-west--colonel-guy-johnson-and-karonghyontye",
+      "benjamin-west--edward-iii-crossing-the-somme",
+      "benjamin-west--portrait-of-george-iii",
+      "benjamin-west--portrait-of-queen-charlotte",
+      "benjamin-west--queen-philippa-at-the-battle-of-neville-s-cross",
+      "benjamin-west--the-institution-of-the-order-of-the-garter",
+      "benjamin-west--the-oath-of-hannibal",
+      "benjamin-west--alexander-iii-of-scotland-rescued-from-the-fury-of-a-stag-by",
+      "benjamin-west--alfred-the-great-dividing-his-loaf-with-a-pilgrim"
     ]
   },
   {
@@ -702,7 +959,19 @@
       "angelica-kauffman--virgil-reading-the-aeneid-to-augustus-and-octavia",
       "angelica-kauffman--the-sorrow-of-telemachus",
       "angelica-kauffman--vortigern-and-rowena",
-      "angelica-kauffman--sappho-inspired-by-love"
+      "angelica-kauffman--sappho-inspired-by-love",
+      "angelica-kauffman--ferdinand-i-and-his-family",
+      "angelica-kauffman--hector-summoning-paris-to-battle",
+      "angelica-kauffman--portrait-of-winckelmann",
+      "angelica-kauffman--telemachus-and-the-nymphs-of-calypso",
+      "angelica-kauffman--the-parting-of-abelard-and-heloise",
+      "angelica-kauffman--venus-persuading-helen-to-love-paris",
+      "angelica-kauffman--jupiter-disguised-as-diana-seducing-callisto",
+      "angelica-kauffman--self-portrait",
+      "angelica-kauffman--bacchantes",
+      "angelica-kauffman--portrait-of-david-garrick",
+      "angelica-kauffman--portrait-of-ludwig-crown-prince-of-bavaria",
+      "angelica-kauffman--armida-in-vain-endeavours-with-her-entreaties-to-prevent-rin"
     ]
   },
   {
@@ -726,7 +995,19 @@
       "francisco-goya--la-maja-vestida",
       "francisco-goya--charles-iv-of-spain-and-his-family",
       "francisco-goya--witches-sabbath",
-      "francisco-goya--the-dog"
+      "francisco-goya--the-dog",
+      "francisco-goya--black-paintings",
+      "francisco-goya--manuel-osorio-manrique-de-zuniga",
+      "francisco-goya--portrait-of-dona-isabel-de-porcel",
+      "francisco-goya--portrait-of-the-marchioness-of-santa-cruz",
+      "francisco-goya--self-portrait-with-dr-arrieta",
+      "francisco-goya--the-burial-of-the-sardine",
+      "francisco-goya--the-countess-of-chinchon",
+      "francisco-goya--asmodea",
+      "francisco-goya--the-family-of-the-infante-don-luis",
+      "francisco-goya--the-inquisition-tribunal",
+      "francisco-goya--the-madhouse",
+      "francisco-goya--truth-time-and-history"
     ]
   },
   {
@@ -750,7 +1031,19 @@
       "caspar-david-friedrich--chalk-cliffs-on-rugen",
       "caspar-david-friedrich--the-stages-of-life",
       "caspar-david-friedrich--two-men-contemplating-the-moon",
-      "caspar-david-friedrich--cross-in-the-mountains"
+      "caspar-david-friedrich--cross-in-the-mountains",
+      "caspar-david-friedrich--mountain-landscape-with-rainbow",
+      "caspar-david-friedrich--the-lonely-tree",
+      "caspar-david-friedrich--the-tree-of-crows",
+      "caspar-david-friedrich--the-watzmann",
+      "caspar-david-friedrich--woman-at-a-window",
+      "caspar-david-friedrich--the-port-of-greifswald",
+      "caspar-david-friedrich--cairn-in-snow",
+      "caspar-david-friedrich--evening",
+      "caspar-david-friedrich--moonrise-by-the-sea",
+      "caspar-david-friedrich--cabin-in-the-snow",
+      "caspar-david-friedrich--morning-on-the-riesengebirge",
+      "caspar-david-friedrich--neubrandenburg"
     ]
   },
   {
@@ -774,7 +1067,18 @@
       "eugene-delacroix--women-of-algiers",
       "eugene-delacroix--entry-of-the-crusaders-in-constantinople",
       "eugene-delacroix--greece-on-the-ruins-of-missolonghi",
-      "eugene-delacroix--the-lion-hunt"
+      "eugene-delacroix--the-lion-hunt",
+      "eugene-delacroix--orphan-girl-at-the-cemetery",
+      "eugene-delacroix--jewish-wedding-in-morocco",
+      "eugene-delacroix--woman-stroking-a-parrot",
+      "eugene-delacroix--last-words-of-the-emperor-marcus-aurelius",
+      "eugene-delacroix--a-young-tiger-playing-with-its-mother",
+      "eugene-delacroix--mademoiselle-rose",
+      "eugene-delacroix--the-abduction-of-rebecca",
+      "eugene-delacroix--the-battle-of-taillebourg-21-july-1242",
+      "eugene-delacroix--the-bride-of-abydos",
+      "eugene-delacroix--the-sultan-of-morocco",
+      "eugene-delacroix--christ-on-the-cross"
     ]
   },
   {
@@ -798,7 +1102,19 @@
       "jmw-turner--the-burning-of-the-houses-of-lords-and-commons",
       "jmw-turner--dido-building-carthage",
       "jmw-turner--ulysses-deriding-polyphemus",
-      "jmw-turner--norham-castle-sunrise"
+      "jmw-turner--norham-castle-sunrise",
+      "jmw-turner--the-battle-of-trafalgar",
+      "jmw-turner--snow-storm-hannibal-and-his-army-crossing-the-alps",
+      "jmw-turner--dolbadarn-castle",
+      "jmw-turner--fishermen-at-sea",
+      "jmw-turner--sunrise-with-sea-monsters",
+      "jmw-turner--light-and-colour-goethe-s-theory-the-morning-after-the-delug",
+      "jmw-turner--modern-rome-campo-vaccino",
+      "jmw-turner--the-golden-bough",
+      "jmw-turner--chichester-canal",
+      "jmw-turner--rome-from-mount-aventine",
+      "jmw-turner--rome-from-the-vatican",
+      "jmw-turner--the-fifth-plague-of-egypt"
     ]
   },
   {
@@ -822,7 +1138,9 @@
       "theodore-gericault--portrait-of-a-kleptomaniac",
       "theodore-gericault--the-woman-with-a-gambling-mania",
       "theodore-gericault--monomaniac-of-envy",
-      "theodore-gericault--evening-landscape-with-an-aqueduct"
+      "theodore-gericault--evening-landscape-with-an-aqueduct",
+      "theodore-gericault--the-melancholic-man",
+      "theodore-gericault--a-charge-of-cuirassiers"
     ]
   },
   {
@@ -867,7 +1185,19 @@
       "gustave-courbet--the-meeting",
       "gustave-courbet--self-portrait-with-a-black-dog",
       "gustave-courbet--the-wheat-sifters",
-      "gustave-courbet--the-wave"
+      "gustave-courbet--the-wave",
+      "gustave-courbet--l-origine-du-monde",
+      "gustave-courbet--le-sommeil",
+      "gustave-courbet--woman-with-a-parrot",
+      "gustave-courbet--the-woman-in-the-waves",
+      "gustave-courbet--young-ladies-beside-the-seine",
+      "gustave-courbet--the-source",
+      "gustave-courbet--the-wounded-man",
+      "gustave-courbet--femme-nue-couchee",
+      "gustave-courbet--killing-a-deer",
+      "gustave-courbet--the-bathers",
+      "gustave-courbet--the-bacchante",
+      "gustave-courbet--after-dinner-at-ornans"
     ]
   },
   {
@@ -891,7 +1221,12 @@
       "jean-francois-millet--shepherdess-with-her-flock",
       "jean-francois-millet--the-winnower",
       "jean-francois-millet--the-potato-harvest",
-      "jean-francois-millet--starry-night"
+      "jean-francois-millet--starry-night",
+      "jean-francois-millet--haystacks-autumn",
+      "jean-francois-millet--shepherdess-seated-on-a-rock",
+      "jean-francois-millet--the-beakful",
+      "jean-francois-millet--peasant-with-a-wheelbarrow",
+      "jean-francois-millet--peasant-women-with-brushwood"
     ]
   },
   {
@@ -915,7 +1250,19 @@
       "edouard-manet--music-in-the-tuileries",
       "edouard-manet--the-railway",
       "edouard-manet--the-old-musician",
-      "edouard-manet--the-execution-of-emperor-maximilian"
+      "edouard-manet--the-execution-of-emperor-maximilian",
+      "edouard-manet--the-fifer",
+      "edouard-manet--nana",
+      "edouard-manet--berthe-morisot-with-a-bouquet-of-violets",
+      "edouard-manet--plum-brandy",
+      "edouard-manet--portrait-of-emile-zola",
+      "edouard-manet--spring",
+      "edouard-manet--le-suicide",
+      "edouard-manet--the-absinthe-drinker",
+      "edouard-manet--the-spanish-singer",
+      "edouard-manet--la-nymphe-surprise",
+      "edouard-manet--in-the-conservatory",
+      "edouard-manet--boating"
     ]
   },
   {
@@ -939,7 +1286,10 @@
       "berthe-morisot--woman-at-her-toilette",
       "berthe-morisot--the-mother-and-sister-of-the-artist",
       "berthe-morisot--the-harbor-at-lorient",
-      "berthe-morisot--the-psyche-mirror"
+      "berthe-morisot--the-psyche-mirror",
+      "berthe-morisot--in-a-park",
+      "berthe-morisot--la-petite-nicoise",
+      "berthe-morisot--young-girl-in-a-park"
     ]
   },
   {
@@ -963,7 +1313,15 @@
       "mary-cassatt--in-the-loge",
       "mary-cassatt--lady-at-the-tea-table",
       "mary-cassatt--young-mother-sewing",
-      "mary-cassatt--the-tea"
+      "mary-cassatt--the-tea",
+      "mary-cassatt--woman-with-a-pearl-necklace-in-a-loge",
+      "mary-cassatt--girl-arranging-her-hair",
+      "mary-cassatt--mother-and-child",
+      "mary-cassatt--woman-with-a-sunflower",
+      "mary-cassatt--a-woman-and-a-girl-driving",
+      "mary-cassatt--lilacs-in-a-window",
+      "mary-cassatt--lydia-crocheting-in-the-garden-at-marly",
+      "mary-cassatt--portrait-of-the-artist"
     ]
   },
   {
@@ -986,7 +1344,19 @@
       "alfred-sisley--frost-in-louveciennes",
       "alfred-sisley--place-du-chenil-in-marly-snow-effect",
       "alfred-sisley--the-seine-at-bougival",
-      "alfred-sisley--under-hampton-court-bridge"
+      "alfred-sisley--under-hampton-court-bridge",
+      "alfred-sisley--avenue-of-chestnut-trees-at-la-celle-saint-cloud",
+      "alfred-sisley--the-seine-at-port-marly-piles-of-sand",
+      "alfred-sisley--the-banks-of-the-oise",
+      "alfred-sisley--view-of-the-canal-saint-martin",
+      "alfred-sisley--chemin-de-la-machine-louveciennes",
+      "alfred-sisley--the-small-meadows-in-spring-by",
+      "alfred-sisley--a-street-in-marly",
+      "alfred-sisley--avenue-of-poplars-near-moret-sur-loing",
+      "alfred-sisley--ferry-to-the-ile-de-la-loge-flood",
+      "alfred-sisley--rue-de-la-chaussee-in-argenteuil",
+      "alfred-sisley--the-canal-du-loing",
+      "alfred-sisley--the-seine-at-argenteuil"
     ]
   },
   {
@@ -1010,7 +1380,18 @@
       "vincent-van-gogh--wheatfield-with-crows",
       "vincent-van-gogh--self-portrait-with-bandaged-ear",
       "vincent-van-gogh--irises",
-      "vincent-van-gogh--almond-blossoms"
+      "vincent-van-gogh--almond-blossoms",
+      "vincent-van-gogh--portrait-of-dr-gachet",
+      "vincent-van-gogh--bedroom-in-arles",
+      "vincent-van-gogh--starry-night-over-the-rhone",
+      "vincent-van-gogh--the-night-cafe",
+      "vincent-van-gogh--the-church-at-auvers",
+      "vincent-van-gogh--the-red-vineyard",
+      "vincent-van-gogh--the-yellow-house",
+      "vincent-van-gogh--sunset-at-montmajour",
+      "vincent-van-gogh--portrait-of-pere-tanguy",
+      "vincent-van-gogh--skull-of-a-skeleton-with-burning-cigarette",
+      "vincent-van-gogh--the-parsonage-garden-at-nuenen"
     ]
   },
   {
@@ -1034,7 +1415,18 @@
       "paul-cezanne--pyramid-of-skulls",
       "paul-cezanne--the-hanged-man-s-house",
       "paul-cezanne--a-modern-olympia",
-      "paul-cezanne--still-life-with-apples-and-oranges"
+      "paul-cezanne--still-life-with-apples-and-oranges",
+      "paul-cezanne--pierrot-and-harlequin",
+      "paul-cezanne--the-boy-in-the-red-vest",
+      "paul-cezanne--lady-in-blue",
+      "paul-cezanne--mont-sainte-victoire-seen-from-bellevue",
+      "paul-cezanne--rideau-cruchon-et-compotier",
+      "paul-cezanne--the-overture-to-tannhauser",
+      "paul-cezanne--house-in-provence",
+      "paul-cezanne--mont-sainte-victoire-with-large-pine",
+      "paul-cezanne--forest",
+      "paul-cezanne--still-life-with-peaches-and-pears",
+      "paul-cezanne--portrait-of-ambroise-vollard"
     ]
   },
   {
@@ -1058,7 +1450,19 @@
       "paul-gauguin--spirit-of-the-dead-watching",
       "paul-gauguin--two-tahitian-women",
       "paul-gauguin--ia-orana-maria",
-      "paul-gauguin--nevermore"
+      "paul-gauguin--nevermore",
+      "paul-gauguin--tahitian-women-on-the-beach",
+      "paul-gauguin--the-green-christ",
+      "paul-gauguin--aha-oe-feii",
+      "paul-gauguin--vincent-van-gogh-painting-sunflowers",
+      "paul-gauguin--study-of-a-nude",
+      "paul-gauguin--tahitian-woman-with-a-flower",
+      "paul-gauguin--arearea",
+      "paul-gauguin--fatata-te-miti",
+      "paul-gauguin--self-portrait-in-a-hat",
+      "paul-gauguin--the-beautiful-angel",
+      "paul-gauguin--vairumati",
+      "paul-gauguin--self-portrait-with-the-yellow-christ"
     ]
   },
   {
@@ -1082,7 +1486,8 @@
       "georges-seurat--parade-de-cirque",
       "georges-seurat--models",
       "georges-seurat--young-woman-powdering-herself",
-      "georges-seurat--the-channel-of-gravelines-petit-fort-philippe"
+      "georges-seurat--the-channel-of-gravelines-petit-fort-philippe",
+      "georges-seurat--the-lighthouse-at-honfleur"
     ]
   },
   {
@@ -1106,7 +1511,13 @@
       "henri-de-toulouse-lautrec--marcelle-lender",
       "henri-de-toulouse-lautrec--la-toilette",
       "henri-de-toulouse-lautrec--portrait-of-vincent-van-gogh",
-      "henri-de-toulouse-lautrec--the-englishman-at-the-moulin-rouge"
+      "henri-de-toulouse-lautrec--the-englishman-at-the-moulin-rouge",
+      "henri-de-toulouse-lautrec--la-blanchisseuse",
+      "henri-de-toulouse-lautrec--count-alphonse-de-toulouse-lautrec-driving-his-mail-coach",
+      "henri-de-toulouse-lautrec--the-tightrope-dancer",
+      "henri-de-toulouse-lautrec--portrait-of-suzanne-valadon",
+      "henri-de-toulouse-lautrec--at-grenelle-absinthe-drinker",
+      "henri-de-toulouse-lautrec--the-hangover"
     ]
   },
   {
@@ -1130,7 +1541,18 @@
       "edvard-munch--anxiety",
       "edvard-munch--evening-on-karl-johan",
       "edvard-munch--the-kiss",
-      "edvard-munch--starry-night"
+      "edvard-munch--starry-night",
+      "edvard-munch--love-and-pain",
+      "edvard-munch--melancholy",
+      "edvard-munch--jealousy",
+      "edvard-munch--inger-on-the-beach",
+      "edvard-munch--puberty",
+      "edvard-munch--christmas-in-the-brothel",
+      "edvard-munch--self-portrait-between-the-clock-and-the-bed",
+      "edvard-munch--ashes",
+      "edvard-munch--death-and-the-child",
+      "edvard-munch--morning-yawn",
+      "edvard-munch--self-portrait-with-cigarette"
     ]
   },
   {
@@ -1154,7 +1576,9 @@
       "ernst-ludwig-kirchner--the-red-tower-in-halle",
       "ernst-ludwig-kirchner--portrait-of-erna-schilling",
       "ernst-ludwig-kirchner--archers",
-      "ernst-ludwig-kirchner--the-bridge-near-wiesen"
+      "ernst-ludwig-kirchner--the-bridge-near-wiesen",
+      "ernst-ludwig-kirchner--female-half-length-nude-with-hat",
+      "ernst-ludwig-kirchner--alpine-kitchen"
     ]
   },
   {
@@ -1178,7 +1602,11 @@
       "franz-marc--the-foxes",
       "franz-marc--little-blue-horse",
       "franz-marc--blue-horses",
-      "franz-marc--horses-in-landscape"
+      "franz-marc--horses-in-landscape",
+      "franz-marc--fox",
+      "franz-marc--hut-in-dachau-moors",
+      "franz-marc--indersdorf",
+      "franz-marc--two-women-on-the-hillside"
     ]
   },
   {
@@ -1225,7 +1653,10 @@
       "wassily-kandinsky--das-bunte-leben",
       "wassily-kandinsky--landscape-with-red-spots",
       "wassily-kandinsky--auf-weiss-ii",
-      "wassily-kandinsky--composition-x"
+      "wassily-kandinsky--composition-x",
+      "wassily-kandinsky--simple-complexity",
+      "wassily-kandinsky--upward",
+      "wassily-kandinsky--three-elements"
     ]
   },
   {
@@ -1249,7 +1680,19 @@
       "salvador-dali--metamorphosis-of-narcissus",
       "salvador-dali--swans-reflecting-elephants",
       "salvador-dali--crucifixion",
-      "salvador-dali--the-elephants"
+      "salvador-dali--the-elephants",
+      "salvador-dali--the-great-masturbator",
+      "salvador-dali--the-face-of-war",
+      "salvador-dali--the-burning-giraffe",
+      "salvador-dali--landscape-near-figueras",
+      "salvador-dali--leda-atomica",
+      "salvador-dali--the-sacrament-of-the-last-supper",
+      "salvador-dali--the-temptation-of-st-anthony",
+      "salvador-dali--the-basket-of-bread",
+      "salvador-dali--the-disintegration-of-the-persistence-of-memory",
+      "salvador-dali--young-woman-at-a-window",
+      "salvador-dali--the-discovery-of-america-by-christopher-columbus",
+      "salvador-dali--the-hallucinogenic-toreador"
     ]
   },
   {
@@ -1273,7 +1716,19 @@
       "rene-magritte--the-lovers",
       "rene-magritte--time-transfixed",
       "rene-magritte--the-false-mirror",
-      "rene-magritte--not-to-be-reproduced"
+      "rene-magritte--not-to-be-reproduced",
+      "rene-magritte--the-mysteries-of-the-horizon",
+      "rene-magritte--the-castle-of-the-pyrenees",
+      "rene-magritte--the-menaced-assassin",
+      "rene-magritte--the-portrait",
+      "rene-magritte--16th-september",
+      "rene-magritte--elective-affinities",
+      "rene-magritte--the-human-condition",
+      "rene-magritte--the-listening-room",
+      "rene-magritte--the-telescope",
+      "rene-magritte--on-the-threshold-of-liberty",
+      "rene-magritte--the-voice-of-space",
+      "rene-magritte--the-secret-player"
     ]
   },
   {
@@ -1297,7 +1752,13 @@
       "max-ernst--pieta-or-revolution-by-night",
       "max-ernst--men-shall-know-nothing-of-this",
       "max-ernst--the-eye-of-silence",
-      "max-ernst--aquis-submersus"
+      "max-ernst--aquis-submersus",
+      "max-ernst--napoleon-in-the-wilderness",
+      "max-ernst--little-machine-constructed-by-minimax-dadamax-in-person",
+      "max-ernst--murdering-airplane",
+      "max-ernst--the-barbarians",
+      "max-ernst--the-wood",
+      "max-ernst--trophy-hypertrophied"
     ]
   },
   {
@@ -1319,7 +1780,14 @@
       "joan-miro--the-harlequin-s-carnival",
       "joan-miro--dog-barking-at-the-moon",
       "joan-miro--still-life-with-old-shoe",
-      "joan-miro--head-of-a-catalan-peasant"
+      "joan-miro--head-of-a-catalan-peasant",
+      "joan-miro--constellations",
+      "joan-miro--portrait-of-vincent-nubiola",
+      "joan-miro--barcelona-series",
+      "joan-miro--metamorphosis",
+      "joan-miro--hands-flying-off-toward-the-constellations",
+      "joan-miro--the-navigator-s-hope",
+      "joan-miro--man-and-woman-in-front-of-a-pile-of-excrement"
     ]
   },
   {
@@ -1362,7 +1830,9 @@
       "juan-gris--harlequin-with-a-guitar",
       "juan-gris--the-fruit-bowl",
       "juan-gris--checkerboard-and-playing-cards",
-      "juan-gris--juan-legua"
+      "juan-gris--juan-legua",
+      "juan-gris--the-anisette-bottle",
+      "juan-gris--still-life-with-a-poem"
     ]
   },
   {
@@ -1386,7 +1856,8 @@
       "robert-delaunay--homage-to-bleriot",
       "robert-delaunay--windows",
       "robert-delaunay--rhythms",
-      "robert-delaunay--portrait-of-tristan-tzara"
+      "robert-delaunay--portrait-of-tristan-tzara",
+      "robert-delaunay--still-life-with-a-parrot"
     ]
   },
   {
@@ -1410,7 +1881,18 @@
       "albert-gleizes--woman-with-phlox",
       "albert-gleizes--brooklyn-bridge",
       "albert-gleizes--woman-with-animals",
-      "albert-gleizes--the-bathers"
+      "albert-gleizes--the-bathers",
+      "albert-gleizes--le-chemin-paysage-a-meudon",
+      "albert-gleizes--man-in-a-hammock",
+      "albert-gleizes--portrait-of-an-army-doctor",
+      "albert-gleizes--the-publisher-eugene-figuiere",
+      "albert-gleizes--woman-with-black-glove",
+      "albert-gleizes--composition-for-jazz",
+      "albert-gleizes--cubist-landscape",
+      "albert-gleizes--passy-bridges-of-paris",
+      "albert-gleizes--the-banks-of-the-marne",
+      "albert-gleizes--the-hunt",
+      "albert-gleizes--the-tree"
     ]
   },
   {
@@ -1433,7 +1915,19 @@
       "pablo-picasso--three-musicians",
       "pablo-picasso--girl-with-a-mandolin",
       "pablo-picasso--the-weeping-woman",
-      "pablo-picasso--family-of-saltimbanques"
+      "pablo-picasso--family-of-saltimbanques",
+      "pablo-picasso--garcon-a-la-pipe",
+      "pablo-picasso--dora-maar-au-chat",
+      "pablo-picasso--le-reve",
+      "pablo-picasso--les-femmes-d-alger",
+      "pablo-picasso--nude-green-leaves-and-bust",
+      "pablo-picasso--massacre-in-korea",
+      "pablo-picasso--picasso-s-rose-period",
+      "pablo-picasso--la-vie",
+      "pablo-picasso--le-pigeon-aux-petits-pois",
+      "pablo-picasso--portrait-of-suzanne-bloch",
+      "pablo-picasso--femme-aux-bras-croises",
+      "pablo-picasso--girl-on-a-ball"
     ]
   },
   {
@@ -1456,7 +1950,8 @@
       "georges-braque--pitcher-and-violin",
       "georges-braque--fruit-dish",
       "georges-braque--mandora",
-      "georges-braque--still-life"
+      "georges-braque--still-life",
+      "georges-braque--fishing-boats"
     ]
   },
   {
@@ -1497,7 +1992,8 @@
       "jackson-pollock--blue-poles",
       "jackson-pollock--convergence",
       "jackson-pollock--mural",
-      "jackson-pollock--number-17a"
+      "jackson-pollock--number-17a",
+      "jackson-pollock--mural-on-indian-red-ground"
     ]
   },
   {
@@ -1521,7 +2017,12 @@
       "mark-rothko--no-3-no-13",
       "mark-rothko--four-darks-in-red",
       "mark-rothko--no-1",
-      "mark-rothko--no-10"
+      "mark-rothko--no-10",
+      "mark-rothko--black-in-deep-red",
+      "mark-rothko--no-6",
+      "mark-rothko--untitled",
+      "mark-rothko--no-6-yellow-white-blue-over-yellow-on-gray",
+      "mark-rothko--seagram-murals"
     ]
   },
   {
@@ -1567,7 +2068,19 @@
       "andy-warhol--green-coca-cola-bottles",
       "andy-warhol--gold-marilyn-monroe",
       "andy-warhol--triple-elvis",
-      "andy-warhol--mao"
+      "andy-warhol--mao",
+      "andy-warhol--silver-car-crash",
+      "andy-warhol--camouflage-self-portrait",
+      "andy-warhol--ten-portraits-of-jews-of-the-twentieth-century",
+      "andy-warhol--ethel-scull-36-times",
+      "andy-warhol--suicide",
+      "andy-warhol--big-electric-chair",
+      "andy-warhol--campbell-s-soup-ii",
+      "andy-warhol--green-car-crash",
+      "andy-warhol--129-die-in-jet",
+      "andy-warhol--cars",
+      "andy-warhol--flowers",
+      "andy-warhol--men-in-her-life"
     ]
   },
   {
@@ -1591,7 +2104,19 @@
       "roy-lichtenstein--oh-jeff-i-love-you-too-but",
       "roy-lichtenstein--in-the-car",
       "roy-lichtenstein--crying-girl",
-      "roy-lichtenstein--masterpiece"
+      "roy-lichtenstein--masterpiece",
+      "roy-lichtenstein--grrrrrrrrrrr",
+      "roy-lichtenstein--girl-in-mirror",
+      "roy-lichtenstein--girl-with-ball",
+      "roy-lichtenstein--i-can-see-the-whole-room-and-there-s-nobody-in-it",
+      "roy-lichtenstein--torpedo-los",
+      "roy-lichtenstein--as-i-opened-fire",
+      "roy-lichtenstein--bedroom-at-arles",
+      "roy-lichtenstein--takka-takka",
+      "roy-lichtenstein--brattata",
+      "roy-lichtenstein--crak",
+      "roy-lichtenstein--girl-with-hair-ribbon",
+      "roy-lichtenstein--golf-ball"
     ]
   },
   {
@@ -1634,7 +2159,19 @@
       "jean-michel-basquiat--dustheads",
       "jean-michel-basquiat--boy-and-dog-in-a-johnnypump",
       "jean-michel-basquiat--in-this-case",
-      "jean-michel-basquiat--dos-cabezas"
+      "jean-michel-basquiat--dos-cabezas",
+      "jean-michel-basquiat--a-panel-of-experts",
+      "jean-michel-basquiat--gem-spa",
+      "jean-michel-basquiat--la-hara",
+      "jean-michel-basquiat--taxi-45th-broadway",
+      "jean-michel-basquiat--untitled-fishing",
+      "jean-michel-basquiat--untitled-skull",
+      "jean-michel-basquiat--bird-on-money",
+      "jean-michel-basquiat--cadillac-moon",
+      "jean-michel-basquiat--charles-the-first",
+      "jean-michel-basquiat--crown-hotel",
+      "jean-michel-basquiat--defacement",
+      "jean-michel-basquiat--donut-revenge"
     ]
   },
   {
@@ -1656,7 +2193,9 @@
       "david-hockney--mr-and-mrs-clark-and-percy",
       "david-hockney--peter-getting-out-of-nick-s-pool",
       "david-hockney--bigger-trees-near-warter",
-      "david-hockney--we-two-boys-together-clinging"
+      "david-hockney--we-two-boys-together-clinging",
+      "david-hockney--portrait-of-sir-david-webster",
+      "david-hockney--the-splash"
     ]
   },
   {
@@ -1718,7 +2257,19 @@
       "francis-bacon--in-memory-of-george-dyer",
       "francis-bacon--triptych-august-1972",
       "francis-bacon--triptych-may-june-1973",
-      "francis-bacon--portrait-of-michel-leiris"
+      "francis-bacon--portrait-of-michel-leiris",
+      "francis-bacon--three-studies-of-lucian-freud",
+      "francis-bacon--fragment-of-a-crucifixion",
+      "francis-bacon--head-vi",
+      "francis-bacon--painting-1946",
+      "francis-bacon--head-i",
+      "francis-bacon--second-version-of-triptych-1944",
+      "francis-bacon--study-for-a-self-portrait-triptych-1985-86",
+      "francis-bacon--three-figures-in-a-room",
+      "francis-bacon--three-studies-for-self-portrait",
+      "francis-bacon--blood-on-the-floor",
+      "francis-bacon--figure-in-a-landscape",
+      "francis-bacon--head-ii"
     ]
   }
 ]
