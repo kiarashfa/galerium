@@ -76,7 +76,19 @@ export default function GalleryApp() {
         <fog attach="fog" args={['#0a0b10', 14, 55]} />
         <Env />
         <Suspense fallback={null}>
-          <Room room={room} artistName={artist.name} register={register} lowSpec={isTouchDevice} />
+          <Room
+            room={room}
+            artistName={artist.name}
+            periodName={period?.name ?? ''}
+            periodColor={period?.color ?? '#a8843a'}
+            datesText={
+              artist.deathYear != null
+                ? `${artist.birthYear ?? '—'} – ${artist.deathYear}`
+                : `b. ${artist.birthYear ?? '—'}`
+            }
+            register={register}
+            lowSpec={isTouchDevice}
+          />
         </Suspense>
         <Player
           room={room}

@@ -60,6 +60,91 @@ export function makePlasterTexture(): THREE.CanvasTexture {
   return tex
 }
 
+/** Coffered gallery ceiling: warm plaster panels with recessed borders. */
+export function makeCeilingTexture(): THREE.CanvasTexture {
+  const size = 512
+  const c = document.createElement('canvas')
+  c.width = size
+  c.height = size
+  const ctx = c.getContext('2d')!
+  ctx.fillStyle = '#6e675a'
+  ctx.fillRect(0, 0, size, size)
+  // one coffer per tile: recessed border, beveled highlight, lighter panel
+  ctx.fillStyle = '#57503f'
+  ctx.fillRect(14, 14, size - 28, size - 28)
+  ctx.fillStyle = '#7a7263'
+  ctx.fillRect(34, 34, size - 68, size - 68)
+  ctx.strokeStyle = 'rgba(255, 244, 214, 0.18)'
+  ctx.lineWidth = 4
+  ctx.strokeRect(36, 36, size - 72, size - 72)
+  ctx.fillStyle = '#847c6c'
+  ctx.fillRect(52, 52, size - 104, size - 104)
+  const tex = new THREE.CanvasTexture(c)
+  tex.wrapS = THREE.RepeatWrapping
+  tex.wrapT = THREE.RepeatWrapping
+  tex.colorSpace = THREE.SRGBColorSpace
+  tex.anisotropy = 4
+  return tex
+}
+
+/** Grand wing placard for the far wall: artist name, period, dates. */
+export function makePlacardTexture(name: string, period: string, dates: string, accent: string): THREE.CanvasTexture {
+  const w = 2048
+  const h = 1024
+  const c = document.createElement('canvas')
+  c.width = w
+  c.height = h
+  const ctx = c.getContext('2d')!
+  // blends with the plaster wall the plane sits on
+  ctx.fillStyle = '#e2dbcb'
+  ctx.fillRect(0, 0, w, h)
+  ctx.textAlign = 'center'
+
+  ctx.fillStyle = accent
+  ctx.font = '600 54px "Inter", sans-serif'
+  ctx.fillText(period.toUpperCase().split('').join('  '), w / 2, 240)
+
+  // artist name, wrapped to at most two lines
+  ctx.fillStyle = '#2a2118'
+  let fontSize = 215
+  ctx.font = `600 ${fontSize}px "Cormorant Garamond", Georgia, serif`
+  const display = name.toUpperCase()
+  let lines = [display]
+  if (ctx.measureText(display).width > w - 300) {
+    const words = display.split(' ')
+    const mid = Math.ceil(words.length / 2)
+    lines = [words.slice(0, mid).join(' '), words.slice(mid).join(' ')]
+    const widest = Math.max(...lines.map((l) => ctx.measureText(l).width))
+    if (widest > w - 300) {
+      fontSize = Math.floor((fontSize * (w - 300)) / widest)
+      ctx.font = `600 ${fontSize}px "Cormorant Garamond", Georgia, serif`
+    }
+  }
+  const nameY = lines.length === 1 ? 520 : 440
+  lines.forEach((l, i) => ctx.fillText(l, w / 2, nameY + i * (fontSize * 1.08)))
+
+  // gold rule with fleuron
+  const ruleY = lines.length === 1 ? 640 : 700
+  const grad = ctx.createLinearGradient(w / 2 - 260, 0, w / 2 + 260, 0)
+  grad.addColorStop(0, 'rgba(168,132,58,0)')
+  grad.addColorStop(0.5, 'rgba(168,132,58,0.9)')
+  grad.addColorStop(1, 'rgba(168,132,58,0)')
+  ctx.fillStyle = grad
+  ctx.fillRect(w / 2 - 260, ruleY, 520, 4)
+  ctx.fillStyle = '#a8843a'
+  ctx.font = '52px Georgia, serif'
+  ctx.fillText('❦', w / 2, ruleY + 20)
+
+  ctx.fillStyle = 'rgba(42,33,24,0.75)'
+  ctx.font = `italic 92px "Cormorant Garamond", Georgia, serif`
+  ctx.fillText(dates, w / 2, ruleY + 165)
+
+  const tex = new THREE.CanvasTexture(c)
+  tex.colorSpace = THREE.SRGBColorSpace
+  tex.anisotropy = 8
+  return tex
+}
+
 /** Museum wall label for a painting: ivory card with title / year.
  *  Restricted (in-copyright) works get a small red © marker. */
 export function makeLabelTexture(
