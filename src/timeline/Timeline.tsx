@@ -1,28 +1,20 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useMuseum } from '../store'
 import { isTouchDevice } from '../touch'
 import type { Artist, MuseumData, Period } from '../types'
-import {
-  type Cam,
-  K_MIN,
-  K_MAX,
-  ROOM_IN_START,
-  ROOM_IN_END,
-  clamp,
-  smoothstep,
-  easeInOutCubic,
-  roman,
-} from './camera'
+import { type Cam, K_MIN, K_MAX, clamp, easeInOutCubic, roman } from './camera'
 
 // ------------------------------------------------------------- world layout -
-// The museum section: fifteen fixed-size floor slabs stacked chronologically,
-// ground floor (Medieval & Gothic) at the bottom. Rooms are standardized —
-// their size never encodes collection size — and sit along each floor at the
-// position of the artist's real working years.
+// The museum section as an accordion directory: fifteen floor rows stacked
+// chronologically (ground floor = Medieval & Gothic, at the bottom). Exactly
+// one floor at a time is expanded to its full room layout; the rest collapse
+// to their edge band. Rooms are standardized — their size never encodes
+// collection size — and sit at the position of the artist's real working years.
 
 const SLAB_W = 1150
-const SLAB_H = 232
-const GAP = 44
+const H_EXPANDED = 232
+const H_COLLAPSED = 62
+const GAP = 28
 const BAND_H = 52
 const ROOM_W = 150
 const ROOM_H = 104
@@ -39,7 +31,6 @@ interface RoomPos {
 interface FloorLayout {
   period: Period
   index: number // 0 = ground floor (earliest period)
-  y: number // world y of slab top
   rooms: RoomPos[]
   ticks: { x: number; year: number }[]
 }
@@ -58,9 +49,7 @@ function artistYear(artist: Artist, data: MuseumData, period: Period): number {
 }
 
 function computeFloors(data: MuseumData): FloorLayout[] {
-  const n = data.periods.length
   return data.periods.map((period, index) => {
-    const y = (n - 1 - index) * (SLAB_H + GAP)
     const span = Math.max(period.end - period.start, 1)
     const usable = SLAB_W - EDGE_PAD * 2
 
@@ -91,8 +80,19 @@ function computeFloors(data: MuseumData): FloorLayout[] {
       return { x: EDGE_PAD + (usable * i) / 4, year }
     })
 
-    return { period, index, y, rooms, ticks }
+    return { period, index, rooms, ticks }
   })
+}
+
+/** Slab-top world y for every floor, given which floor is open. */
+function floorTops(n: number, open: number | null): { ys: number[]; worldH: number } {
+  const ys = new Array<number>(n)
+  let acc = 0
+  for (let i = n - 1; i >= 0; i--) {
+    ys[i] = acc
+    acc += (i === open ? H_EXPANDED : H_COLLAPSED) + GAP
+  }
+  return { ys, worldH: acc - GAP }
 }
 
 // ------------------------------------------------------------- component ----
@@ -104,30 +104,21 @@ export default function Timeline() {
   const openCard = useMuseum((s) => s.openCard)
 
   const floors = useMemo(() => computeFloors(data), [data])
-  const worldH = floors.length * (SLAB_H + GAP) - GAP
+  const n = floors.length
+
+  // the accordion: exactly one floor expanded; you start at the entrance
+  const [openFloor, setOpenFloor] = useState<number | null>(0)
+  const layout = useMemo(() => floorTops(n, openFloor), [n, openFloor])
+  const layoutRef = useRef(layout)
+  layoutRef.current = layout
 
   const viewportRef = useRef<HTMLDivElement>(null)
   const worldRef = useRef<HTMLDivElement>(null)
   const railRef = useRef<HTMLElement>(null)
-  const slabRefs = useRef<(HTMLDivElement | null)[]>([])
-  const railRefs = useRef<(HTMLButtonElement | null)[]>([])
-  const hereRef = useRef(-1)
 
-  const camRef = useRef<Cam>({ x: SLAB_W / 2, y: worldH / 2, k: 0.2 })
+  const camRef = useRef<Cam>({ x: SLAB_W / 2, y: layout.worldH, k: 0.3 })
   const targetRef = useRef<Cam>({ ...camRef.current })
   const flightRef = useRef<{ from: Cam; to: Cam; t0: number; dur: number } | null>(null)
-
-  // Home view: fit the building's width and stand at the ground-floor
-  // entrance (Medieval & Gothic, at the bottom) — visitors pan upward through
-  // history; the rail jumps straight to any floor.
-  const fitAll = (): Cam => {
-    const vw = viewportRef.current?.clientWidth ?? 1280
-    return {
-      x: SLAB_W / 2,
-      y: worldH, // clamped to the bottom of the building by the camera bounds
-      k: clamp((vw * 0.42) / SLAB_W, 0.16, 0.8),
-    }
-  }
 
   /** Width taken by the wayfinding rail (0 when hidden on small screens). */
   const railW = () => {
@@ -135,18 +126,34 @@ export default function Timeline() {
     return el && el.offsetWidth > 0 ? el.offsetWidth + 60 : 0
   }
 
+  // Home view: the whole directory fits on screen, collapsed rows legible.
+  const fitAll = (): Cam => {
+    const vw = viewportRef.current?.clientWidth ?? 1280
+    const vh = viewportRef.current?.clientHeight ?? 800
+    const { worldH } = layoutRef.current
+    return {
+      x: SLAB_W / 2,
+      y: worldH / 2,
+      k: clamp(Math.min(((vw - railW()) * 0.85) / SLAB_W, (vh - 160) / worldH), 0.16, 0.9),
+    }
+  }
+
   const flyTo = (to: Cam, dur = 950) => {
     flightRef.current = { from: { ...camRef.current }, to, t0: performance.now(), dur }
   }
 
-  /** Frame a floor in the space right of the rail, always past room reveal. */
+  /** Frame a floor in the space right of the rail, at room-reading zoom. */
   const floorZoom = () => {
     const vw = (viewportRef.current?.clientWidth ?? 1280) - railW()
     return clamp((vw * 0.92) / SLAB_W, 0.95, 2.2)
   }
-  const flyToFloor = (f: FloorLayout, dur = 1000) => {
+
+  /** Expand a floor (auto-collapsing any other) and fly the camera to it. */
+  const openAndFly = (index: number, dur = 1000) => {
+    setOpenFloor(index)
+    const { ys } = floorTops(n, index)
     const k = floorZoom()
-    flyTo({ x: SLAB_W / 2 - railW() / (2 * k), y: f.y + SLAB_H / 2, k }, dur)
+    flyTo({ x: SLAB_W / 2 - railW() / (2 * k), y: ys[index] + H_EXPANDED / 2, k }, dur)
   }
 
   // ------------------------------------------------------------ frame loop --
@@ -155,11 +162,11 @@ export default function Timeline() {
     const world = worldRef.current!
     let raf = 0
     let lastT = performance.now()
-    let roomsLive = false
 
     const clampCam = (c: Cam) => {
       const vw = viewport.clientWidth
       const vh = viewport.clientHeight
+      const { worldH } = layoutRef.current
       const hw = vw / 2 / c.k
       const hh = vh / 2 / c.k
       const rw = railW() / c.k // keep content clear of the wayfinding rail
@@ -197,34 +204,13 @@ export default function Timeline() {
       const vh = viewport.clientHeight
       const { x, y, k } = cam
       world.style.transform = `translate3d(${vw / 2 - x * k}px, ${vh / 2 - y * k}px, 0) scale(${k})`
-
-      // semantic reveal of rooms + per-floor date rules
-      const reveal = smoothstep(ROOM_IN_START, ROOM_IN_END, k)
-      world.style.setProperty('--room-reveal', String(reveal))
       // floor bands stay readable however far out the camera is
       world.style.setProperty('--band-scale', String(Math.max(1, 0.55 / k)))
-      const live = reveal > 0.5
-      if (live !== roomsLive) {
-        roomsLive = live
-        world.classList.toggle('rooms-live', live)
-      }
-
-      // "you are here": the floor nearest the viewport centre once zoomed in
-      let here = -1
-      if (k >= ROOM_IN_START) {
-        const idx = Math.round((worldH - y - SLAB_H / 2) / (SLAB_H + GAP))
-        here = clamp(idx, 0, floors.length - 1)
-      }
-      if (here !== hereRef.current) {
-        hereRef.current = here
-        slabRefs.current.forEach((el, i) => el?.classList.toggle('is-here', i === here))
-        railRefs.current.forEach((el, i) => el?.classList.toggle('is-here', i === here))
-      }
     }
     raf = requestAnimationFrame(frame)
 
     const start = fitAll()
-    camRef.current = { ...start, k: start.k * 0.82 }
+    camRef.current = { ...start, k: start.k * 0.85 }
     targetRef.current = { ...start }
 
     return () => cancelAnimationFrame(raf)
@@ -251,7 +237,7 @@ export default function Timeline() {
       target.k = k1
     }
 
-    // Multi-pointer input: drag pans (after a threshold so room/band clicks
+    // Multi-pointer input: drag pans (after a threshold so band/room clicks
     // survive), two touches pinch-zoom about the moving midpoint.
     const pts = new Map<number, { x: number; y: number }>()
     let mode: 'idle' | 'pending' | 'drag' | 'pinch' = 'idle'
@@ -379,21 +365,35 @@ export default function Timeline() {
     }
     if (flyReq.kind === 'period') {
       const f = floors.find((fl) => fl.period.id === flyReq.id)
-      if (f) flyToFloor(f, 1100)
+      if (f) openAndFly(f.index, 1100)
       return
     }
     for (const f of floors) {
       const room = f.rooms.find((r) => r.artist.id === flyReq.id)
       if (room) {
-        flyTo({ x: room.x + ROOM_W / 2, y: f.y + room.y + ROOM_H / 2, k: Math.max(floorZoom(), 1.15) }, 1000)
+        setOpenFloor(f.index)
+        const { ys } = floorTops(n, f.index)
+        flyTo(
+          { x: room.x + ROOM_W / 2, y: ys[f.index] + room.y + ROOM_H / 2, k: Math.max(floorZoom(), 1.15) },
+          1000,
+        )
         return
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [flyReq])
 
+  const onBandClick = (f: FloorLayout) => {
+    if (openFloor === f.index) setOpenFloor(null) // collapse back to the directory
+    else openAndFly(f.index)
+  }
+
   const onRoomClick = (f: FloorLayout, room: RoomPos) => {
-    flyTo({ x: room.x + ROOM_W / 2, y: f.y + room.y + ROOM_H / 2, k: Math.max(camRef.current.k, 1.15) }, 700)
+    const { ys } = layoutRef.current
+    flyTo(
+      { x: room.x + ROOM_W / 2, y: ys[f.index] + room.y + ROOM_H / 2, k: Math.max(camRef.current.k, 1.15) },
+      700,
+    )
     window.setTimeout(() => openCard(room.artist.id), 480)
   }
 
@@ -402,51 +402,65 @@ export default function Timeline() {
   return (
     <div ref={viewportRef} className="floorplan" role="application" aria-label="Museum floor plan timeline">
       <div ref={worldRef} className="fp-world" style={{ width: SLAB_W }}>
-        {floors.map((f) => (
-          <div
-            key={f.period.id}
-            ref={(el) => (slabRefs.current[f.index] = el)}
-            className={`fp-floor${dimmed(f.period.id)}`}
-            style={{ top: f.y, height: SLAB_H, ['--pc' as string]: f.period.color }}
-            onClick={(e) => {
-              if ((e.target as HTMLElement).closest('.fp-room')) return
-              flyToFloor(f)
-            }}
-          >
-            <div className="fp-band" style={{ height: BAND_H }}>
-              <div className="fp-band-inner">
-                <span className="fp-fnum">{roman(f.index + 1)}</span>
-                <span className="fp-fname">{f.period.name}</span>
-                <span className="fp-fyears">
-                  {f.period.start} – {f.period.end}
-                </span>
-              </div>
-              <span className="fp-here-chip">◉ You are here</span>
-            </div>
-
-            {f.rooms.map((room) => (
-              <button
-                key={room.artist.id}
-                className="fp-room"
-                style={{ left: room.x, top: room.y, width: ROOM_W, height: ROOM_H }}
-                onClick={() => onRoomClick(f, room)}
-                aria-label={`Open card for ${room.artist.name}`}
+        {floors.map((f) => {
+          const open = openFloor === f.index
+          return (
+            <div
+              key={f.period.id}
+              className={`fp-floor${open ? ' is-open is-here' : ''}${dimmed(f.period.id)}`}
+              style={{
+                top: layout.ys[f.index],
+                height: open ? H_EXPANDED : H_COLLAPSED,
+                ['--pc' as string]: f.period.color,
+              }}
+              onClick={(e) => {
+                if ((e.target as HTMLElement).closest('.fp-room, .fp-band')) return
+                if (!open) openAndFly(f.index)
+              }}
+            >
+              <div
+                className="fp-band"
+                style={{ height: BAND_H }}
+                onClick={() => onBandClick(f)}
+                role="button"
+                aria-expanded={open}
               >
-                <span className="fp-rnum">{room.number}</span>
-                <span className="fp-rname">{room.artist.name}</span>
-                <span className="fp-rdates">{room.years}</span>
-              </button>
-            ))}
+                <div className="fp-band-inner">
+                  <span className="fp-fnum">{roman(f.index + 1)}</span>
+                  <span className="fp-fname">{f.period.name}</span>
+                  <span className="fp-fyears">
+                    {f.period.start} – {f.period.end}
+                  </span>
+                </div>
+                <span className="fp-here-chip">◉ You are here</span>
+              </div>
 
-            <div className="fp-rule">
-              {f.ticks.map((tk) => (
-                <span key={tk.year} className="fp-tick" style={{ left: tk.x }}>
-                  {tk.year}
-                </span>
-              ))}
+              <div className="fp-clip">
+                {f.rooms.map((room) => (
+                  <button
+                    key={room.artist.id}
+                    className="fp-room"
+                    style={{ left: room.x, top: room.y, width: ROOM_W, height: ROOM_H }}
+                    onClick={() => onRoomClick(f, room)}
+                    tabIndex={open ? 0 : -1}
+                    aria-label={`Open card for ${room.artist.name}`}
+                  >
+                    <span className="fp-rnum">{room.number}</span>
+                    <span className="fp-rname">{room.artist.name}</span>
+                    <span className="fp-rdates">{room.years}</span>
+                  </button>
+                ))}
+                <div className="fp-rule">
+                  {f.ticks.map((tk) => (
+                    <span key={tk.year} className="fp-tick" style={{ left: tk.x }}>
+                      {tk.year}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
 
       {/* screen-fixed floor index — the wayfinding rail */}
@@ -455,9 +469,8 @@ export default function Timeline() {
         {[...floors].reverse().map((f) => (
           <button
             key={f.period.id}
-            ref={(el) => (railRefs.current[f.index] = el)}
-            className={`fp-rail-item${dimmed(f.period.id)}`}
-            onClick={() => flyToFloor(f)}
+            className={`fp-rail-item${openFloor === f.index ? ' is-here' : ''}${dimmed(f.period.id)}`}
+            onClick={() => openAndFly(f.index)}
           >
             <b>{roman(f.index + 1)}</b>
             <i style={{ background: f.period.color }} />

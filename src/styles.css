@@ -136,7 +136,6 @@ button {
   top: 0;
   transform-origin: 0 0;
   will-change: transform;
-  --room-reveal: 0;
   --band-scale: 1;
 }
 
@@ -156,10 +155,21 @@ button {
   background: linear-gradient(180deg, #f3ecda 0%, #e7dcc1 100%);
   border-radius: 2px;
   box-shadow: 0 20px 38px rgba(0, 0, 0, 0.5);
-  transition: filter 0.3s ease;
+  /* accordion: rows glide as one floor expands and another collapses */
+  transition: top 0.65s cubic-bezier(0.3, 0.8, 0.25, 1), height 0.65s cubic-bezier(0.3, 0.8, 0.25, 1),
+    filter 0.3s ease;
 }
 .fp-floor:hover {
   filter: brightness(1.04);
+}
+/* clips room content during the height transition (the skewed cap lives
+   outside this wrapper so it never gets cut) */
+.fp-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 2px;
+  pointer-events: none;
 }
 /* skewed top surface — the slab's 2.5D cap */
 .fp-floor::before {
@@ -238,7 +248,7 @@ button {
   transition: opacity 0.35s ease;
 }
 .fp-floor.is-here .fp-here-chip {
-  opacity: var(--room-reveal);
+  opacity: 1;
 }
 
 /* --- artist rooms (standardized placards — size never encodes data) --- */
@@ -258,15 +268,18 @@ button {
     0 6px 14px rgba(42, 33, 24, 0.18);
   padding: 10px 8px;
   text-align: center;
-  opacity: var(--room-reveal);
+  opacity: 0;
   pointer-events: none;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: opacity 0.3s ease, transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
-.rooms-live .fp-room {
+/* rooms fade in once their floor has (mostly) expanded */
+.fp-floor.is-open .fp-room {
+  opacity: 1;
   pointer-events: auto;
   cursor: pointer;
+  transition: opacity 0.4s ease 0.28s, transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
-.rooms-live .fp-room:hover {
+.fp-floor.is-open .fp-room:hover {
   transform: translateY(-3px);
   border-color: var(--gold-2);
   box-shadow:
@@ -314,7 +327,12 @@ button {
   right: 70px;
   bottom: 12px;
   border-top: 1px solid rgba(139, 108, 48, 0.4);
-  opacity: var(--room-reveal);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.fp-floor.is-open .fp-rule {
+  opacity: 1;
+  transition: opacity 0.4s ease 0.28s;
 }
 .fp-tick {
   position: absolute;
@@ -420,10 +438,10 @@ button {
 /* ===== filter bar ===== */
 
 .filterbar {
+  /* grouped with the About button in the top-right corner */
   position: absolute;
-  top: 28px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 84px;
+  right: 32px;
   z-index: 40;
   width: 320px;
   /* container must not swallow timeline clicks under the (closed) panel box */
@@ -436,7 +454,7 @@ button {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 0 auto;
+  margin: 0 0 0 auto;
   padding: 10px 18px;
   border-radius: 999px;
   border: 1px solid rgba(200, 162, 75, 0.35);
@@ -1049,9 +1067,9 @@ button {
     padding: 8px 13px;
   }
   .filterbar {
-    top: 72px;
-    left: 18px;
-    width: min(320px, calc(100vw - 36px));
+    top: 60px;
+    right: 14px;
+    width: min(320px, calc(100vw - 28px));
   }
   .fp-hint {
     display: none;
@@ -1326,14 +1344,6 @@ button {
 }
 .lightbox-sources a:hover {
   color: var(--paper-ink);
-}
-
-@media (max-width: 1100px) {
-  .filterbar {
-    top: 92px;
-    left: 34px;
-    transform: none;
-  }
 }
 
 @media (max-width: 860px) {
