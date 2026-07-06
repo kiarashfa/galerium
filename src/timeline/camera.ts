@@ -7,8 +7,12 @@ export interface Cam {
   k: number
 }
 
-export const K_MIN = 0.14
-export const K_MAX = 3.2
+// Manual zoom-out floor: below this the counter-scaled floor-band text (which
+// holds a ~constant on-screen size via --band-scale) overflows the shrinking
+// band box. Verified empirically in the timeline (viewport-independent since the
+// overflow ratio is scale-free). Zoom-IN is capped separately at floorZoom().
+export const K_MIN = 0.32
+export const K_MAX = 3.2 // legacy hard ceiling; manual zoom-in now caps at floorZoom()
 
 export const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v))
 export const easeInOutCubic = (t: number) =>

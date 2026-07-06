@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useMuseum } from '../store'
 import { isTouchDevice } from '../touch'
 import type { Artist, MuseumData, Period } from '../types'
-import { type Cam, K_MIN, K_MAX, clamp, easeInOutCubic, roman } from './camera'
+import { type Cam, K_MIN, clamp, easeInOutCubic, roman } from './camera'
 
 // ------------------------------------------------------------- world layout -
 // The museum section as an accordion directory: fifteen floor rows stacked
@@ -229,7 +229,8 @@ export default function Timeline() {
       const sx = e.clientX - rect.left
       const sy = e.clientY - rect.top
       const k0 = target.k
-      const k1 = clamp(k0 * Math.exp(-e.deltaY * 0.0016), K_MIN, K_MAX)
+      // zoom-in stops at the floor-expand level; zoom-out stops before band text overflows
+      const k1 = clamp(k0 * Math.exp(-e.deltaY * 0.0016), K_MIN, floorZoom())
       const wx = target.x + (sx - rect.width / 2) / k0
       const wy = target.y + (sy - rect.height / 2) / k0
       target.x = wx - (sx - rect.width / 2) / k1
@@ -284,7 +285,7 @@ export default function Timeline() {
         const mx = (a.x + b.x) / 2
         const my = (a.y + b.y) / 2
         const k0 = target.k
-        const k1 = clamp((k0 * d) / pinchPrev.d, K_MIN, K_MAX)
+        const k1 = clamp((k0 * d) / pinchPrev.d, K_MIN, floorZoom())
         const wx = target.x + (pinchPrev.mx - rect.left - rect.width / 2) / k0
         const wy = target.y + (pinchPrev.my - rect.top - rect.height / 2) / k0
         target.x = wx - (mx - rect.left - rect.width / 2) / k1

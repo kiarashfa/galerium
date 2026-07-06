@@ -1,11 +1,14 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { useThree } from '@react-three/fiber'
-import { MeshReflectorMaterial } from '@react-three/drei'
+import { Center, MeshReflectorMaterial, Text3D } from '@react-three/drei'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 import PaintingMesh from './PaintingMesh'
-import { makeCeilingTexture, makeFloorTexture, makeNoticeTexture, makePlacardMaps, makePlasterTexture } from './textures'
+import { makeCeilingTexture, makeFloorTexture, makeNoticeTexture, makePlasterTexture } from './textures'
 import type { RoomSpec } from './layout'
+
+/** Serif typeface for the extruded 3D placard lettering (fetched, not bundled). */
+const PLACARD_FONT = `${import.meta.env.BASE_URL}fonts/gentilis_bold.typeface.json`
 
 /** Image-based lighting from three's built-in RoomEnvironment — no network fetch. */
 export function Env() {
@@ -42,10 +45,6 @@ export default function Room({ room, artistName, periodName, periodColor, datesT
   const floorTex = useMemo(() => makeFloorTexture(), [])
   const plasterTex = useMemo(() => makePlasterTexture(), [])
   const ceilingTex = useMemo(() => makeCeilingTexture(), [])
-  const placard = useMemo(
-    () => makePlacardMaps(artistName, periodName, datesText, periodColor),
-    [artistName, periodName, datesText, periodColor],
-  )
   const noticeQuiet = useMemo(() => makeNoticeTexture('quiet'), [])
   const noticeFlash = useMemo(() => makeNoticeTexture('noflash'), [])
   useEffect(
@@ -53,11 +52,10 @@ export default function Room({ room, artistName, periodName, periodColor, datesT
       floorTex.dispose()
       plasterTex.dispose()
       ceilingTex.dispose()
-      placard.dispose()
       noticeQuiet.dispose()
       noticeFlash.dispose()
     },
-    [floorTex, plasterTex, ceilingTex, placard, noticeQuiet, noticeFlash],
+    [floorTex, plasterTex, ceilingTex, noticeQuiet, noticeFlash],
   )
   floorTex.repeat.set(width / 5, depth / 5)
   plasterTex.repeat.set(6, 3)
@@ -140,51 +138,12 @@ export default function Room({ room, artistName, periodName, periodColor, datesT
         {wallMat}
       </mesh>
 
-      {/* grand wing placard on the far short wall — a mounted stone tablet with
-          raised gold lettering (bump + metalness maps) framed in gilt bronze */}
-      <group position={[0, 2.35, -depth / 2 + 0.02]}>
-        {/* limestone tablet, proud of the wall */}
-        <mesh position-z={0.02} castShadow>
-          <boxGeometry args={[8.5, 4.5, 0.1]} />
-          <meshStandardMaterial color="#cabd9f" roughness={0.9} metalness={0} />
-        </mesh>
-        {/* raised-gold lettering panel */}
-        <mesh position-z={0.075}>
-          <planeGeometry args={[8, 4]} />
-          <meshStandardMaterial
-            map={placard.map}
-            bumpMap={placard.bumpMap}
-            bumpScale={1.1}
-            metalnessMap={placard.metalnessMap}
-            metalness={1}
-            roughnessMap={placard.roughnessMap}
-            roughness={1}
-            emissiveMap={placard.metalnessMap}
-            emissive="#3a2c12"
-            emissiveIntensity={0.32}
-            envMapIntensity={1.1}
-          />
-        </mesh>
-        {/* gilt-bronze bevel frame around the tablet */}
-        {([
-          [0, 2.28, 8.7, 0.16],
-          [0, -2.28, 8.7, 0.16],
-        ] as const).map(([x, y, bw, bh], i) => (
-          <mesh key={`h${i}`} position={[x, y, 0.06]}>
-            <boxGeometry args={[bw, bh, 0.13]} />
-            <meshStandardMaterial color="#8a6a2c" metalness={0.75} roughness={0.38} />
-          </mesh>
-        ))}
-        {([
-          [-4.27, 0, 0.16, 4.72],
-          [4.27, 0, 0.16, 4.72],
-        ] as const).map(([x, y, bw, bh], i) => (
-          <mesh key={`v${i}`} position={[x, y, 0.06]}>
-            <boxGeometry args={[bw, bh, 0.13]} />
-            <meshStandardMaterial color="#8a6a2c" metalness={0.75} roughness={0.38} />
-          </mesh>
-        ))}
-      </group>
+      {/* grand wing placard on the far short wall — GENUINE extruded/beveled 3D
+          lettering straight on the wall (no frame/backing), gold + accent metal
+          that catches the wash + picture-light spill */}
+      <Suspense fallback={null}>
+        <Placard3D name={artistName} period={periodName} dates={datesText} accent={periodColor} depth={depth} />
+      </Suspense>
       <PlacardWash depth={depth} height={height} />
 
       {/* baseboard + crown molding */}
@@ -260,9 +219,9 @@ export default function Room({ room, artistName, periodName, periodColor, datesT
   )
 }
 
-const WALNUT = '#241a11'
-const FRAME_WOOD = '#2c2118'
-const GOLD = '#8a6a2c'
+const WALNUT = '#5a3c22' // richer, lighter walnut so grain + molding read in the entrance's low light
+const FRAME_WOOD = '#452e1b'
+const GOLD = '#c49338' // brighter brass
 
 function makeExitPlateTexture(): THREE.CanvasTexture {
   const w = 256
@@ -315,11 +274,20 @@ function ExitDoor({
   )
 
   const zWall = depth / 2
-  const leafW = doorWidth / 2 - 0.03
-  const leafX = doorWidth / 4
-  const doorMat = <meshStandardMaterial color={WALNUT} roughness={0.5} metalness={0.15} envMapIntensity={1} />
-  const goldMat = <meshStandardMaterial color={GOLD} metalness={0.78} roughness={0.36} />
-  const frameMat = <meshStandardMaterial color={FRAME_WOOD} roughness={0.5} metalness={0.1} />
+  // leaves MEET at the centre (no wall-gap seam) and tuck under the jambs
+  const leafW = doorWidth / 2 + 0.04
+  const leafX = doorWidth / 4 + 0.02
+  const doorMat = <meshStandardMaterial color={WALNUT} roughness={0.52} metalness={0.18} envMapIntensity={1.7} />
+  const goldMat = <meshStandardMaterial color={GOLD} metalness={0.82} roughness={0.3} envMapIntensity={2} />
+  const frameMat = <meshStandardMaterial color={FRAME_WOOD} roughness={0.5} metalness={0.12} envMapIntensity={1.5} />
+
+  // a warm wash so the entrance door + notices actually read (the picture lights
+  // all point at the side-wall paintings; the door end is otherwise unlit)
+  const washTarget = useMemo(() => {
+    const o = new THREE.Object3D()
+    o.position.set(0, 1.5, depth / 2)
+    return o
+  }, [depth])
 
   // a slim gold molding frame (4 thin bars) around a leaf-local rectangle
   const molding = (pw: number, ph: number, cy: number, key: string) => (
@@ -347,6 +315,19 @@ function ExitDoor({
 
   return (
     <group>
+      {/* warm wash over the entrance door + notices (no shadow — cheap) */}
+      <primitive object={washTarget} />
+      <spotLight
+        position={[0, doorHeight - 0.1, zWall - 5]}
+        target={washTarget}
+        angle={1.12}
+        penumbra={0.82}
+        intensity={30}
+        decay={1.5}
+        distance={12}
+        color="#ffe7c4"
+      />
+
       {/* two walnut leaves */}
       {([-1, 1] as const).map((s) => (
         <group key={s} position={[s * leafX, 0, zWall - 0.06]}>
@@ -367,9 +348,15 @@ function ExitDoor({
         </group>
       ))}
 
+      {/* meeting-stile astragal covering the centre joint (proud of the leaves) */}
+      <mesh position={[0, doorHeight / 2, zWall - 0.125]}>
+        <boxGeometry args={[0.07, doorHeight - 0.04, 0.05]} />
+        {doorMat}
+      </mesh>
+
       {/* vertical gold pull-handles at the meeting stiles */}
       {([-1, 1] as const).map((s) => (
-        <mesh key={s} position={[s * 0.12, doorHeight * 0.46, zWall - 0.16]}>
+        <mesh key={s} position={[s * 0.14, doorHeight * 0.46, zWall - 0.17]}>
           <boxGeometry args={[0.05, 0.6, 0.05]} />
           {goldMat}
         </mesh>
@@ -422,14 +409,126 @@ function ExitDoor({
           </mesh>
           <mesh position-z={-0.05}>
             <boxGeometry args={[0.92, 0.72, 0.02]} />
-            <meshStandardMaterial color="#3a2c18" roughness={0.6} metalness={0.3} />
+            <meshStandardMaterial color="#523c22" roughness={0.6} metalness={0.3} envMapIntensity={1.4} />
           </mesh>
           <mesh position-z={-0.065} rotation-y={Math.PI}>
             <planeGeometry args={[0.88, 0.68]} />
-            <meshStandardMaterial map={tex} roughness={0.55} metalness={0.35} />
+            <meshStandardMaterial
+              map={tex}
+              emissiveMap={tex}
+              emissive="#7a5a26"
+              emissiveIntensity={0.35}
+              roughness={0.5}
+              metalness={0.35}
+              envMapIntensity={1.4}
+            />
           </mesh>
         </group>
       ))}
+    </group>
+  )
+}
+
+/** One line of extruded/beveled placard lettering, centred on the wall and
+ *  scaled down if its real geometry exceeds maxWidth (so no name ever overflows,
+ *  whatever the font metrics). */
+function PlacardLine({
+  text,
+  size,
+  color,
+  maxWidth,
+  y,
+}: {
+  text: string
+  size: number
+  color: string
+  maxWidth: number
+  y: number
+}) {
+  const ref = useRef<THREE.Group>(null)
+  useLayoutEffect(() => {
+    const g = ref.current
+    if (!g) return
+    let geo: THREE.BufferGeometry | undefined
+    g.traverse((o) => {
+      const m = o as THREE.Mesh
+      if (m.isMesh && m.geometry) geo = m.geometry
+    })
+    if (!geo) return
+    geo.computeBoundingBox()
+    const bb = geo.boundingBox!
+    const w = bb.max.x - bb.min.x
+    g.scale.setScalar(w > maxWidth ? maxWidth / w : 1)
+  }, [text, size, maxWidth])
+
+  return (
+    <group ref={ref} position={[0, y, 0]}>
+      <Center disableZ>
+        <Text3D
+          font={PLACARD_FONT}
+          size={size}
+          height={Math.max(0.04, size * 0.26)}
+          bevelEnabled
+          bevelThickness={size * 0.06}
+          bevelSize={size * 0.035}
+          bevelSegments={2}
+          curveSegments={4}
+        >
+          {text}
+          <meshStandardMaterial color={color} metalness={0.9} roughness={0.3} envMapIntensity={1.5} />
+        </Text3D>
+      </Center>
+    </group>
+  )
+}
+
+/** The far-wall placard as real 3D geometry: period eyebrow (accent metal),
+ *  large gold name (≤2 lines), gold rule, gold dates — extruded and beveled so
+ *  the room's lamps and picture-light spill rake across the letters. */
+function Placard3D({
+  name,
+  period,
+  dates,
+  accent,
+  depth,
+}: {
+  name: string
+  period: string
+  dates: string
+  accent: string
+  depth: number
+}) {
+  const zWall = -depth / 2 + 0.04 // text base at the wall, extrudes +z into the room
+  const nameU = name.toUpperCase()
+  const spacedPeriod = period.toUpperCase().split('').join(' ')
+
+  // split long names to two lines for readability (PlacardLine still guarantees
+  // width fit); single long tokens stay on one line and get scaled down
+  let nameLines = [nameU]
+  if (nameU.includes(' ') && nameU.length > 13) {
+    const words = nameU.split(' ')
+    const mid = Math.ceil(words.length / 2)
+    nameLines = [words.slice(0, mid).join(' '), words.slice(mid).join(' ')]
+  }
+  const nameSize = nameLines.length === 1 ? 0.6 : 0.5
+  const nameLH = nameSize * 1.28
+  const nameTopY = nameLines.length === 1 ? 2.42 : 2.42 + nameLH / 2
+  const nameBottomY = nameTopY - (nameLines.length - 1) * nameLH
+  const ruleY = nameBottomY - 0.5
+  const datesY = ruleY - 0.42
+  const GOLD_TEXT = '#c79a3c'
+
+  return (
+    <group position={[0, 0, zWall]}>
+      <PlacardLine text={spacedPeriod} size={0.15} color={accent} maxWidth={6.8} y={3.2} />
+      {nameLines.map((l, i) => (
+        <PlacardLine key={i} text={l} size={nameSize} color={GOLD_TEXT} maxWidth={7} y={nameTopY - i * nameLH} />
+      ))}
+      <mesh position={[0, ruleY, 0.06]}>
+        <boxGeometry args={[2.2, 0.035, 0.06]} />
+        <meshStandardMaterial color={GOLD_TEXT} metalness={0.9} roughness={0.3} envMapIntensity={1.5} />
+      </mesh>
+      <PlacardLine text={dates} size={0.26} color={GOLD_TEXT} maxWidth={5} y={datesY} />
     </group>
   )
 }
