@@ -205,7 +205,7 @@ export default function InspectOverlay({ painting, artist, period }: Props) {
           <div className="lightbox-copyright">
             <span className="lightbox-copyright-badge">© In copyright</span>
             <span>
-              Included for personal use only.<br />
+              Included for educational use only.<br />
               Low-resolution image used under fair use.
               {painting.copyrightHolder && <><br />Rights: {painting.copyrightHolder}.</>}
             </span>
